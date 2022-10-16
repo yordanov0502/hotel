@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.hotel;
+package bg.tu_varna.sit.hotel.run_application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
