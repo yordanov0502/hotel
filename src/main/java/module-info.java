@@ -10,8 +10,6 @@ module bg.tu_varna.sit.hotel {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens bg.tu_varna.sit.hotel to javafx.fxml;
-
     exports bg.tu_varna.sit.hotel.run_application;
     opens bg.tu_varna.sit.hotel.run_application to javafx.fxml;
 }

@@ -1,0 +1,19 @@
+.adminLoginButton:pressed{
+   -fx-border-color: DarkBlue;
+}
+
+.ownerLoginButton:pressed{
+   -fx-border-color: DarkBlue;
+}
+
+.managerLoginButton:pressed{
+   -fx-border-color: DarkBlue;
+}
+
+.receptionistLoginButton:pressed{
+   -fx-border-color: DarkBlue;
+}
+
+.closeWindowButton:pressed{
+   -fx-border-color: DarkBlue;
+}

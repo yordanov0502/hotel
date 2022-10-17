@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -23,9 +24,17 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button layoutX="305.0" layoutY="143.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightSkyBlue;" text="Вход за администратори" textAlignment="CENTER" />
-      <Button layoutX="305.0" layoutY="203.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: Gold;" text="Вход за собственици" textAlignment="CENTER" />
-      <Button layoutX="305.0" layoutY="243.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightCoral;" text="Вход за мениджъри" textAlignment="CENTER" />
-      <Button layoutX="305.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightSeaGreen;" text="Вход за рецепционисти" textAlignment="CENTER" />
+      <Button fx:id="adminLoginButton" layoutX="305.0" layoutY="143.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightSkyBlue;" styleClass="adminLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за администратори" textAlignment="CENTER" />
+      <Button fx:id="ownerLoginButton" layoutX="305.0" layoutY="203.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: Gold;" styleClass="ownerLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за собственици" textAlignment="CENTER" />
+      <Button fx:id="managerLoginButton" layoutX="305.0" layoutY="243.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightCoral;" styleClass="managerLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за мениджъри" textAlignment="CENTER" />
+      <Button fx:id="receptionistLoginButton" layoutX="305.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: LightSeaGreen;" styleClass="receptionistLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за рецепционисти" textAlignment="CENTER" />
+      <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: Red;" styleClass="closeWindowButton" stylesheets="@ButtonFeatures.css" text="X" textFill="WHITE">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
    </children>
 </AnchorPane>
