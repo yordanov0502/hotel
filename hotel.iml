@@ -35,5 +35,11 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.7.1" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.base" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.fxml" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.graphics" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.media" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.web" level="project" />
   </component>
 </module>
