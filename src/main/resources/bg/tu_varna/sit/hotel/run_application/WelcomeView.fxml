@@ -42,7 +42,7 @@
          </font></Button>
       <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: Red;" styleClass="closeWindowButton" stylesheets="@ButtonFeatures.css" text="X" textFill="WHITE">
          <font>
-            <Font size="14.0" />
+            <Font name="Arial" size="14.0" />
          </font>
          <effect>
             <DropShadow blurType="ONE_PASS_BOX" />
