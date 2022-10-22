@@ -21,7 +21,7 @@ public class Welcome extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         stage = primaryStage;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bg/tu_varna/sit/hotel/run_application/WelcomeView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bg/tu_varna/sit/hotel/front_end/presentation/application/pages/WelcomeView.fxml")));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Hotel Management System");
         primaryStage.setScene(new Scene(root, 800, 500));

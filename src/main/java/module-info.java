@@ -14,4 +14,7 @@ module bg.tu_varna.sit.hotel {
     opens bg.tu_varna.sit.hotel.back_end.application to javafx.fxml;
     exports bg.tu_varna.sit.hotel.front_end.presentation.application.controllers;
     opens bg.tu_varna.sit.hotel.front_end.presentation.application.controllers to javafx.fxml;
+
+    exports bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers;
+    opens bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers to javafx.fxml;
 }

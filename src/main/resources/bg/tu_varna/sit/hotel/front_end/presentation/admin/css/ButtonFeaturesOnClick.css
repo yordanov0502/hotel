@@ -1,0 +1,15 @@
+.adminEnterButton:pressed{
+    -fx-border-color: DarkBlue;
+}
+
+.adminBackButton:pressed{
+    -fx-border-color: DarkBlue;
+}
+
+.adminRegisterButton{
+    -fx-text-fill: White;
+}
+
+.adminRegisterButton:pressed{
+    -fx-text-fill: DarkBlue;
+}
