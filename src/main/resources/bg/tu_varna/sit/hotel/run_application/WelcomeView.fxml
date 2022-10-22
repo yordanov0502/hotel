@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.run_application.WelcomeViewController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.front_end.presentation.application.controllers.WelcomeViewController">
    <children>
       <Label layoutX="87.0" layoutY="15.0" text="Добре дошли в Хотелска Информационна Система">
          <font>
@@ -24,7 +24,7 @@
             </LinearGradient>
          </textFill>
       </Label>
-      <Button fx:id="adminLoginButton" layoutX="305.0" layoutY="143.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: LightSkyBlue;" styleClass="adminLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за администратори" textAlignment="CENTER">
+      <Button fx:id="adminLoginButton" layoutX="305.0" layoutY="143.0" mnemonicParsing="false" onAction="#admin_Login" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: LightSkyBlue;" styleClass="adminLoginButton" stylesheets="@ButtonFeatures.css" text="Вход за администратори" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>

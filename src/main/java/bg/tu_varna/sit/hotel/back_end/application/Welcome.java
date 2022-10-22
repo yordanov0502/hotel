@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.hotel.run_application;
+package bg.tu_varna.sit.hotel.back_end.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

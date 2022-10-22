@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.hotel.run_application;
+package bg.tu_varna.sit.hotel.front_end.presentation.application.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,10 @@ public class WelcomeViewController implements Initializable {
     @FXML
     public Button closeWindowButton;
 
-
+    @FXML
+    void admin_Login(ActionEvent event) throws IOException {
+       // CommonTask.pageNavigation("zadmin/Login/AdminLogin.fxml", Main.stage,this.getClass(),"Admin Login", 600, 400);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
