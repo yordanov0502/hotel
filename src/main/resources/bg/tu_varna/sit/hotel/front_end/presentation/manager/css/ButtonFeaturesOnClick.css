@@ -1,0 +1,7 @@
+.managerEnterButton:pressed{
+    -fx-border-color: DarkBlue;
+}
+
+.managerBackButton:pressed{
+    -fx-border-color: DarkBlue;
+}
