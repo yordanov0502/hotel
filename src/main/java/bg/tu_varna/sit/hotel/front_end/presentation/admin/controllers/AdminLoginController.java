@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-
+// Controller for Admin Login tab
 public class AdminLoginController  implements Initializable{
 
     @FXML
