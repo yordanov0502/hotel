@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Objects;
-
+//
 public class Main extends Application {
     public static Stage stage;
     public static double x, y;
