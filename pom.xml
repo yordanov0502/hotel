@@ -112,7 +112,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>bg.tu_varna.sit.hotel/bg.tu_varna.sit.hotel.back_end.application.Welcome</mainClass>
+                            <mainClass>bg.tu_varna.sit.hotel/bg.tu_varna.sit.hotel.back_end.application.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>

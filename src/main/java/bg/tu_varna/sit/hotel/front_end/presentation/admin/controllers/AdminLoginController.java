@@ -1,6 +1,6 @@
 package bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers;
 
-import bg.tu_varna.sit.hotel.back_end.application.Welcome;
+import bg.tu_varna.sit.hotel.back_end.application.Main;
 import bg.tu_varna.sit.hotel.back_end.common.CommonTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,9 +30,15 @@ public class AdminLoginController  implements Initializable{
     @FXML
     public Button closeWindowButton;
 
+
     @FXML
-    public void backToWelcomeScreen(ActionEvent actionEvent) throws IOException {
-        CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/application/pages/WelcomeView.fxml", Welcome.stage,this.getClass(),"Hotel Management System", 800, 500);
+    public void admin_Registration(ActionEvent actionEvent) throws IOException {
+        CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/admin/pages/AdminRegistration.fxml", Main.stage,this.getClass(),"Admin Registration", 800, 500);
+    }
+
+    @FXML
+    public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
+        CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/application/pages/WelcomeView.fxml", Main.stage,this.getClass(),"Hotel Management System", 800, 500);
     }
 
 

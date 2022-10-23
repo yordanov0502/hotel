@@ -1,30 +1,16 @@
 package bg.tu_varna.sit.hotel.back_end.common;
 
-import bg.tu_varna.sit.hotel.back_end.application.Welcome;
-import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogEvent;
+import bg.tu_varna.sit.hotel.back_end.application.Main;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 
-public class CommonTask extends Welcome {
+public class CommonTask extends Main {
 
     public static Stage newStage;
     public static double xx, yy;

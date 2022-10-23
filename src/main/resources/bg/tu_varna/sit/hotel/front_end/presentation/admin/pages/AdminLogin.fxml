@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -20,31 +21,36 @@
       </Button>
       <Pane layoutX="280.0" layoutY="131.0" prefHeight="239.0" prefWidth="241.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <TextField fx:id="adminEmailField" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="adminEmailField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="adminPasswordField" layoutX="21.0" layoutY="106.0" prefHeight="27.0" prefWidth="200.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <PasswordField fx:id="adminPasswordField" alignment="CENTER" layoutX="21.0" layoutY="106.0" prefHeight="27.0" prefWidth="200.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="adminEnterButton" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
+            <Button fx:id="adminEnterButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="adminBackButton" layoutX="148.0" layoutY="154.0" mnemonicParsing="false" onAction="#backToWelcomeScreen" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+            <Button fx:id="adminBackButton" alignment="CENTER" layoutX="148.0" layoutY="154.0" mnemonicParsing="false" onAction="#backToWelcomePage" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="adminRegisterButton" layoutX="71.0" layoutY="208.0" mnemonicParsing="false" style="-fx-background-color: transparent;" styleClass="adminRegisterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE" underline="true">
+            <Button fx:id="adminRegisterButton" layoutX="71.0" layoutY="208.0" mnemonicParsing="false" onAction="#admin_Registration" style="-fx-background-color: transparent;" styleClass="adminRegisterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE" underline="true">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
+            <Label layoutX="71.0" layoutY="14.0" text="Администратор" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
          </children></Pane>
    </children>
 </AnchorPane>

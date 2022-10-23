@@ -13,3 +13,7 @@
 .adminRegisterButton:pressed{
     -fx-text-fill: DarkBlue;
 }
+
+.adminRegistrationButton:pressed{
+    -fx-border-color: DarkBlue;
+}
