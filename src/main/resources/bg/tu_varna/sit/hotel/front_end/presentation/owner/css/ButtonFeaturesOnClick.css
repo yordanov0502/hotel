@@ -1,0 +1,7 @@
+.ownerEnterButton:pressed{
+    -fx-border-color: DarkBlue;
+}
+
+.ownerBackButton:pressed{
+    -fx-border-color: DarkBlue;
+}

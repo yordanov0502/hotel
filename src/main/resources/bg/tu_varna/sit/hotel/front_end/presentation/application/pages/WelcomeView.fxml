@@ -28,7 +28,7 @@
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>
-      <Button fx:id="ownerLoginButton" layoutX="305.0" layoutY="203.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: Gold;" styleClass="ownerLoginButton" stylesheets="@../css/ButtonFeatures.css" text="Вход за собственици" textAlignment="CENTER">
+      <Button fx:id="ownerLoginButton" layoutX="305.0" layoutY="203.0" mnemonicParsing="false" onAction="#owner_Login" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: Gold;" styleClass="ownerLoginButton" stylesheets="@../css/ButtonFeatures.css" text="Вход за собственици" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>
