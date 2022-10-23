@@ -36,7 +36,7 @@
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>
-      <Button fx:id="receptionistLoginButton" layoutX="305.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: LightSeaGreen;" styleClass="receptionistLoginButton" stylesheets="@../css/ButtonFeatures.css" text="Вход за рецепционисти" textAlignment="CENTER">
+      <Button fx:id="receptionistLoginButton" layoutX="305.0" layoutY="283.0" mnemonicParsing="false" onAction="#receptionist_Login" prefHeight="31.0" prefWidth="196.0" style="-fx-background-color: LightSeaGreen;" styleClass="receptionistLoginButton" stylesheets="@../css/ButtonFeatures.css" text="Вход за рецепционисти" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>

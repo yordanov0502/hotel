@@ -1,0 +1,7 @@
+.receptionistEnterButton:pressed{
+    -fx-border-color: DarkBlue;
+}
+
+.receptionistBackButton:pressed{
+    -fx-border-color: DarkBlue;
+}

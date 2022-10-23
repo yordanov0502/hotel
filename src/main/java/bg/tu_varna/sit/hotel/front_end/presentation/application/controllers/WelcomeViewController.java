@@ -39,6 +39,11 @@ public class WelcomeViewController implements Initializable {
         CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/manager/pages/ManagerLogin.fxml", Main.stage,this.getClass(),"Manager Login", 800, 500);
     }
 
+    @FXML
+    void receptionist_Login(ActionEvent event) throws IOException {
+        CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/receptionist/pages/ReceptionistLogin.fxml", Main.stage,this.getClass(),"Receptionist Login", 800, 500);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
