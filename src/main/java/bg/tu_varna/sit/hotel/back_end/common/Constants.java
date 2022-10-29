@@ -11,6 +11,5 @@ public final class Constants {
         public static final String OWNER_LOGIN_VIEW = "/bg/tu_varna/sit/hotel/front_end/presentation/owner/pages/OwnerLogin.fxml";
         public static final String MANAGER_LOGIN_VIEW = "/bg/tu_varna/sit/hotel/front_end/presentation/manager/pages/ManagerLogin.fxml";
         public static final String RECEPTIONIST_LOGIN_VIEW = "/bg/tu_varna/sit/hotel/front_end/presentation/receptionist/pages/ReceptionistLogin.fxml";
-
     }
 }
