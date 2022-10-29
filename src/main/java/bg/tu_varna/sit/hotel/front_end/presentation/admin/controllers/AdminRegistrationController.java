@@ -2,6 +2,7 @@ package bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers;
 
 import bg.tu_varna.sit.hotel.back_end.application.Main;
 import bg.tu_varna.sit.hotel.back_end.common.CommonTask;
+import bg.tu_varna.sit.hotel.back_end.common.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +40,7 @@ public class AdminRegistrationController implements Initializable {
 
     @FXML
     public void backToAdminLoginPage(ActionEvent event) throws IOException{
-        CommonTask.pageNavigation("/bg/tu_varna/sit/hotel/front_end/presentation/admin/pages/AdminLogin.fxml", Main.stage,this.getClass(),"Admin Login", 800, 500);
+        CommonTask.pageNavigation(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
     }
 
     @Override

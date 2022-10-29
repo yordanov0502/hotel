@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.hotel.back_end.application;
 
+import bg.tu_varna.sit.hotel.back_end.common.Constants;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -21,7 +22,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         stage = primaryStage;
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/bg/tu_varna/sit/hotel/front_end/presentation/application/pages/WelcomeView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.View.WELCOME_VIEW)));
         primaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
         primaryStage.setTitle("Hotel Management System");
         primaryStage.setScene(new Scene(root, 800, 500));
