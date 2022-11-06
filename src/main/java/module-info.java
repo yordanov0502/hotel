@@ -9,6 +9,7 @@ module bg.tu_varna.sit.hotel {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires log4j;
 
     exports bg.tu_varna.sit.hotel.back_end.application;
     opens bg.tu_varna.sit.hotel.back_end.application to javafx.fxml;

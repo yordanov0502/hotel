@@ -12,4 +12,9 @@ public final class Constants {
         public static final String MANAGER_LOGIN_VIEW = "/bg/tu_varna/sit/hotel/front_end/presentation/manager/pages/ManagerLogin.fxml";
         public static final String RECEPTIONIST_LOGIN_VIEW = "/bg/tu_varna/sit/hotel/front_end/presentation/receptionist/pages/ReceptionistLogin.fxml";
     }
+
+    public static class Configurations{
+        public static final String LOG4J_PROPERTIES = "/bg/tu_varna/sit/hotel/configurations/log4j.properties";
+    }
+
 }

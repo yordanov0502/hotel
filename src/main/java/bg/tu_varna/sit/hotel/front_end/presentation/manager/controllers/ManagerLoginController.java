@@ -29,7 +29,7 @@ public class ManagerLoginController implements Initializable {
 
     @FXML
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
-        CommonTask.pageNavigation(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
+        CommonTask.pageNavigation(Constants.View.WELCOME_VIEW,Main.stage,this.getClass(),"Hotel Management System", 800, 500);
     }
 
     @Override

@@ -15,4 +15,10 @@ class ConstantsTest {
         assertEquals("/bg/tu_varna/sit/hotel/front_end/presentation/manager/pages/ManagerLogin.fxml",Constants.View.MANAGER_LOGIN_VIEW);
         assertEquals("/bg/tu_varna/sit/hotel/front_end/presentation/receptionist/pages/ReceptionistLogin.fxml",Constants.View.RECEPTIONIST_LOGIN_VIEW);
     }
+
+    @Test
+    void CheckPathsOfAllConfigurations()
+    {
+        assertEquals("/bg/tu_varna/sit/hotel/configurations/log4j.properties",Constants.Configurations.LOG4J_PROPERTIES);
+    }
 }
