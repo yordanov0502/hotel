@@ -35,17 +35,12 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="adminEgnField" alignment="CENTER" layoutX="27.0" layoutY="136.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="adminEgnField" alignment="CENTER" layoutX="27.0" layoutY="136.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="adminCountryField" alignment="CENTER" layoutX="27.0" layoutY="179.0" prefHeight="31.0" prefWidth="189.0" promptText="Държава" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="adminPhoneNumberField" alignment="CENTER" layoutX="294.0" layoutY="51.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="adminPhoneNumberField" alignment="CENTER" layoutX="294.0" layoutY="51.0" prefHeight="31.0" prefWidth="189.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -55,12 +50,12 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <Button fx:id="adminRegistrationButton" layoutX="146.0" layoutY="226.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE">
+            <Button fx:id="adminRegistrationButton" layoutX="132.0" layoutY="207.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="adminBackButton" layoutX="281.0" layoutY="226.0" mnemonicParsing="false" onAction="#backToAdminLoginPage" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+            <Button fx:id="adminBackButton" layoutX="280.0" layoutY="207.0" mnemonicParsing="false" onAction="#backToAdminLoginPage" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
