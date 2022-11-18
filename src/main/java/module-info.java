@@ -11,21 +11,31 @@ module bg.tu_varna.sit.hotel {
     requires eu.hansolo.tilesfx;
     requires log4j;
     requires org.hibernate.orm.core;
+    requires java.persistence;
+    requires java.naming;
+    requires java.sql;
 
-    exports bg.tu_varna.sit.hotel.back_end.application;
-    opens bg.tu_varna.sit.hotel.back_end.application to javafx.fxml;
-    exports bg.tu_varna.sit.hotel.front_end.presentation.application.controllers;
-    opens bg.tu_varna.sit.hotel.front_end.presentation.application.controllers to javafx.fxml;
+    opens bg.tu_varna.sit.hotel.application to javafx.fxml;
+    exports bg.tu_varna.sit.hotel.application;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.application;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.application to javafx.fxml;
 
-    exports bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers;
-    opens bg.tu_varna.sit.hotel.front_end.presentation.admin.controllers to javafx.fxml;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.admin;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.admin to javafx.fxml;
 
-    exports bg.tu_varna.sit.hotel.front_end.presentation.owner.controllers;
-    opens bg.tu_varna.sit.hotel.front_end.presentation.owner.controllers to javafx.fxml;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.owner;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.owner to javafx.fxml;
 
-    exports bg.tu_varna.sit.hotel.front_end.presentation.manager.controllers;
-    opens bg.tu_varna.sit.hotel.front_end.presentation.manager.controllers to javafx.fxml;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.manager;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.manager to javafx.fxml;
 
-    exports bg.tu_varna.sit.hotel.front_end.presentation.receptionist.controllers;
-    opens bg.tu_varna.sit.hotel.front_end.presentation.receptionist.controllers to javafx.fxml;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.receptionist to javafx.fxml;
+
+
+    exports bg.tu_varna.sit.hotel.data.access;
+    opens bg.tu_varna.sit.hotel.data.access to org.hibernate.orm.core;
+    exports bg.tu_varna.sit.hotel.data.entities;
+    opens bg.tu_varna.sit.hotel.data.entities to org.hibernate.orm.core;
+
 }

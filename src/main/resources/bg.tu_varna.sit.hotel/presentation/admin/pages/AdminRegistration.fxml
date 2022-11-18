@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../application/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminRegistrationController">
+   <children>
+      <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: Red;" styleClass="closeWindowButton" stylesheets="@../../application/css/ButtonFeatures.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
+      <Pane layoutX="146.0" layoutY="107.0" prefHeight="287.0" prefWidth="509.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="200.0" layoutY="14.0" text="Администратор" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="adminNameField" alignment="CENTER" layoutX="27.0" layoutY="51.0" prefHeight="31.0" prefWidth="189.0" promptText="Име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font></TextField>
+            <TextField fx:id="adminSurnameField" alignment="CENTER" layoutX="27.0" layoutY="92.0" prefHeight="31.0" prefWidth="189.0" promptText="Фамилия" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="adminEgnField" alignment="CENTER" layoutX="27.0" layoutY="136.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="adminPhoneNumberField" alignment="CENTER" layoutX="294.0" layoutY="51.0" prefHeight="31.0" prefWidth="189.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="adminEmailField" alignment="CENTER" layoutX="294.0" layoutY="92.0" prefHeight="31.0" prefWidth="189.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <Button fx:id="adminRegistrationButton" layoutX="132.0" layoutY="207.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="adminBackButton" layoutX="280.0" layoutY="207.0" mnemonicParsing="false" onAction="#backToAdminLoginPage" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="adminPasswordField" alignment="CENTER" layoutX="294.0" layoutY="136.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </PasswordField>
+         </children></Pane>
+   </children>
+</AnchorPane>

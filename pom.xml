@@ -105,6 +105,14 @@
             <version>5.4.11.Final</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc11 -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc11</artifactId>
+            <version>21.5.0.0</version>
+        </dependency>
+
+
 
     </dependencies>
 
@@ -128,7 +136,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>bg.tu_varna.sit.hotel/bg.tu_varna.sit.hotel.back_end.application.Main</mainClass>
+                            <mainClass>bg.tu_varna.sit.hotel/bg.tu_varna.sit.hotel.application.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>
