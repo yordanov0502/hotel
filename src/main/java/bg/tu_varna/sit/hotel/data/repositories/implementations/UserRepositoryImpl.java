@@ -1,24 +1,24 @@
-package bg.tu_varna.sit.hotel.data.repositories;
+package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.access.Connection;
+import bg.tu_varna.sit.hotel.data.repositories.interfaces.UserRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-public class UserRepository implements EntityRepository<User> {
+public class UserRepositoryImpl implements UserRepository<User> {
 
-    private static final Logger log = Logger.getLogger(UserRepository.class);
+    private static final Logger log = Logger.getLogger(UserRepositoryImpl.class);
 
     //lazy-loaded singleton pattern
-    public static UserRepository getInstance() { return UserRepository.UserRepositoryHolder.INSTANCE;}
+    public static UserRepositoryImpl getInstance() { return UserRepositoryImpl.UserRepositoryHolder.INSTANCE;}
 
     private static class UserRepositoryHolder {
-        public static final UserRepository INSTANCE = new UserRepository();
+        public static final UserRepositoryImpl INSTANCE = new UserRepositoryImpl();
     }
 
 
@@ -73,24 +73,6 @@ public class UserRepository implements EntityRepository<User> {
 
     }
 
-    @Override //EGN
-    public Optional<User> getById(Long id) {
-        Session session = Connection.openSession();
-        Transaction transaction = session.beginTransaction();
-        Optional<User> user = null;
-
-        try {
-            user = session.byId(User.class).loadOptional(id);
-            transaction.commit();
-            log.info("Get User by id successfully.");
-        } catch(Exception ex) {
-            log.error("Get all users error: " + ex.getMessage());
-        } finally {
-            session.close();
-        }
-        return user;
-    }
-
     @Override
     public List<User> getAll() {
         Session session = Connection.openSession();
@@ -104,11 +86,32 @@ public class UserRepository implements EntityRepository<User> {
         } catch (Exception ex) {
             log.error("Get all users error: " + ex.getMessage());
         } finally {
-           session.close();
+            session.close();
         }
         return users;
     }
 
+    @Override //EGN
+    public User getById(String id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
+
+        try {
+            user =  (User) session.get(User.class, id);
+            transaction.commit();
+            log.info("Get User by id successfully.");
+        } catch(Exception ex) {
+            log.error("Get all users error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
+
+
+    @Override
     public User getByPhone(String phone) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
@@ -128,6 +131,7 @@ public class UserRepository implements EntityRepository<User> {
         return user;
     }
 
+    @Override
     public User getByUsername(String username) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
@@ -147,6 +151,7 @@ public class UserRepository implements EntityRepository<User> {
         return user;
     }
 
+    @Override
     public User getByEmail(String email) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();

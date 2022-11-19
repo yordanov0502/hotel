@@ -3,8 +3,9 @@ package bg.tu_varna.sit.hotel.presentation.models;
 import bg.tu_varna.sit.hotel.data.entities.User;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
-public class UserModel {
+public class UserModel implements EntityModel<User> {
     private String id;
     private String firstName;
     private String lastName;
@@ -47,6 +48,7 @@ public class UserModel {
         this.lastLogin=user.getLastLogin();
         this.status=user.getStatus();
     }
+
 
     public String getId() {
         return id;
@@ -137,4 +139,20 @@ public class UserModel {
     }
 
 
+    @Override
+    public User toEntity() {
+        User userTemp = new User();
+        userTemp.setId(this.id);
+        userTemp.setFirstName(this.firstName);
+        userTemp.setLastName(this.lastName);
+        userTemp.setPhone(this.phone);
+        userTemp.setUsername(this.username);
+        userTemp.setEmail(this.email);
+        userTemp.setPassword(this.password);
+        userTemp.setRole(this.role);
+        userTemp.setCreatedAt(this.createdAt);
+        userTemp.setLastLogin(this.lastLogin);
+        userTemp.setStatus(this.status);
+        return userTemp;
+    }
 }

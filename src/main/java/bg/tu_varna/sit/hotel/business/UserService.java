@@ -1,7 +1,7 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.data.entities.User;
-import bg.tu_varna.sit.hotel.data.repositories.UserRepository;
+import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
 
-    private final UserRepository repository = UserRepository.getInstance();
+    private final UserRepositoryImpl repository = UserRepositoryImpl.getInstance();
 
     //lazy-loaded singleton pattern
     public static UserService getInstance() {
@@ -41,6 +41,42 @@ public class UserService {
                         u.getStatus()
                 )).collect(Collectors.toList())
         );
+    }
+
+    public UserModel getUserById(String id) {
+        User user = repository.getById(id);
+        return (user == null) ? null : new UserModel(user);
+    }
+
+    public boolean isIdExists(String id) {
+        return getUserById(id) != null;
+    }
+
+    public UserModel getUserByPhone(String phone) {
+        User user = repository.getByPhone(phone);
+        return (user == null) ? null : new UserModel(user);
+    }
+
+    public boolean isPhoneExists(String phone) {
+        return getUserByPhone(phone) != null;
+    }
+
+    public UserModel getUserByUsername(String username) {
+        User user = repository.getByUsername(username);
+        return (user == null) ? null : new UserModel(user);
+    }
+
+    public boolean isUsernameExists(String username) {
+        return getUserByUsername(username) != null;
+    }
+
+    public UserModel getUserByEmail(String email) {
+        User user = repository.getByEmail(email);
+        return (user == null) ? null : new UserModel(user);
+    }
+
+    public boolean isEmailExists(String email) {
+        return getUserByEmail(email) != null;
     }
 
 
