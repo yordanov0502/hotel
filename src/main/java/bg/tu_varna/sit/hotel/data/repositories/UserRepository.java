@@ -41,7 +41,18 @@ public class UserRepository implements EntityRepository<User> {
 
     @Override
     public void update(User obj) {
-
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(obj);
+            transaction.commit();
+            log.info("User saved successfully.");
+        } catch (Exception ex) {
+            log.error("User save error: " + ex);
+            transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
@@ -62,9 +73,22 @@ public class UserRepository implements EntityRepository<User> {
 
     }
 
-    @Override
+    @Override //EGN
     public Optional<User> getById(Long id) {
-        return Optional.empty();
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Optional<User> user = null;
+
+        try {
+            user = session.byId(User.class).loadOptional(id);
+            transaction.commit();
+            log.info("Get User by id successfully.");
+        } catch(Exception ex) {
+            log.error("Get all users error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+        return user;
     }
 
     @Override
@@ -75,12 +99,74 @@ public class UserRepository implements EntityRepository<User> {
         try{
             String jpql = "SELECT u FROM User u";
             users.addAll(session.createQuery(jpql, User.class).getResultList());
+            transaction.commit();
             log.info("Get all users.");
         } catch (Exception ex) {
             log.error("Get all users error: " + ex.getMessage());
         } finally {
-            transaction.commit();
+           session.close();
         }
         return users;
     }
+
+    public User getByPhone(String phone) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE phone = '" + phone + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Get User by phone successfully.");
+        } catch(Exception ex) {
+            log.error("Get user by phone error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return user;
+    }
+
+    public User getByUsername(String username) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
+
+        try {
+            String jpql = "SELECT u FROM User u WHERE username = '" + username + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Get User by username successfully.");
+        } catch(Exception ex) {
+            log.error("Get user by username error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return user;
+    }
+
+    public User getByEmail(String email) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE email = '" + email + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Get User by email successfully.");
+        } catch(Exception ex) {
+            log.error("Get user by email error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+
+        return user;
+    }
+
+
+
+
 }

@@ -20,14 +20,14 @@ public class Main extends Application {
     {
         CommonTask.pageNavigation(Constants.View.WELCOME_VIEW,Main.stage,this.getClass(),"Hotel Management System",800,500);
 
-        User user1 = new User();
+        //User user1 = new User();
 
         //user1.setId(55L);
-        user1.setFirstName("Катя");
-        user1.setLastName("aaa");
+        //user1.setFirstName("Катя");
+        //user1.setLastName("aaa");
 
-        UserRepository userRepository = new UserRepository();
-        userRepository.save(user1);
+        //UserRepository userRepository = new UserRepository();
+        //userRepository.save(user1);
 
 
 

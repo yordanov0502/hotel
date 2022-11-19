@@ -7,7 +7,9 @@
           <unit-entry name="bg:tu_varna:sit:hotel:configurations:hibernate.cfg.xml" />
           <unit-entry name="hibernate.cfg.xml" value="b23734e3-18bb-4935-ad70-08675cd1a10c" />
         </datasource-map>
-        <naming-strategy-map />
+        <naming-strategy-map>
+          <unit-entry name="hibernate.cfg.xml" />
+        </naming-strategy-map>
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>

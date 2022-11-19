@@ -21,11 +21,11 @@ public class AdminRegistrationController implements Initializable {
     @FXML
     public TextField adminSurnameField;
     @FXML
-    public TextField adminEgnField;
+    public TextField adminEGNField;
     @FXML
-    public TextField adminCountryField;
+    public TextField adminPhoneField;
     @FXML
-    public TextField adminPhoneNumberField;
+    public TextField adminUserNameField;
     @FXML
     public TextField adminEmailField;
     @FXML
@@ -42,6 +42,8 @@ public class AdminRegistrationController implements Initializable {
     public void backToAdminLoginPage(ActionEvent event) throws IOException{
         CommonTask.pageNavigation(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

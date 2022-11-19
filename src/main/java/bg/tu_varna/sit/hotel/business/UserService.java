@@ -5,11 +5,13 @@ import bg.tu_varna.sit.hotel.data.repositories.UserRepository;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserService {
+    private static final Logger log = Logger.getLogger(UserService.class);
 
     private final UserRepository repository = UserRepository.getInstance();
 
@@ -28,8 +30,18 @@ public class UserService {
                 users.stream().map(u -> new UserModel(
                         u.getId(),
                         u.getFirstName(),
-                        u.getLastName()
+                        u.getLastName(),
+                        u.getPhone(),
+                        u.getUsername(),
+                        u.getEmail(),
+                        u.getPassword(),
+                        u.getRole(),
+                        u.getCreatedAt(),
+                        u.getLastLogin(),
+                        u.getStatus()
                 )).collect(Collectors.toList())
         );
     }
+
+
 }
