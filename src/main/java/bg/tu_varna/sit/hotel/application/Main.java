@@ -1,7 +1,9 @@
 package bg.tu_varna.sit.hotel.application;
 
+import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.CommonTask;
 import bg.tu_varna.sit.hotel.common.Constants;
+import bg.tu_varna.sit.hotel.common.Hasher;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -18,6 +20,8 @@ public class Main extends Application {
     {
         CommonTask.pageNavigation(Constants.View.WELCOME_VIEW,Main.stage,this.getClass(),"Hotel Management System",800,500);
     }
+
+
 
     public static void main(String[] args) {launch();}
 }

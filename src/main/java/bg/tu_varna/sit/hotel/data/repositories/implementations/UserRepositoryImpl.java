@@ -63,9 +63,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
         try {
             session.delete(obj);
             transaction.commit();
-            log.info("Station has been deleted.");
+            log.info("User has been deleted.");
         }  catch (Exception e) {
-            log.info("Failed to delete station: " + e.getMessage());
+            log.info("Failed to delete user: " + e.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -98,7 +98,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
         User user = null;
 
         try {
-            user =  (User) session.get(User.class, id);
+            //String jpql = "SELECT u FROM User u WHERE id = '" + id + "'";
+            user =  (User) session.get(User.class, id);/////////////////////////////////////////////////////////////////
+            //user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Get User by id successfully.");
         } catch(Exception ex) {
@@ -127,7 +129,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
         } finally {
             session.close();
         }
-
         return user;
     }
 
@@ -147,7 +148,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
         } finally {
             session.close();
         }
-
         return user;
     }
 
@@ -167,11 +167,26 @@ public class UserRepositoryImpl implements UserRepository<User> {
         } finally {
             session.close();
         }
-
         return user;
     }
 
+    public User getByUsernameAndPassword(String username, String password) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
 
+        try{
+            String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND password = '" + password + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Get User by username & password successfully.");
+        } catch (Exception ex) {
+            log.error("Get user by username & password error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+        return user;
+    }
 
 
 }
