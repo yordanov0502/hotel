@@ -29,21 +29,27 @@ public class UserService {
 
     public ObservableList<UserModel> getAllUser() {
         List<User> users = repository.getAll();
-        return FXCollections.observableList(
-                users.stream().map(u -> new UserModel(
-                        u.getId(),
-                        u.getFirstName(),
-                        u.getLastName(),
-                        u.getPhone(),
-                        u.getUsername(),
-                        u.getEmail(),
-                        u.getPassword(),
-                        u.getRole(),
-                        u.getCreatedAt(),
-                        u.getLastLogin(),
-                        u.getStatus()
-                )).collect(Collectors.toList())
-        );
+
+        if(users.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    users.stream().map(u -> new UserModel(
+                            u.getId(),
+                            u.getFirstName(),
+                            u.getLastName(),
+                            u.getPhone(),
+                            u.getUsername(),
+                            u.getEmail(),
+                            u.getPassword(),
+                            u.getRole(),
+                            u.getCreatedAt(),
+                            u.getLastLogin(),
+                            u.getStatus()
+                    )).collect(Collectors.toList())
+            );
+        }
     }
 
     public UserModel getUserById(String id) {
@@ -140,50 +146,58 @@ public class UserService {
         }
     }
 
-    public boolean phoneValidate(String email) {
+    public boolean phoneValidate(String phone) {
         String regex = "^[0]{1}([0-9]{9})$";
 
         Pattern p = Pattern.compile(regex);
-        if(email == null) {return false;}
+        if(phone == null) {return false;}
         else
         {
-            Matcher m = p.matcher(email);
+            Matcher m = p.matcher(phone);
             return m.matches();
         }
     }
 
-    public boolean idValidate(String email) {
+    public boolean idValidate(String id) {
         String regex = "^[0-9]{10}$";
 
         Pattern p = Pattern.compile(regex);
-        if(email == null) {return false;}
+        if(id == null) {return false;}
         else
         {
-            Matcher m = p.matcher(email);
+            Matcher m = p.matcher(id);
+            if(m.matches())//checks if the password matches the regex
+            {
+                String dayOfBirth = id.substring(4,6);
+                int day = Integer.parseInt(dayOfBirth);
+                String monthOfBirth = id.substring(2,4);
+                int month = Integer.parseInt(monthOfBirth);
+                return day != 0 && day <= 31 && month != 0;//checks if day is [1;31] and month>0
+            }
+            else {return false;}
+        }
+    }
+
+    public boolean firstNameValidate(String firstName) {
+        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(firstName == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(firstName);
             return m.matches();
         }
     }
 
-    public boolean firstNameValidate(String email) {
+    public boolean lastNameValidate(String lastName) {
         String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
 
         Pattern p = Pattern.compile(regex);
-        if(email == null) {return false;}
+        if(lastName == null) {return false;}
         else
         {
-            Matcher m = p.matcher(email);
-            return m.matches();
-        }
-    }
-
-    public boolean lastNameValidate(String email) {
-        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
-
-        Pattern p = Pattern.compile(regex);
-        if(email == null) {return false;}
-        else
-        {
-            Matcher m = p.matcher(email);
+            Matcher m = p.matcher(lastName);
             return m.matches();
         }
     }
