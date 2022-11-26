@@ -104,7 +104,7 @@ public class UserService {
 
 
     public boolean usernameValidate(String username) {
-        String regex = "^[^0-9][a-zA-Z0-9._]{5,255}$";
+        String regex = "^[^0-9][a-zA-Z0-9._]{5,200}$";
 
         Pattern p = Pattern.compile(regex);
         if(username == null) {return false;}
@@ -116,7 +116,7 @@ public class UserService {
     }
 
     public boolean passwordValidate(String password) {
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_*~!)(./:;<>?{}|`',-])(?=\\S+$).{7,}$";
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_*~!)(./:;<>?{}|`',-])(?=\\S+$).{7,200}$";
 
         Pattern p = Pattern.compile(regex);
         if(password == null) {return false;}
@@ -129,8 +129,55 @@ public class UserService {
     }
 
     public boolean emailValidate(String email) {
-        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@"
-                + "[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        String regex = "^[\\w-\\.]{1,50}@([\\w-]{1,50}\\.)+[\\w-]{2,10}$";
+
+        Pattern p = Pattern.compile(regex);
+        if(email == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+    }
+
+    public boolean phoneValidate(String email) {
+        String regex = "^[0]{1}([0-9]{9})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(email == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+    }
+
+    public boolean idValidate(String email) {
+        String regex = "^[0-9]{10}$";
+
+        Pattern p = Pattern.compile(regex);
+        if(email == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+    }
+
+    public boolean firstNameValidate(String email) {
+        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(email == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+    }
+
+    public boolean lastNameValidate(String email) {
+        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
 
         Pattern p = Pattern.compile(regex);
         if(email == null) {return false;}

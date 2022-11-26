@@ -13,7 +13,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, length = 10)
     private String id;//EGN
 
     @Column(name = "first_name", nullable = false)
@@ -22,7 +22,7 @@ public class User implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "phone", nullable = false, unique = true)
+    @Column(name = "phone", nullable = false, unique = true, length = 10)
     private String phone;
 
     @Column(name = "username", nullable = false, unique = true)
