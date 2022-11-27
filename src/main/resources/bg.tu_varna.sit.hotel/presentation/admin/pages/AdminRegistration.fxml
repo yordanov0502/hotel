@@ -35,6 +35,11 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
+            <TextField fx:id="adminEGNField" alignment="CENTER" layoutX="27.0" layoutY="134.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
             <TextField fx:id="adminPhoneField" alignment="CENTER" layoutX="27.0" layoutY="175.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
@@ -50,7 +55,12 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <Button fx:id="adminRegistrationButton" layoutX="132.0" layoutY="222.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE">
+            <PasswordField fx:id="adminPasswordField" alignment="CENTER" layoutX="294.0" layoutY="134.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="adminRegistrationButton" layoutX="132.0" layoutY="222.0" mnemonicParsing="false" onAction="#registerAdmin" prefHeight="38.0" prefWidth="109.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрация" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -60,16 +70,6 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <PasswordField fx:id="adminPasswordField" alignment="CENTER" layoutX="294.0" layoutY="134.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </PasswordField>
-            <TextField fx:id="adminEGNField" alignment="CENTER" layoutX="27.0" layoutY="134.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
          </children></Pane>
    </children>
 </AnchorPane>

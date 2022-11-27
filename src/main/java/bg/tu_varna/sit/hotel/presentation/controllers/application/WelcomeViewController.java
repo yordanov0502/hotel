@@ -1,7 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.application;
 
 import bg.tu_varna.sit.hotel.application.Main;
-import bg.tu_varna.sit.hotel.common.CommonTask;
+import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,22 +27,22 @@ public class WelcomeViewController implements Initializable {
 
     @FXML
     void admin_Login(ActionEvent event) throws IOException {
-        CommonTask.pageNavigation(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
+        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
     }
 
     @FXML
     void owner_Login(ActionEvent event) throws IOException {
-        CommonTask.pageNavigation(Constants.View.OWNER_LOGIN_VIEW, Main.stage,this.getClass(),"Owner Login", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, Main.stage,this.getClass(),"Owner Login", 800, 500);
     }
 
     @FXML
     void manager_Login(ActionEvent event) throws IOException {
-        CommonTask.pageNavigation(Constants.View.MANAGER_LOGIN_VIEW, Main.stage,this.getClass(),"Manager Login", 800, 500);
+        ViewManager.changeView(Constants.View.MANAGER_LOGIN_VIEW, Main.stage,this.getClass(),"Manager Login", 800, 500);
     }
 
     @FXML
     void receptionist_Login(ActionEvent event) throws IOException {
-        CommonTask.pageNavigation(Constants.View.RECEPTIONIST_LOGIN_VIEW, Main.stage,this.getClass(),"Receptionist Login", 800, 500);
+        ViewManager.changeView(Constants.View.RECEPTIONIST_LOGIN_VIEW, Main.stage,this.getClass(),"Receptionist Login", 800, 500);
     }
 
     @Override

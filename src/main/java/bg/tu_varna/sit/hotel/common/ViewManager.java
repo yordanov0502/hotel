@@ -1,10 +1,12 @@
 package bg.tu_varna.sit.hotel.common;
 
 import bg.tu_varna.sit.hotel.application.Main;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
@@ -14,14 +16,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+
 //This is a utility class which methods are often used in the application for page navigation
-public final class CommonTask {
+public final class ViewManager {
 
-    private static final Logger log = Logger.getLogger(CommonTask.class);
+    private static final Logger log = Logger.getLogger(ViewManager.class);
 
-    private CommonTask(){}
+    private ViewManager(){}
 
-    public static void pageNavigation(String to, Stage stage, Class<?> classes, String title, int width, int height) throws IOException {
+    public static void changeView(String to, Stage stage, Class<?> classes, String title, int width, int height) throws IOException {
 
         if(stage==null)
         {
@@ -64,7 +67,6 @@ public final class CommonTask {
 
         else
         {
-
             //Here the "stage" is actually the "Main.stage", because in every controller I pass only the "Main.stage"
             //Main.stage = stage;
             Parent root = FXMLLoader.load(Objects.requireNonNull(classes.getResource(to)));
@@ -89,5 +91,7 @@ public final class CommonTask {
         }
 
     }
+
+
 
 }

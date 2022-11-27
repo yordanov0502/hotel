@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -88,18 +89,18 @@ public class UserService {
         return getUserByEmail(email) != null;
     }
 
-    public int userAdd(UserModel user) {
-        repository.save(user.toEntity());
+    public int hotelAdd(UserModel userModel) {
+        repository.save(userModel.toEntity());
         return 0;
     }
 
-    public int userUpdate(UserModel user) {
-        repository.update(user.toEntity());
+    public int userUpdate(UserModel userModel) {
+        repository.update(userModel.toEntity());
         return 0;
     }
 
-    public int userDelete(UserModel user){
-        repository.delete(user.toEntity());
+    public int userDelete(UserModel userModel){
+        repository.delete(userModel.toEntity());
         return 0;
     }
 
@@ -200,5 +201,14 @@ public class UserService {
             Matcher m = p.matcher(lastName);
             return m.matches();
         }
+    }
+
+    public boolean emptyFieldsValidate(UserModel user) //checks for empty fields in registration forms
+    {
+        if(Objects.equals(user.getFirstName(), "")||Objects.equals(user.getLastName(), "")||Objects.equals(user.getId(), "")||Objects.equals(user.getPhone(), "")||Objects.equals(user.getUsername(), "")||Objects.equals(user.getEmail(), "")||Objects.equals(user.getPassword(), ""))
+        {
+            return false;
+        }
+        else{return true;}
     }
 }

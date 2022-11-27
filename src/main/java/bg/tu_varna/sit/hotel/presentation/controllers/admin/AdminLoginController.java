@@ -1,7 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.application.Main;
-import bg.tu_varna.sit.hotel.common.CommonTask;
+import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,12 +34,12 @@ public class AdminLoginController  implements Initializable{
 
     @FXML
     public void admin_Registration(ActionEvent actionEvent) throws IOException {
-        CommonTask.pageNavigation(Constants.View.ADMIN_REGISTRATION_VIEW, Main.stage,this.getClass(),"Admin Registration", 800, 500);
+        ViewManager.changeView(Constants.View.ADMIN_REGISTRATION_VIEW, Main.stage,this.getClass(),"Admin Registration", 800, 500);
     }
 
     @FXML
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
-        CommonTask.pageNavigation(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
+        ViewManager.changeView(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
     }
 
 

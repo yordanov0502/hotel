@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.save(obj);
+            session.save(obj); //insert object into table
             transaction.commit();
             log.info("User saved successfully.");
         } catch (Exception ex) {
@@ -48,7 +48,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("User saved successfully.");
         } catch (Exception ex) {
-            log.error("User save error: " + ex);
+            log.error("User update error: " + ex);
             transaction.rollback();
         } finally {
             session.close();
@@ -82,9 +82,10 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u";
             users.addAll(session.createQuery(jpql, User.class).getResultList());
             transaction.commit();
-            log.info("Get all users.");
+            log.info("Got all users.");
         } catch (Exception ex) {
-            log.error("Get all users error: " + ex.getMessage());
+            log.error("Got all users error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }
@@ -104,7 +105,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("Get User by id successfully.");
         } catch(Exception ex) {
-            log.error("Get all users error: " + ex.getMessage());
+            log.error("Got user by id error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }
@@ -125,7 +127,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("Get User by phone successfully.");
         } catch(Exception ex) {
-            log.error("Get user by phone error: " + ex.getMessage());
+            log.error("Got user by phone error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }
@@ -144,7 +147,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("Get User by username successfully.");
         } catch(Exception ex) {
-            log.error("Get user by username error: " + ex.getMessage());
+            log.error("Got user by username error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }
@@ -163,7 +167,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("Get User by email successfully.");
         } catch(Exception ex) {
-            log.error("Get user by email error: " + ex.getMessage());
+            log.error("Got user by email error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }
@@ -181,7 +186,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("Get User by username & password successfully.");
         } catch (Exception ex) {
-            log.error("Get user by username & password error: " + ex.getMessage());
+            log.error("Got user by username & password error: " + ex.getMessage());
+            transaction.rollback();
         } finally {
             session.close();
         }

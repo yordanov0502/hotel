@@ -1,7 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
 import bg.tu_varna.sit.hotel.application.Main;
-import bg.tu_varna.sit.hotel.common.CommonTask;
+import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +29,7 @@ public class ReceptionistLoginController implements Initializable {
 
     @FXML
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
-        CommonTask.pageNavigation(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
+        ViewManager.changeView(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
     }
 
     @Override
