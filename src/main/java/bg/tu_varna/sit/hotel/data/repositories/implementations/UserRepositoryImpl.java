@@ -1,8 +1,10 @@
 package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
+import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.UserRepository;
+import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,54 +25,63 @@ public class UserRepositoryImpl implements UserRepository<User> {
 
 
     @Override
-    public void save(User obj) {
+    public boolean save(User obj) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             session.save(obj); //insert object into table
             transaction.commit();
-            log.info("User saved successfully.");
+            log.info("User added successfully.");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
+            return true;
         } catch (Exception ex) {
-            log.error("User save error: " + ex);
+            log.error("User add error: " + ex);
             transaction.rollback();
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Регистрацията ви е неуспешна.");
+            return false;
         } finally {
             session.close();
         }
-
          }
 
     @Override
-    public void update(User obj) {
+    public boolean update(User obj) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         try {
             session.update(obj);
             transaction.commit();
-            log.info("User saved successfully.");
+            log.info("User updated successfully.");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
+            return true;
         } catch (Exception ex) {
             log.error("User update error: " + ex);
             transaction.rollback();
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Актуализирането на данни е неуспешно.");
+            return false;
         } finally {
             session.close();
         }
     }
 
     @Override
-    public void delete(User obj) {
+    public boolean delete(User obj) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
-
         try {
             session.delete(obj);
             transaction.commit();
-            log.info("User has been deleted.");
+            log.info("User deleted successfully.");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно изтриване на данни.");
+            return true;
         }  catch (Exception e) {
-            log.info("Failed to delete user: " + e.getMessage());
+            log.info("User delete error: " + e.getMessage());
             transaction.rollback();
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Изтриването на данни е неуспешно.");
+            return false;
         } finally {
             session.close();
         }
-
     }
 
     @Override
@@ -82,9 +93,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u";
             users.addAll(session.createQuery(jpql, User.class).getResultList());
             transaction.commit();
-            log.info("Got all users.");
+            log.info("Got all users successfully.");
         } catch (Exception ex) {
-            log.error("Got all users error: " + ex.getMessage());
+            log.error("Get all users error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -99,13 +110,12 @@ public class UserRepositoryImpl implements UserRepository<User> {
         User user = null;
 
         try {
-            //String jpql = "SELECT u FROM User u WHERE id = '" + id + "'";
-            user =  (User) session.get(User.class, id);/////////////////////////////////////////////////////////////////
-            //user = (User) session.createQuery(jpql).getSingleResult();
+            String jpql = "SELECT u FROM User u WHERE id = '" + id + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
-            log.info("Get User by id successfully.");
+            log.info("Got user by id successfully.");
         } catch(Exception ex) {
-            log.error("Got user by id error: " + ex.getMessage());
+            log.error("Get user by id error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -125,9 +135,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u WHERE phone = '" + phone + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
-            log.info("Get User by phone successfully.");
+            log.info("Got user by phone successfully.");
         } catch(Exception ex) {
-            log.error("Got user by phone error: " + ex.getMessage());
+            log.error("Get user by phone error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -145,9 +155,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u WHERE username = '" + username + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
-            log.info("Get User by username successfully.");
+            log.info("Got user by username successfully.");
         } catch(Exception ex) {
-            log.error("Got user by username error: " + ex.getMessage());
+            log.error("Get user by username error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -165,9 +175,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u WHERE email = '" + email + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
-            log.info("Get User by email successfully.");
+            log.info("Got user by email successfully.");
         } catch(Exception ex) {
-            log.error("Got user by email error: " + ex.getMessage());
+            log.error("Get user by email error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();
@@ -184,9 +194,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND password = '" + password + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
-            log.info("Get User by username & password successfully.");
+            log.info("Got user by username & password successfully.");
         } catch (Exception ex) {
-            log.error("Got user by username & password error: " + ex.getMessage());
+            log.error("Get user by username & password error: " + ex.getMessage());
             transaction.rollback();
         } finally {
             session.close();

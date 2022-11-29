@@ -11,11 +11,14 @@ public class Connection {
 
     static {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();//loads SessionFactory
+            sessionFactory = new Configuration().configure().buildSessionFactory();//creates SessionFactory
+            log.info("Initial SessionFactory created successfully");
         } catch (Throwable ex) {
             log.error("Initial SessionFactory created failed with error: " + ex);
         }
     }
+
+    public static void createSessionFactory(){}
 
     public static Session openSession() {
         return sessionFactory.openSession();//opens session
@@ -23,5 +26,9 @@ public class Connection {
 
     public static void closeSessionFactory() {
         sessionFactory.close(); //closes Session Factory
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }

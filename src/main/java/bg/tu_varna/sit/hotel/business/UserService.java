@@ -1,10 +1,12 @@
 package bg.tu_varna.sit.hotel.business;
 
+import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,7 +18,6 @@ import java.util.stream.Collectors;
 
 public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
-
     private final UserRepositoryImpl repository = UserRepositoryImpl.getInstance();
 
     //lazy-loaded singleton pattern
@@ -28,7 +29,7 @@ public class UserService {
         public static final UserService INSTANCE = new UserService();
     }
 
-    public ObservableList<UserModel> getAllUser() {
+    public ObservableList<UserModel> getAllUsers() {
         List<User> users = repository.getAll();
 
         if(users.isEmpty()){return null;}
@@ -89,77 +90,48 @@ public class UserService {
         return getUserByEmail(email) != null;
     }
 
-    public int hotelAdd(UserModel userModel) {
-        repository.save(userModel.toEntity());
-        return 0;
+    public boolean addUser(UserModel userModel) {
+        return repository.save(userModel.toEntity());
     }
 
-    public int userUpdate(UserModel userModel) {
-        repository.update(userModel.toEntity());
-        return 0;
+    public boolean updateUser(UserModel userModel) {
+        return repository.update(userModel.toEntity());
     }
 
-    public int userDelete(UserModel userModel){
-        repository.delete(userModel.toEntity());
-        return 0;
+    public boolean deleteUser(UserModel userModel){
+       return repository.delete(userModel.toEntity());
     }
 
-    public boolean userAuthentication(String username, String password) {
+    public boolean authenticateUser(String username, String password) {
         User userTmp = repository.getByUsernameAndPassword(username, password);
         return userTmp != null;
     }
 
-
-    public boolean usernameValidate(String username) {
-        String regex = "^[^0-9][a-zA-Z0-9._]{5,200}$";
+    public boolean validateFirstName(String firstName) {
+        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,29})$";
 
         Pattern p = Pattern.compile(regex);
-        if(username == null) {return false;}
+        if(firstName == null) {return false;}
         else
         {
-            Matcher m = p.matcher(username);
+            Matcher m = p.matcher(firstName);
             return m.matches();
         }
     }
 
-    public boolean passwordValidate(String password) {
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_*~!)(./:;<>?{}|`',-])(?=\\S+$).{7,200}$";
+    public boolean validateLastName(String lastName) {
+        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,29})$";
 
         Pattern p = Pattern.compile(regex);
-        if(password == null) {return false;}
-        else if(StringUtils.isAsciiPrintable(password))//checks if the password contains only of ASCII symbols
-        {
-            Matcher m = p.matcher(password);
-            return m.matches();//checks if the password matches the regex
-        }
-        else {return false;}
-    }
-
-    public boolean emailValidate(String email) {
-        String regex = "^[\\w-\\.]{1,50}@([\\w-]{1,50}\\.)+[\\w-]{2,10}$";
-
-        Pattern p = Pattern.compile(regex);
-        if(email == null) {return false;}
+        if(lastName == null) {return false;}
         else
         {
-            Matcher m = p.matcher(email);
+            Matcher m = p.matcher(lastName);
             return m.matches();
         }
     }
 
-    public boolean phoneValidate(String phone) {
-        String regex = "^[0]{1}([0-9]{9})$";
-
-        Pattern p = Pattern.compile(regex);
-        if(phone == null) {return false;}
-        else
-        {
-            Matcher m = p.matcher(phone);
-            return m.matches();
-        }
-    }
-
-    public boolean idValidate(String id) {
+    public boolean validateId(String id) {
         String regex = "^[0-9]{10}$";
 
         Pattern p = Pattern.compile(regex);
@@ -179,36 +151,122 @@ public class UserService {
         }
     }
 
-    public boolean firstNameValidate(String firstName) {
-        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
+    public boolean validatePhone(String phone) {
+        String regex = "^[0]{1}([0-9]{9})$";
 
         Pattern p = Pattern.compile(regex);
-        if(firstName == null) {return false;}
+        if(phone == null) {return false;}
         else
         {
-            Matcher m = p.matcher(firstName);
+            Matcher m = p.matcher(phone);
             return m.matches();
         }
     }
 
-    public boolean lastNameValidate(String lastName) {
-        String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,50})$";
+    public boolean validateUsername(String username) {
+        String regex = "^[^0-9][a-zA-Z0-9._]{5,50}$";
 
         Pattern p = Pattern.compile(regex);
-        if(lastName == null) {return false;}
+        if(username == null) {return false;}
         else
         {
-            Matcher m = p.matcher(lastName);
+            Matcher m = p.matcher(username);
             return m.matches();
         }
     }
 
-    public boolean emptyFieldsValidate(UserModel user) //checks for empty fields in registration forms
+    public boolean validateEmail(String email) {
+        String regex = "^[\\w-\\.]{1,50}@([\\w-]{1,50}\\.)+[\\w-]{2,10}$";
+
+        Pattern p = Pattern.compile(regex);
+        if(email == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+    }
+
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_*~!)(./:;<>?{}|`',-])(?=\\S+$).{7,200}$";
+
+        Pattern p = Pattern.compile(regex);
+        if(password == null) {return false;}
+        else if(StringUtils.isAsciiPrintable(password))//checks if the password contains only of ASCII symbols
+        {
+            Matcher m = p.matcher(password);
+            return m.matches();//checks if the password matches the regex
+        }
+        else {return false;}
+    }
+
+    public boolean validateFields(String [] fields) //checks for empty fields in registration forms
     {
-        if(Objects.equals(user.getFirstName(), "")||Objects.equals(user.getLastName(), "")||Objects.equals(user.getId(), "")||Objects.equals(user.getPhone(), "")||Objects.equals(user.getUsername(), "")||Objects.equals(user.getEmail(), "")||Objects.equals(user.getPassword(), ""))
+        if(Objects.equals(fields[0], "")||Objects.equals(fields[1], "")||Objects.equals(fields[2], "")||Objects.equals(fields[3], "")||Objects.equals(fields[4], "")||Objects.equals(fields[5], "")||Objects.equals(fields[6], ""))
         {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля въведете данни във всички полета.");
             return false;
         }
-        else{return true;}
+        else if(!validateFirstName(fields[0]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името може да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
+            return false;
+        }
+        else if(!validateLastName(fields[1]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Фамилията може да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
+            return false;
+        }
+        else if(!validateId(fields[2]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН-то трябва да съдържа 10 цифри [0-9] и да бъде валидно.");
+            return false;
+        }
+        else if(!validatePhone(fields[3]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилният номер трябва да съдържа 10 цифри [0-9] като първата цифра задължително трябва да е \"0\".");
+            return false;
+        }
+        else if(!validateUsername(fields[4]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителското име може да съдържа от 5 до 50 символа. (малки и главни латински букви, цифри[0-9] както и символите (_) и (.))");
+            return false;
+        }
+        else if(!validateEmail(fields[5]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адресът може да съдържа от 6 до 112 символа като зъдължително символите \"@\" и \".\" трябва да присъстват веднъж и преди и след тях да има други символи. (малки и главни латински букви, цифри[0-9]");
+            return false;
+        }
+        else if(!validatePassword(fields[6]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Паролата може да съдържа от 7 до 200 символа като зъдължително трябва да има поне 1 малка и 1 главна латинска буква, както и поне 1 цифра [0-9] и 1 специален символ[@#$%^&+=_*~!)(./:;<>?{}|`',-].");
+            return false;
+        }
+        else {return true;}
     }
+    public boolean checkForExistingData(String [] fields) //checks for existing data in the database
+    {
+       if(isIdExists(fields[0]))
+       {
+           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН: \""+fields[0]+"\" вече съществува в базата данни.");
+           return true;
+       }
+       else if(isPhoneExists(fields[1]))
+       {
+           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[1]+"\" вече съществува в базата данни.");
+           return true;
+       }
+       else if(isUsernameExists(fields[2]))
+       {
+           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[2]+"\" вече съществува в базата данни.");
+           return true;
+       }
+       else if(isEmailExists(fields[3]))
+       {
+           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[3]+"\" вече съществува в базата данни.");
+           return true;
+       }
+       else {return false;}
+    }
+
 }

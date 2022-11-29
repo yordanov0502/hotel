@@ -1,8 +1,5 @@
 package bg.tu_varna.sit.hotel.business;
 
-import bg.tu_varna.sit.hotel.common.Constants;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
-import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,68 +21,68 @@ class UserServiceTest {
     }
 
     //@Test
-   // void getAllUser() {
-    //    assertNotNull(userService.getAllUser());
+   // void getAllUsers() {
+    //    assertNotNull(userService.getAllUsers());
     //}
 
     @Test
     void usernameValidate() {
-        assertTrue(UserService.getInstance().usernameValidate("yordanov5.0"));
-        assertTrue(UserService.getInstance().usernameValidate("Zdravk000_1.05"));
-        assertFalse(UserService.getInstance().usernameValidate("mAri@ a.02"));
-        assertFalse(UserService.getInstance().usernameValidate("GEORGI#()-202"));
+        assertTrue(UserService.getInstance().validateUsername("yordanov5.0"));
+        assertTrue(UserService.getInstance().validateUsername("Zdravk000_1.05"));
+        assertFalse(UserService.getInstance().validateUsername("mAri@ a.02"));
+        assertFalse(UserService.getInstance().validateUsername("GEORGI#()-202"));
     }
 
     @Test
     void passwordValidate() {
-        assertTrue(UserService.getInstance().passwordValidate("awbfg_!?fA9"));
-        assertTrue(UserService.getInstance().passwordValidate("req_._2314A"));
-        assertFalse(UserService.getInstance().passwordValidate("mSIDi02 13@#$%8765"));
-        assertFalse(UserService.getInstance().passwordValidate("pPlK-54***1`~12©"));
+        assertTrue(UserService.getInstance().validatePassword("awbfg_!?fA9"));
+        assertTrue(UserService.getInstance().validatePassword("req_._2314A"));
+        assertFalse(UserService.getInstance().validatePassword("mSIDi02 13@#$%8765"));
+        assertFalse(UserService.getInstance().validatePassword("pPlK-54***1`~12©"));
     }
 
     @Test
     void emailValidate() {
-        assertTrue(UserService.getInstance().emailValidate("yordanovtodor281@gmail.com"));
-        assertTrue(UserService.getInstance().emailValidate("natoto01@abv.bg"));
-        assertFalse(UserService.getInstance().emailValidate("ivanov24.com"));
-        assertFalse(UserService.getInstance().emailValidate("john@com"));
+        assertTrue(UserService.getInstance().validateEmail("yordanovtodor281@gmail.com"));
+        assertTrue(UserService.getInstance().validateEmail("natoto01@abv.bg"));
+        assertFalse(UserService.getInstance().validateEmail("ivanov24.com"));
+        assertFalse(UserService.getInstance().validateEmail("john@com"));
     }
 
     @Test
     void phoneValidate() {
-        assertTrue(UserService.getInstance().phoneValidate("0882960178"));
-        assertTrue(UserService.getInstance().phoneValidate("0894735533"));
-        assertFalse(UserService.getInstance().phoneValidate("052500500"));
-        assertFalse(UserService.getInstance().phoneValidate("0521144 "));
+        assertTrue(UserService.getInstance().validatePhone("0882960178"));
+        assertTrue(UserService.getInstance().validatePhone("0894735533"));
+        assertFalse(UserService.getInstance().validatePhone("052500500"));
+        assertFalse(UserService.getInstance().validatePhone("0521144 "));
     }
 
     @Test
     void idValidate() {
-        assertTrue(UserService.getInstance().idValidate("0146302585"));
-        assertTrue(UserService.getInstance().idValidate("1428063011"));
-        assertFalse(UserService.getInstance().idValidate("0100301025"));
-        assertFalse(UserService.getInstance().idValidate("0146345515"));
+        assertTrue(UserService.getInstance().validateId("0146302585"));
+        assertTrue(UserService.getInstance().validateId("1428063011"));
+        assertFalse(UserService.getInstance().validateId("0100301025"));
+        assertFalse(UserService.getInstance().validateId("0146345515"));
     }
 
     @Test
     void firstNameValidate() {
-        assertTrue(UserService.getInstance().firstNameValidate("Тодор"));
-        assertTrue(UserService.getInstance().firstNameValidate("Благовеста"));
-        assertFalse(UserService.getInstance().firstNameValidate("ЗАхари"));
-        assertFalse(UserService.getInstance().firstNameValidate("митко"));
-        assertFalse(UserService.getInstance().firstNameValidate("012321432903423"));
-        assertFalse(UserService.getInstance().firstNameValidate("popov"));
+        assertTrue(UserService.getInstance().validateFirstName("Тодор"));
+        assertTrue(UserService.getInstance().validateFirstName("Благовеста"));
+        assertFalse(UserService.getInstance().validateFirstName("ЗАхари"));
+        assertFalse(UserService.getInstance().validateFirstName("митко"));
+        assertFalse(UserService.getInstance().validateFirstName("012321432903423"));
+        assertFalse(UserService.getInstance().validateFirstName("popov"));
     }
 
     @Test
     void lastNameValidate() {
-        assertTrue(UserService.getInstance().firstNameValidate("Йорданов"));
-        assertTrue(UserService.getInstance().firstNameValidate("Енчева"));
-        assertFalse(UserService.getInstance().firstNameValidate("ГеоргиеВ"));
-        assertFalse(UserService.getInstance().firstNameValidate("димитров"));
-        assertFalse(UserService.getInstance().firstNameValidate("012321 432903423"));
-        assertFalse(UserService.getInstance().lastNameValidate("popov"));
+        assertTrue(UserService.getInstance().validateFirstName("Йорданов"));
+        assertTrue(UserService.getInstance().validateFirstName("Енчева"));
+        assertFalse(UserService.getInstance().validateFirstName("ГеоргиеВ"));
+        assertFalse(UserService.getInstance().validateFirstName("димитров"));
+        assertFalse(UserService.getInstance().validateFirstName("012321 432903423"));
+        assertFalse(UserService.getInstance().validateLastName("popov"));
     }
 
     @Test
@@ -119,6 +116,6 @@ class UserServiceTest {
     @Test
     void userAuthentication() {
         // Non-existent user
-        assertFalse(userService.userAuthentication("nothing", "12345"));
+        assertFalse(userService.authenticateUser("nothing", "12345"));
     }
 }

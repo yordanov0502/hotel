@@ -11,6 +11,7 @@ class ConstantsTest {
         assertEquals("/bg.tu_varna.sit.hotel/presentation/application/pages/WelcomeView.fxml", Constants.View.WELCOME_VIEW);
         assertEquals("/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminLogin.fxml",Constants.View.ADMIN_LOGIN_VIEW);
         assertEquals("/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminRegistration.fxml",Constants.View.ADMIN_REGISTRATION_VIEW);
+        assertEquals("/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminMain.fxml",Constants.View.ADMIN_MAIN_VIEW);
         assertEquals("/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerLogin.fxml",Constants.View.OWNER_LOGIN_VIEW);
         assertEquals("/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerLogin.fxml",Constants.View.MANAGER_LOGIN_VIEW);
         assertEquals("/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistLogin.fxml",Constants.View.RECEPTIONIST_LOGIN_VIEW);

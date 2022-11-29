@@ -3,27 +3,29 @@ package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 import bg.tu_varna.sit.hotel.application.Main;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 
-
-public class AdminLoginController  implements Initializable{
+public class AdminLoginController{
 
     @FXML
-    public TextField adminEmailField;
+    public AnchorPane anchorPane;
+    @FXML
+    public TextField adminUsernameField;
     @FXML
     public PasswordField adminPasswordField;
     @FXML
-    public Button adminEnterButton;
+    public Button adminLoginButton;
     @FXML
     public Button adminBackButton;
     @FXML
@@ -43,9 +45,20 @@ public class AdminLoginController  implements Initializable{
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
+
+    public void initialize()
     {
+        anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ENTER){
+                adminLoginButton.fire();
+                keyEvent.consume();
+            }
+            if(keyEvent.getCode() == KeyCode.ESCAPE){
+                System.exit(0);
+                keyEvent.consume();
+            }
+        });
+
         closeWindowButton.setOnMouseClicked(event -> System.exit(0));
     }
 
