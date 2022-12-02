@@ -1,7 +1,12 @@
 package bg.tu_varna.sit.hotel.business;
 
+import bg.tu_varna.sit.hotel.application.Main;
+import bg.tu_varna.sit.hotel.common.Constants;
+import bg.tu_varna.sit.hotel.common.ViewManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,9 +15,7 @@ class UserServiceTest {
     private UserService userService;
 
     @BeforeEach
-    void setUp() {
-        userService = UserService.getInstance();
-    }
+    void setUp() {userService = UserService.getInstance();}
 
     @Test
     void getInstance() {
@@ -113,9 +116,4 @@ class UserServiceTest {
         assertFalse(userService.isEmailExists("georgigmail.com"));
     }
 
-    @Test
-    void userAuthentication() {
-        // Non-existent user
-        assertFalse(userService.authenticateUser("nothing", "12345"));
-    }
 }

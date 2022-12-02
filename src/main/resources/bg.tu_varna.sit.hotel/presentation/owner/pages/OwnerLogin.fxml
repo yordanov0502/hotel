@@ -21,7 +21,7 @@
       </Button>
       <Pane layoutX="280.0" layoutY="131.0" prefHeight="239.0" prefWidth="241.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <TextField fx:id="ownerEmailField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="ownerEmailField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

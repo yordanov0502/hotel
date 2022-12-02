@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class AdminRegistrationController {
@@ -48,10 +47,10 @@ public class AdminRegistrationController {
 
     @FXML
     public void registerAdmin(ActionEvent event) throws IOException {
-        if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
-                && !userService.checkForExistingData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
+        if(userService.validateRegistrationFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
+                && !userService.checkForExistingRegistrationData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
         {
-            if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),"admin",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"unconfirmed")))
+            if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),"Администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
             {
                 ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, Main.stage,this.getClass(),"Admin Main", 800, 500);
             }

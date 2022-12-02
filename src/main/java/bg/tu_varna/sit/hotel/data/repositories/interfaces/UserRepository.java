@@ -10,4 +10,5 @@ public interface UserRepository<T> extends Repository<T> {
     User getByPhone(String phone);
     User getByUsername(String username);
     User getByEmail(String email);
+    User getByUsernameAndPassword(String username, String password, String role);
 }

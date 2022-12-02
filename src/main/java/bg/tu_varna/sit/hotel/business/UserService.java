@@ -91,20 +91,42 @@ public class UserService {
     }
 
     public boolean addUser(UserModel userModel) {
-        return repository.save(userModel.toEntity());
+        if(repository.save(userModel.toEntity()))
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
+            return true;
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
+            return false;
+        }
     }
 
     public boolean updateUser(UserModel userModel) {
-        return repository.update(userModel.toEntity());
+        if(repository.update(userModel.toEntity()))
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
+            return true;
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");
+            return false;
+        }
     }
 
     public boolean deleteUser(UserModel userModel){
-       return repository.delete(userModel.toEntity());
-    }
-
-    public boolean authenticateUser(String username, String password) {
-        User userTmp = repository.getByUsernameAndPassword(username, password);
-        return userTmp != null;
+        if(repository.delete(userModel.toEntity()))
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно изтриване на данни.");
+            return true;
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни е неуспешно.");
+            return false;
+        }
     }
 
     public boolean validateFirstName(String firstName) {
@@ -200,7 +222,7 @@ public class UserService {
         else {return false;}
     }
 
-    public boolean validateFields(String [] fields) //checks for empty fields in registration forms
+    public boolean validateRegistrationFields(String [] fields) //validate fields in registration forms
     {
         if(Objects.equals(fields[0], "")||Objects.equals(fields[1], "")||Objects.equals(fields[2], "")||Objects.equals(fields[3], "")||Objects.equals(fields[4], "")||Objects.equals(fields[5], "")||Objects.equals(fields[6], ""))
         {
@@ -209,12 +231,12 @@ public class UserService {
         }
         else if(!validateFirstName(fields[0]))
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името може да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името трябва да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
             return false;
         }
         else if(!validateLastName(fields[1]))
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Фамилията може да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Фамилията трябва да съдържа от 3 до 30 символа като започва с главна буква, последвана от малки букви на кирилица.");
             return false;
         }
         else if(!validateId(fields[2]))
@@ -229,22 +251,22 @@ public class UserService {
         }
         else if(!validateUsername(fields[4]))
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителското име може да съдържа от 5 до 50 символа. (малки и главни латински букви, цифри[0-9] както и символите (_) и (.))");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителското име трябва да съдържа от 5 до 50 символа. (малки и главни латински букви, цифри[0-9] както и символите (_) и (.))");
             return false;
         }
         else if(!validateEmail(fields[5]))
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адресът може да съдържа от 6 до 112 символа като зъдължително символите \"@\" и \".\" трябва да присъстват веднъж и преди и след тях да има други символи. (малки и главни латински букви, цифри[0-9]");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адресът трябва да съдържа от 6 до 112 символа като зъдължително символите \"@\" и \".\" трябва да присъстват веднъж и преди и след тях да има други символи. (малки и главни латински букви, цифри[0-9]");
             return false;
         }
         else if(!validatePassword(fields[6]))
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Паролата може да съдържа от 7 до 200 символа като зъдължително трябва да има поне 1 малка и 1 главна латинска буква, както и поне 1 цифра [0-9] и 1 специален символ[@#$%^&+=_*~!)(./:;<>?{}|`',-].");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Паролата трябва да съдържа от 7 до 200 символа като зъдължително трябва да има поне 1 малка и 1 главна латинска буква, както и поне 1 цифра [0-9] и 1 специален символ[@#$%^&+=_*~!)(./:;<>?{}|`',-].");
             return false;
         }
         else {return true;}
     }
-    public boolean checkForExistingData(String [] fields) //checks for existing data in the database
+    public boolean checkForExistingRegistrationData(String [] fields) //checks for already existing data in the database
     {
        if(isIdExists(fields[0]))
        {
@@ -269,4 +291,30 @@ public class UserService {
        else {return false;}
     }
 
+    public boolean validateLoginFields(String [] fields) //validate fields in registration forms
+    {
+        if (Objects.equals(fields[0], "") || Objects.equals(fields[1], ""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете данни във всички полета.");
+            return false;
+        }
+        else if(!validateUsername(fields[0]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителското име трябва да съдържа от 5 до 50 символа. (малки и главни латински букви, цифри[0-9] както и символите (_) и (.))");
+            return false;
+        }
+        else if(!validatePassword(fields[1]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Паролата трябва да съдържа от 7 до 200 символа като зъдължително трябва да има поне 1 малка и 1 главна латинска буква, както и поне 1 цифра [0-9] и 1 специален символ[@#$%^&+=_*~!)(./:;<>?{}|`',-].");
+            return false;
+        }
+        else {return true;}
+    }
+
+    public boolean authenticateUser(String username, String password, String role) {
+        User userTmp = repository.getByUsernameAndPassword(username, password, role);
+        if(userTmp!=null){AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");}
+        else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ "+role+" с подобно потребителско име или парола не съществува в системата.");}
+        return userTmp != null;
+    }
 }

@@ -31,7 +31,7 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="adminLoginButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
+            <Button fx:id="adminLoginButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" onAction="#admin_Login" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
+import bg.tu_varna.sit.hotel.common.Hasher;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.UserRepository;
@@ -30,14 +31,11 @@ public class UserRepositoryImpl implements UserRepository<User> {
         Transaction transaction = session.beginTransaction();
         try {
             session.save(obj); //insert object into table
-            transaction.commit();
+            transaction.commit();//commit changes to the database
             log.info("User added successfully.");
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
             return true;
         } catch (Exception ex) {
             log.error("User add error: " + ex);
-            transaction.rollback();
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Регистрацията ви е неуспешна.");
             return false;
         } finally {
             session.close();
@@ -52,12 +50,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             session.update(obj);
             transaction.commit();
             log.info("User updated successfully.");
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
             return true;
         } catch (Exception ex) {
             log.error("User update error: " + ex);
-            transaction.rollback();
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Актуализирането на данни е неуспешно.");
             return false;
         } finally {
             session.close();
@@ -72,12 +67,9 @@ public class UserRepositoryImpl implements UserRepository<User> {
             session.delete(obj);
             transaction.commit();
             log.info("User deleted successfully.");
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно изтриване на данни.");
             return true;
         }  catch (Exception e) {
             log.info("User delete error: " + e.getMessage());
-            transaction.rollback();
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Грешка","❌ Изтриването на данни е неуспешно.");
             return false;
         } finally {
             session.close();
@@ -96,7 +88,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
             log.info("Got all users successfully.");
         } catch (Exception ex) {
             log.error("Get all users error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
@@ -116,7 +107,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
             log.info("Got user by id successfully.");
         } catch(Exception ex) {
             log.error("Get user by id error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
@@ -138,7 +128,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
             log.info("Got user by phone successfully.");
         } catch(Exception ex) {
             log.error("Get user by phone error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
@@ -158,7 +147,6 @@ public class UserRepositoryImpl implements UserRepository<User> {
             log.info("Got user by username successfully.");
         } catch(Exception ex) {
             log.error("Get user by username error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
@@ -178,31 +166,29 @@ public class UserRepositoryImpl implements UserRepository<User> {
             log.info("Got user by email successfully.");
         } catch(Exception ex) {
             log.error("Get user by email error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
         return user;
     }
 
-    public User getByUsernameAndPassword(String username, String password) {
+    @Override
+    public User getByUsernameAndPassword(String username, String password,String role) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
+        password= Hasher.SHA512.hash(password);//transforms entered password into hash
         User user = null;
 
         try{
-            String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND password = '" + password + "'";
+            String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND password = '" + password + "' AND role = '" + role + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by username & password successfully.");
         } catch (Exception ex) {
             log.error("Get user by username & password error: " + ex.getMessage());
-            transaction.rollback();
         } finally {
             session.close();
         }
         return user;
     }
-
-
 }
