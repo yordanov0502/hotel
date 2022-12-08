@@ -15,6 +15,9 @@ module bg.tu_varna.sit.hotel {
     requires java.naming;
     requires java.sql;
     requires org.apache.commons.lang3;
+    requires de.jensd.fx.glyphs.fontawesome;
+
+
 
     opens bg.tu_varna.sit.hotel.application to javafx.fxml;
     exports bg.tu_varna.sit.hotel.application;

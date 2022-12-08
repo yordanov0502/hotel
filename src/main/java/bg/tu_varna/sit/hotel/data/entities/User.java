@@ -34,6 +34,9 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "hash", nullable = false, unique = true)
+    private String hash;
+
     @Column(name = "role", nullable = false)
     private String role;
 
@@ -45,6 +48,14 @@ public class User implements Serializable {
 
     @Column(name = "status", nullable = false)
     private String status;
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
+    }
 
     public Timestamp getLastLogin() {
         return lastLogin;

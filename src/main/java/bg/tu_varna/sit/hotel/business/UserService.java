@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
+import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
@@ -45,6 +46,7 @@ public class UserService {
                             u.getUsername(),
                             u.getEmail(),
                             u.getPassword(),
+                            u.getHash(),
                             u.getRole(),
                             u.getCreatedAt(),
                             u.getLastLogin(),
@@ -106,12 +108,12 @@ public class UserService {
     public boolean updateUser(UserModel userModel) {
         if(repository.update(userModel.toEntity()))
         {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
+            //AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
             return true;
         }
         else
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");
+            //AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");
             return false;
         }
     }
@@ -222,7 +224,7 @@ public class UserService {
         else {return false;}
     }
 
-    public boolean validateRegistrationFields(String [] fields) //validate fields in registration forms
+    public boolean validateFields(String [] fields) //validate fields in registration and edit-info forms
     {
         if(Objects.equals(fields[0], "")||Objects.equals(fields[1], "")||Objects.equals(fields[2], "")||Objects.equals(fields[3], "")||Objects.equals(fields[4], "")||Objects.equals(fields[5], "")||Objects.equals(fields[6], ""))
         {
@@ -266,32 +268,36 @@ public class UserService {
         }
         else {return true;}
     }
-    public boolean checkForExistingRegistrationData(String [] fields) //checks for already existing data in the database
+    public boolean checkForExistingData(String [] fields) //checks for already existing data in the database
     {
-       if(isIdExists(fields[0]))
-       {
-           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН: \""+fields[0]+"\" вече съществува в базата данни.");
-           return true;
-       }
-       else if(isPhoneExists(fields[1]))
-       {
-           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[1]+"\" вече съществува в базата данни.");
-           return true;
-       }
-       else if(isUsernameExists(fields[2]))
-       {
-           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[2]+"\" вече съществува в базата данни.");
-           return true;
-       }
-       else if(isEmailExists(fields[3]))
-       {
-           AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[3]+"\" вече съществува в базата данни.");
-           return true;
-       }
-       else {return false;}
+        if(fields.length==4) //proverka pri registraciq na user
+        {
+            if(isIdExists(fields[0]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН: \""+fields[0]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else if(isPhoneExists(fields[1]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[1]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else if(isUsernameExists(fields[2]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[2]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else if(isEmailExists(fields[3]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[3]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else {return false;}
+        }
+        else return true;
     }
 
-    public boolean validateLoginFields(String [] fields) //validate fields in registration forms
+    public boolean validateLoginFields(String [] fields) //validate fields in login forms
     {
         if (Objects.equals(fields[0], "") || Objects.equals(fields[1], ""))
         {
@@ -316,5 +322,33 @@ public class UserService {
         if(userTmp!=null){AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");}
         else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ "+role+" с подобно потребителско име или парола не съществува в системата.");}
         return userTmp != null;
+    }
+
+    public boolean checkForCorrectDataUpdate(String [] fields) //proverka pri redaktirane danni na user
+    {
+        if(fields.length==6)
+        {
+            if(Objects.equals(UserSession.getUser().getFirstName(), fields[0]) && Objects.equals(UserSession.getUser().getLastName(), fields[1]) && Objects.equals(UserSession.getUser().getPhone(), fields[2]) && Objects.equals(UserSession.getUser().getUsername(), fields[3]) && Objects.equals(UserSession.getUser().getEmail(), fields[4]) && Objects.equals(UserSession.getUser().getPassword(), fields[5]))
+            {
+                 return false;
+            }
+            else if(!Objects.equals(UserSession.getUser().getPhone(), fields[2]) && isPhoneExists(fields[2]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[2]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else if(!Objects.equals(UserSession.getUser().getUsername(), fields[3]) &&isUsernameExists(fields[3]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[3]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else if(!Objects.equals(UserSession.getUser().getEmail(), fields[4]) &&isEmailExists(fields[4]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[4]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else return true;
+        }
+        else {return false;}
     }
 }

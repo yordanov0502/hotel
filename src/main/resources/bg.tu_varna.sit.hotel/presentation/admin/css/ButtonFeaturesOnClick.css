@@ -1,9 +1,27 @@
+.adminEnterButton{
+    -fx-background-color:  #00cc66;
+}
+
+.adminEnterButton:hover{
+    -fx-background-color:  #00994d;
+}
+
 .adminEnterButton:pressed{
-    -fx-border-color: DarkBlue;
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.adminBackButton{
+    -fx-background-color: #0099ff;
+}
+
+.adminBackButton:hover{
+    -fx-background-color: #0052cc;
 }
 
 .adminBackButton:pressed{
     -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
 }
 
 .adminRegisterButton{
@@ -14,6 +32,27 @@
     -fx-text-fill: DarkBlue;
 }
 
+.adminRegistrationButton{
+    -fx-background-color:  #00cc66;
+}
+
+.adminRegistrationButton:hover{
+    -fx-background-color: #00994d;
+}
+
 .adminRegistrationButton:pressed{
-    -fx-border-color: DarkBlue;
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.secondaryMenuButton{
+    -fx-background-color:  #3366cc;
+}
+
+.secondaryMenuButton:hover{
+    -fx-background-color: #003399;
+}
+
+.secondaryMenuButton > .arrow-button > .arrow {
+    -fx-background-color: Black;
 }

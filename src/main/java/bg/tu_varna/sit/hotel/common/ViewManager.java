@@ -1,12 +1,9 @@
 package bg.tu_varna.sit.hotel.common;
 
-import bg.tu_varna.sit.hotel.application.Main;
-
-import javafx.application.Platform;
+import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminInfoController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
@@ -19,72 +16,77 @@ import java.util.Objects;
 
 //This is a utility class which methods are often used in the application for page navigation
 public final class ViewManager {
-
+    private static Stage primaryStage;//initial and primary stage
+    private static double px, py;//initial and current coordinates of primary stage
+    private static double pxx, pyy;//temporary coordinates(when moving the window) of primary stage
+    private static Stage secondaryStage;
+    private static double sx, sy;//initial and current coordinates of secondary stage
+    private static double sxx;
+    private static double syy;//temporary coordinates(when moving the window) of secondary stage
     private static final Logger log = Logger.getLogger(ViewManager.class);
 
     private ViewManager(){}
 
-    public static void changeView(String to, Stage stage, Class<?> classes, String title, int width, int height) throws IOException {
+    public static void changeView(String to, Stage stage, Class<?> classes, String title, double width, double height) throws IOException {
 
         if(stage==null)
         {
-            Main.stage = new Stage();
-            PropertyConfigurator.configure(Main.class.getResource(Constants.Configurations.LOG4J_PROPERTIES));
-            URL path = Main.class.getResource(Constants.View.WELCOME_VIEW);
+            primaryStage = new Stage();
+            PropertyConfigurator.configure(ViewManager.class.getResource(Constants.Configurations.LOG4J_PROPERTIES));
+            URL path = ViewManager.class.getResource(to);/////////////////////////////////////////////////////////////////
 
             if(path != null)
             {
                 Parent root = FXMLLoader.load(path);
-                Main.stage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
-                Main.stage.setTitle("Hotel Management System");
-                Main.stage.setScene(new Scene(root, 800, 500));
-                Main.stage.setX(380);
-                Main.stage.setY(160);
-                Main.x = Main.stage.getX();
-                Main.y = Main.stage.getY();
+                primaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
+                primaryStage.setTitle("Hotel Management System");
+                primaryStage.setScene(new Scene(root, width, height));
+                primaryStage.setX(380);
+                primaryStage.setY(160);
+                px = primaryStage.getX();
+                py = primaryStage.getY();
 
                 root.setOnMousePressed(event -> {
-                    Main.xx = event.getSceneX();
-                    Main.yy = event.getSceneY();
+                    pxx = event.getSceneX();
+                    pyy = event.getSceneY();
                 });
 
                 root.setOnMouseDragged(event -> {
-                    Main.stage.setX(event.getScreenX() - Main.xx);
-                    Main.stage.setY(event.getScreenY() - Main.yy);
-                    Main.x = Main.stage.getX();
-                    Main.y = Main.stage.getY();
-
+                    primaryStage.setX(event.getScreenX() - pxx);
+                    primaryStage.setY(event.getScreenY() - pyy);
+                    px = primaryStage.getX();
+                    py = primaryStage.getY();
                 });
 
-                Main.stage.show();
+                primaryStage.show();
             }
             else
             {
                 log.error("Error when starting the application!(WelcomeView.fxml was not found)");
-                Platform.exit();//Exits the application, because no window was loaded
+                System.exit(1);//Exits the application, because no window was loaded
             }
         }
 
         else
         {
-            //Here the "stage" is actually the "Main.stage", because in every controller I pass only the "Main.stage"
-            //Main.stage = stage;
+            //Here the "stage" is actually the "primaryStage", because in every controller where I call this method I pass only the "primaryStage"
+            //primaryStage = stage;
             Parent root = FXMLLoader.load(Objects.requireNonNull(classes.getResource(to)));
             stage.setTitle(title);
-            stage.setX(Main.x);
-            stage.setY(Main.y);
+            stage.setX(px);
+            stage.setY(py);
             stage.setScene(new Scene(root, width, height));
 
             root.setOnMousePressed(event -> {
-                Main.xx = event.getSceneX();
-                Main.yy = event.getSceneY();
+                pxx = event.getSceneX();
+                pyy = event.getSceneY();
             });
 
             root.setOnMouseDragged(event -> {
-                stage.setX(event.getScreenX() - Main.xx);
-                stage.setY(event.getScreenY() - Main.yy);
-                Main.x = stage.getX();
-                Main.y = stage.getY();
+                stage.setX(event.getScreenX() - pxx);
+                stage.setY(event.getScreenY() - pyy);
+                px = stage.getX();
+                py = stage.getY();
             });
 
             stage.show();
@@ -93,5 +95,113 @@ public final class ViewManager {
     }
 
 
+    public static void openDialogBox(String to, Stage stage, Class<?> classes, String title, double width, double height) throws IOException {
+
+        if(stage==null)
+        {
+            secondaryStage = new Stage();
+            PropertyConfigurator.configure(ViewManager.class.getResource(Constants.Configurations.LOG4J_PROPERTIES));
+            URL path = ViewManager.class.getResource(to);//
+
+            if(path != null)
+            {
+                Parent root = FXMLLoader.load(path);
+                secondaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
+                secondaryStage.setTitle("Secondary Stage");
+                secondaryStage.setScene(new Scene(root, width, height));
+                //secondaryStage.sizeToScene();////////////////////////////////////////////////////////////////
+                secondaryStage.setX(primaryStage.getX()+75);
+                secondaryStage.setY(primaryStage.getY()+75);
+                sx = secondaryStage.getX();
+                sy = secondaryStage.getY();
+
+                root.setOnMousePressed(event -> {
+                    sxx = event.getSceneX();
+                    syy = event.getSceneY();
+                });
+
+                root.setOnMouseDragged(event -> {
+                    secondaryStage.setX(event.getScreenX() - sxx);
+                    secondaryStage.setY(event.getScreenY() - syy);
+                    sx = secondaryStage.getX();
+                    sy = secondaryStage.getY();
+                });
+
+                secondaryStage.show();
+            }
+            else
+            {
+                log.error("Error when loading secondaryStage!(.fxml was not found)");
+                System.exit(1);//Exits the application, because no window was loaded
+            }
+        }
+
+        else
+        {
+            //Here the "stage" is actually the "secondaryStage", because in every controller where I call this method I pass only the "secondaryStage"
+            //secondaryStage = stage;
+            Parent root = FXMLLoader.load(Objects.requireNonNull(classes.getResource(to)));
+            stage.setTitle(title);
+            stage.setX(sx);
+            stage.setY(sy);
+            stage.setScene(new Scene(root, width, height));
+            //secondaryStage.sizeToScene();//////////////////////////////////////////////////////////////
+
+            root.setOnMousePressed(event -> {
+                sxx = event.getSceneX();
+                syy = event.getSceneY();
+            });
+
+            root.setOnMouseDragged(event -> {
+                stage.setX(event.getScreenX() - sxx);
+                stage.setY(event.getScreenY() - syy);
+                sx = stage.getX();
+                sy = stage.getY();
+            });
+
+            stage.show();
+        }
+
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static double getPx() {
+        return px;
+    }
+
+    public static double getPy() {
+        return py;
+    }
+
+    public static double getPxx() {
+        return pxx;
+    }
+
+    public static double getPyy() {
+        return pyy;
+    }
+
+    public static Stage getSecondaryStage() {
+        return secondaryStage;
+    }
+
+    public static void setSecondaryStage(Stage secondaryStage) {ViewManager.secondaryStage = secondaryStage;}
+
+    public static double getSx() {
+        return sx;
+    }
+
+    public static double getSy() {
+        return sy;
+    }
+
+    public static double getSxx() {
+        return sxx;
+    }
+
+    public static double getSyy() {return syy;}
 
 }

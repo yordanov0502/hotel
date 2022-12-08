@@ -1,8 +1,8 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
-import bg.tu_varna.sit.hotel.application.Main;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.Hasher;
+import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.sql.Timestamp;
 
 public class AdminRegistrationController {
-
     private static final Logger log = Logger.getLogger(AdminRegistrationController.class);
     public final UserService userService = UserService.getInstance();
 
@@ -47,19 +46,24 @@ public class AdminRegistrationController {
 
     @FXML
     public void registerAdmin(ActionEvent event) throws IOException {
-        if(userService.validateRegistrationFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
-                && !userService.checkForExistingRegistrationData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
+        if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
+                && !userService.checkForExistingData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
         {
-            if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),"Администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
+            if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"Администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
             {
-                ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, Main.stage,this.getClass(),"Admin Main", 800, 500);
+                log.info("Successful admin registration.");
+                /////////////////////////////////////////////////////////////////////////
+                UserSession.setUser(userService.getUserById(adminEGNField.getText()));//tova ne trqbva da e taka, da e tuk, zashtoto trqbva da se pravi potvurjdenie ot drug admin za napravena registraciq
+                ////////////////////////////////////////////////////////////////////////
+                ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
             }
+            else{log.error("Unsuccessful admin registration.");}
         }
     }
 
     @FXML
     public void backToAdminLoginPage(ActionEvent event) throws IOException {
-        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
+        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
 

@@ -29,7 +29,7 @@ public class ReceptionistLoginController implements Initializable {
 
     @FXML
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
-        ViewManager.changeView(Constants.View.WELCOME_VIEW, Main.stage,this.getClass(),"Hotel Management System", 800, 500);
+        ViewManager.changeView(Constants.View.WELCOME_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System", 800, 500);
     }
 
     @Override

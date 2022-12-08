@@ -13,6 +13,7 @@ public class UserModel implements EntityModel<User> {
     private String username;
     private String email;
     private String password;
+    private String hash;
     private String role;
     private Timestamp createdAt;
     private Timestamp lastLogin;
@@ -20,7 +21,7 @@ public class UserModel implements EntityModel<User> {
 
     public UserModel(){}
 
-    public UserModel(String id,String firstName,String lastName,String phone,String username,String email,String password,String role,Timestamp createdAt,Timestamp lastLogin,String status)
+    public UserModel(String id,String firstName,String lastName,String phone,String username,String email,String password,String hash,String role,Timestamp createdAt,Timestamp lastLogin,String status)
     {
         this.id=id;
         this.firstName=firstName;
@@ -29,6 +30,7 @@ public class UserModel implements EntityModel<User> {
         this.username=username;
         this.email=email;
         this.password=password;
+        this.hash=hash;
         this.role=role;
         this.createdAt=createdAt;
         this.lastLogin=lastLogin;
@@ -43,6 +45,7 @@ public class UserModel implements EntityModel<User> {
         this.username=user.getUsername();
         this.email=user.getEmail();
         this.password=user.getPassword();
+        this.hash=user.getHash();
         this.role=user.getRole();
         this.createdAt=user.getCreatedAt();
         this.lastLogin=user.getLastLogin();
@@ -106,6 +109,10 @@ public class UserModel implements EntityModel<User> {
         this.password = password;
     }
 
+    public String getHash() {return hash;}
+
+    public void setHash(String hash) {this.hash = hash;}
+
     public String getRole() {
         return role;
     }
@@ -149,6 +156,7 @@ public class UserModel implements EntityModel<User> {
         userTemp.setUsername(this.username);
         userTemp.setEmail(this.email);
         userTemp.setPassword(this.password);
+        userTemp.setHash(this.hash);
         userTemp.setRole(this.role);
         userTemp.setCreatedAt(this.createdAt);
         userTemp.setLastLogin(this.lastLogin);

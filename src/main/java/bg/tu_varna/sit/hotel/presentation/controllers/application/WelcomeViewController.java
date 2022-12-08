@@ -29,22 +29,22 @@ public class WelcomeViewController{
 
     @FXML
     void admin_Login(ActionEvent event) throws IOException {
-        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, Main.stage,this.getClass(),"Admin Login", 800, 500);
+        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
     @FXML
     void owner_Login(ActionEvent event) throws IOException {
-        ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, Main.stage,this.getClass(),"Owner Login", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
     @FXML
     void manager_Login(ActionEvent event) throws IOException {
-        ViewManager.changeView(Constants.View.MANAGER_LOGIN_VIEW, Main.stage,this.getClass(),"Manager Login", 800, 500);
+        ViewManager.changeView(Constants.View.MANAGER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Login", 800, 500);
     }
 
     @FXML
     void receptionist_Login(ActionEvent event) throws IOException {
-        ViewManager.changeView(Constants.View.RECEPTIONIST_LOGIN_VIEW, Main.stage,this.getClass(),"Receptionist Login", 800, 500);
+        ViewManager.changeView(Constants.View.RECEPTIONIST_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Login", 800, 500);
     }
 
 

@@ -23,11 +23,6 @@ class UserServiceTest {
         assertNotNull(userService);
     }
 
-    //@Test
-   // void getAllUsers() {
-    //    assertNotNull(userService.getAllUsers());
-    //}
-
     @Test
     void usernameValidate() {
         assertTrue(UserService.getInstance().validateUsername("yordanov5.0"));

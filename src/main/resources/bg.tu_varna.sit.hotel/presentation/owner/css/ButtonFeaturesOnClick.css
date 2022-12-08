@@ -1,7 +1,25 @@
+.ownerEnterButton{
+    -fx-background-color:  #00cc66;
+}
+
+.ownerEnterButton:hover{
+    -fx-background-color:  #00994d;
+}
+
 .ownerEnterButton:pressed{
-    -fx-border-color: DarkBlue;
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.ownerBackButton{
+    -fx-background-color: #0099ff;
+}
+
+.ownerBackButton:hover{
+    -fx-background-color: #0052cc;
 }
 
 .ownerBackButton:pressed{
     -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
 }

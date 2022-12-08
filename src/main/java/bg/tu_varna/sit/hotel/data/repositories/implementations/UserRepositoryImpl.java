@@ -176,11 +176,10 @@ public class UserRepositoryImpl implements UserRepository<User> {
     public User getByUsernameAndPassword(String username, String password,String role) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
-        password= Hasher.SHA512.hash(password);//transforms entered password into hash
         User user = null;
 
         try{
-            String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND password = '" + password + "' AND role = '" + role + "'";
+            String jpql = "SELECT u FROM User u WHERE username = '" + username + "' AND hash = '" + Hasher.SHA512.hash(password) + "' AND role = '" + role + "'";
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by username & password successfully.");

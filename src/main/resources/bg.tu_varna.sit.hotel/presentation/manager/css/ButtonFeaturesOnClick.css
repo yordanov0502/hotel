@@ -1,7 +1,25 @@
+.managerEnterButton{
+    -fx-background-color:  #00cc66;
+}
+
+.managerEnterButton:hover{
+    -fx-background-color:  #00994d;
+}
+
 .managerEnterButton:pressed{
-    -fx-border-color: DarkBlue;
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.managerBackButton{
+    -fx-background-color: #0099ff;
+}
+
+.managerBackButton:hover{
+    -fx-background-color: #0052cc;
 }
 
 .managerBackButton:pressed{
     -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
 }

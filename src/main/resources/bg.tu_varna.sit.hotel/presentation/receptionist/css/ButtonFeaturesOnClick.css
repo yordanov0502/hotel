@@ -1,7 +1,25 @@
+.receptionistEnterButton{
+    -fx-background-color:  #00cc66;
+}
+
+.receptionistEnterButton:hover{
+    -fx-background-color:  #00994d;
+}
+
 .receptionistEnterButton:pressed{
-    -fx-border-color: DarkBlue;
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.receptionistBackButton{
+    -fx-background-color: #0099ff;
+}
+
+.receptionistBackButton:hover{
+    -fx-background-color: #0052cc;
 }
 
 .receptionistBackButton:pressed{
     -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
 }

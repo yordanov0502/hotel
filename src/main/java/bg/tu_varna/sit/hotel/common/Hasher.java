@@ -6,7 +6,8 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Hasher {
+public final class Hasher {
+    private Hasher(){}
     public static class SHA512{
         private static final Logger log = Logger.getLogger(Hasher.SHA512.class);
       public static String hash(String password)

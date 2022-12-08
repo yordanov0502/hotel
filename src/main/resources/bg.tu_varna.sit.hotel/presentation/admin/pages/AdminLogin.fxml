@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -21,7 +22,7 @@
       </Button>
       <Pane layoutX="280.0" layoutY="131.0" prefHeight="239.0" prefWidth="241.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <TextField fx:id="adminUsernameField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="adminUsernameField" alignment="CENTER" layoutX="21.0" layoutY="52.0" prefHeight="27.0" prefWidth="200.0" promptText="Потребителско име" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -31,12 +32,12 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="adminLoginButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" onAction="#admin_Login" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(89, 232, 148, 0.8);" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
+            <Button fx:id="adminLoginButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" onAction="#admin_Login" prefHeight="41.0" prefWidth="66.0" styleClass="adminEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="adminBackButton" alignment="CENTER" layoutX="148.0" layoutY="154.0" mnemonicParsing="false" onAction="#backToWelcomePage" prefHeight="41.0" prefWidth="66.0" style="-fx-background-color: rgba(98, 171, 254, 0.8);" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+            <Button fx:id="adminBackButton" alignment="CENTER" layoutX="148.0" layoutY="154.0" mnemonicParsing="false" onAction="#backToWelcomePage" prefHeight="41.0" prefWidth="66.0" styleClass="adminBackButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -51,6 +52,8 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
+            <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="3.0" layoutY="72.0" size="20" />
+            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="4.0" layoutY="128.0" size="22" />
          </children></Pane>
    </children>
 </AnchorPane>

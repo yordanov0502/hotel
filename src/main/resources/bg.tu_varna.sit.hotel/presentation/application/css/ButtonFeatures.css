@@ -1,19 +1,65 @@
+.adminLoginButton{
+   -fx-background-color:  LightSkyBlue;
+}
+
+.adminLoginButton:hover{
+   -fx-background-color:  SteelBlue;
+}
+
 .adminLoginButton:pressed{
    -fx-border-color: DarkBlue;
+   -fx-border-width: 2;
+}
+
+.ownerLoginButton{
+   -fx-background-color:  Gold;
+}
+
+.ownerLoginButton:hover{
+   -fx-background-color: GoldenRod;
 }
 
 .ownerLoginButton:pressed{
-   -fx-border-color: DarkBlue;
+   -fx-border-color: #997300;
+   -fx-border-width: 2;
+}
+
+.managerLoginButton{
+   -fx-background-color: LightCoral;
+}
+
+.managerLoginButton:hover{
+   -fx-background-color: IndianRed;
 }
 
 .managerLoginButton:pressed{
-   -fx-border-color: DarkBlue;
+   -fx-border-color: #752424;
+   -fx-border-width: 2;
+}
+
+.receptionistLoginButton{
+   -fx-background-color:  LightSeaGreen;
+}
+
+.receptionistLoginButton:hover{
+   -fx-background-color: Teal;
 }
 
 .receptionistLoginButton:pressed{
-   -fx-border-color: DarkBlue;
+   -fx-border-color: DarkGreen;
+   -fx-border-width: 2;
+}
+
+.closeWindowButton{
+   -fx-background-color: #ff471a;
+}
+
+
+.closeWindowButton:hover{
+   -fx-background-color:  #cc2900;
 }
 
 .closeWindowButton:pressed{
-   -fx-border-color: DarkBlue;
+   -fx-border-color: #752424;
+   -fx-border-width: 1;
 }

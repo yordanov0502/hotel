@@ -11,13 +11,14 @@ public final class AlertManager {
 
     private AlertManager(){}
 
+    //alerts for primary stage
     public static void showAlert(Alert.AlertType type,String header, String message){
         Alert alert = new Alert(type);
         alert.setHeaderText(header);
         alert.initStyle(StageStyle.UNDECORATED);
         alert.setContentText(message);
-        alert.setX((Main.x+Main.stage.getWidth())/2);
-        alert.setY((Main.y+Main.stage.getHeight())/2);
+        alert.setX(ViewManager.getPrimaryStage().getX()+220);
+        alert.setY(ViewManager.getPrimaryStage().getY()+180);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.showAndWait();
     }
