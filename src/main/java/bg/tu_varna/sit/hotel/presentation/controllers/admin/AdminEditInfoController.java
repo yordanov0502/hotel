@@ -39,7 +39,7 @@ public class AdminEditInfoController {
     @FXML
     public Button closeButton;
 
-    public void editAdminInfo() throws IOException {
+    public void editAdminInfo(){
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && userService.checkForCorrectDataUpdate(new String[] {adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText(),adminPasswordField.getText()}))
         {
@@ -55,7 +55,7 @@ public class AdminEditInfoController {
         }
     }
 
-    public void closeEditInfoPage() throws IOException {
+    public void closeEditInfoPage(){
         //Stage stage = (Stage) closeButton.getScene().getWindow();
         //stage.close();
         ViewManager.getSecondaryStage().close();

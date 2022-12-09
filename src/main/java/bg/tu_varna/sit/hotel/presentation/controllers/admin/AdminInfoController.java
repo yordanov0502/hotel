@@ -35,7 +35,7 @@ public class AdminInfoController {
     @FXML
     public Button closeButton;
 
-    public void closeInfoPage() throws IOException {
+    public void closeInfoPage(){
         //Stage stage = (Stage) closeButton.getScene().getWindow();
         //stage.close();
         ViewManager.getSecondaryStage().close();

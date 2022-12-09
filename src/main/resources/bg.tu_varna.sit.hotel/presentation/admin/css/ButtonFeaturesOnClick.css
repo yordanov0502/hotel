@@ -56,3 +56,147 @@
 .secondaryMenuButton > .arrow-button > .arrow {
     -fx-background-color: Black;
 }
+
+.beginningButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.beginningButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.beginningButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.headingLabel{
+    -fx-text-fill: Black;
+}
+
+.addOwnerButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.addOwnerButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.addOwnerButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.ownersQueryButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.ownersQueryButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.ownersQueryButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.managersQueryButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.managersQueryButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.managersQueryButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.receptionistsQueryButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.receptionistsQueryButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.receptionistsQueryButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.customersQueryButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.customersQueryButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.customersQueryButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.messagesButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.messagesButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.messagesButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
