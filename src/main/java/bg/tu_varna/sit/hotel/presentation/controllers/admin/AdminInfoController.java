@@ -6,8 +6,6 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -43,7 +41,7 @@ public class AdminInfoController {
     }
 
     public void openEditInfoPage() throws IOException {
-            ViewManager.openDialogBox(Constants.View.ADMIN_EDIT_INFO,ViewManager.getSecondaryStage(),this.getClass(),"Admin Edit Info",652,352);
+            ViewManager.openDialogBox(Constants.View.ADMIN_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Admin Edit Info",652,352);
     }
 
     public void showCustomerInfo(){

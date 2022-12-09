@@ -34,7 +34,7 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "hash", nullable = false, unique = true)
+    @Column(name = "hash", nullable = false)
     private String hash;
 
     @Column(name = "role", nullable = false)

@@ -1,10 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.UserService;
-import bg.tu_varna.sit.hotel.common.Hasher;
-import bg.tu_varna.sit.hotel.common.UserSession;
-import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.common.Constants;
+import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,12 +49,17 @@ public class AdminRegistrationController {
             if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"Администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
             {
                 log.info("Successful admin registration.");
+                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
                 /////////////////////////////////////////////////////////////////////////
                 UserSession.setUser(userService.getUserById(adminEGNField.getText()));//tova ne trqbva da e taka, da e tuk, zashtoto trqbva da se pravi potvurjdenie ot drug admin za napravena registraciq
                 ////////////////////////////////////////////////////////////////////////
                 ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
             }
-            else{log.error("Unsuccessful admin registration.");}
+            else
+            {
+                log.error("Unsuccessful admin registration.");
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
+            }
         }
     }
 

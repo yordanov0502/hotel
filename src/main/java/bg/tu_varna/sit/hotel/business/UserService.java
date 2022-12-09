@@ -8,6 +8,8 @@ import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
 
@@ -93,29 +95,11 @@ public class UserService {
     }
 
     public boolean addUser(UserModel userModel) {
-        if(repository.save(userModel.toEntity()))
-        {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
-            return true;
-        }
-        else
-        {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
-            return false;
-        }
+        return repository.save(userModel.toEntity());
     }
 
     public boolean updateUser(UserModel userModel) {
-        if(repository.update(userModel.toEntity()))
-        {
-            //AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
-            return true;
-        }
-        else
-        {
-            //AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");
-            return false;
-        }
+        return repository.update(userModel.toEntity());
     }
 
     public boolean deleteUser(UserModel userModel){
@@ -350,5 +334,14 @@ public class UserService {
             else return true;
         }
         else {return false;}
+    }
+
+    public void clearFields(TextField [] textFields, PasswordField passwordField)
+    {
+        for(TextField currTextField:textFields)
+        {
+            currTextField.clear();
+        }
+        passwordField.clear();
     }
 }
