@@ -5,10 +5,7 @@ import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -46,7 +43,7 @@ public class AdminAddOwnerController {
     }
 
     @FXML
-    public void addOwner(ActionEvent event) {
+    public void addOwner(ActionEvent event) throws IOException {
         if(userService.validateFields(new String[] {ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
                 && !userService.checkForExistingData(new String[] {ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(),ownerEmailField.getText()}))
         {
@@ -54,7 +51,7 @@ public class AdminAddOwnerController {
             {
                 log.info("New owner has been added successfully.");
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавяне на нов собственик.");
-                userService.clearFields(new TextField[] {ownerEGNField,ownerNameField,ownerSurnameField,ownerPhoneField,ownerUsernameField,ownerEmailField},ownerPasswordField);
+                ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
             }
             else
             {
