@@ -24,6 +24,19 @@
     -fx-border-width: 2;
 }
 
+.closeWindowButton{
+    -fx-background-color: Red;
+}
+
+.closeWindowButton:hover{
+    -fx-background-color:  #cc2900;
+}
+
+.closeWindowButton:pressed{
+    -fx-border-color: #752424;
+    -fx-border-width: 1;
+}
+
 .adminRegisterButton{
     -fx-text-fill: White;
 }
@@ -200,3 +213,4 @@
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
 }
+

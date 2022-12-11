@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../application/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminRegistrationController">
    <children>
-      <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: Red;" styleClass="closeWindowButton" stylesheets="@../../application/css/ButtonFeatures.css" text="X" textFill="WHITE">
+      <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" styleClass="closeWindowButton" stylesheets="@../../application/css/ButtonFeatures.css" text="X" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>

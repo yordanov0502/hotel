@@ -56,8 +56,6 @@ public class AdminEditInfoController {
     }
 
     public void closeEditInfoPage(){
-        //Stage stage = (Stage) closeButton.getScene().getWindow();
-        //stage.close();
         ViewManager.getSecondaryStage().close();
         ViewManager.setSecondaryStage(null);
     }
