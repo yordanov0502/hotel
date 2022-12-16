@@ -48,7 +48,7 @@ public class UserEditInfoController {
         {
             if(userService.updateUser(new UserModel(userEGNField.getText(),userNameField.getText(), userSurnameField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText(), Hasher.SHA512.hash(userPasswordField.getText()),selectedUser.getRole(), selectedUser.getCreatedAt(),selectedUser.getLastLogin(), "редактиран")))
             {
-                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данните за собственик \""+selectedUser.getFirstName()+" "+selectedUser.getLastName()+"\" .");
+                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данните за "+selectedUser.getRole()+" \""+selectedUser.getFirstName()+" "+selectedUser.getLastName()+"\" .");
                 ViewManager.getSecondaryStage().close();
                 ViewManager.setSecondaryStage(null);
                 UserEditInfoController.setSelectedUser(null);

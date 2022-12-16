@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminMainController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminManagersInfoController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
         <items>
@@ -88,7 +90,7 @@
       </MenuButton>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
-            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
+            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showAdminMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -106,7 +108,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="181.0" size="20" />
-            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showManagersInfo" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
+            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -131,11 +133,23 @@
             </Button>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добре дошли в Хотелска Информационна Система">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="221.0" layoutY="14.0" prefHeight="32.0" prefWidth="439.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Списък с всички мениджъри в системата">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
       <FontAwesomeIconView glyphName="BELL" layoutX="5.0" layoutY="397.0" size="20" />
+      <TableView fx:id="managersTable" layoutX="143.0" layoutY="70.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
+        <columns>
+          <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
+          <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />
+            <TableColumn fx:id="surnameColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Фамилия" />
+            <TableColumn fx:id="phoneColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="Телефон" />
+            <TableColumn fx:id="usernameColumn" prefWidth="79.0" style="-fx-font-family: Arial;" text="Username" />
+            <TableColumn fx:id="emailColumn" prefWidth="87.0" style="-fx-font-family: Arial;" text="Имейл" />
+            <TableColumn fx:id="statusColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Статус" />
+            <TableColumn fx:id="actionColumn" prefWidth="118.0" style="-fx-font-family: Arial;" text="Действия" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

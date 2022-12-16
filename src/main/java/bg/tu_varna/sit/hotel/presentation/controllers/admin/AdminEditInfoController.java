@@ -38,7 +38,7 @@ public class AdminEditInfoController {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && userService.checkForCorrectPersonalDataUpdate(new String[] {adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText(),adminPasswordField.getText()}))
         {
-            if(userService.updateUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),"Администратор",UserSession.getUser().getCreatedAt(),UserSession.getUser().getLastLogin(), "редактиран")))
+            if(userService.updateUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),UserSession.getUser().getRole(), UserSession.getUser().getCreatedAt(),UserSession.getUser().getLastLogin(), "редактиран")))
             {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
                 UserSession.setUser(null);

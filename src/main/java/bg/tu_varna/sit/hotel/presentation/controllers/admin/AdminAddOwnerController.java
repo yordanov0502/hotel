@@ -48,11 +48,16 @@ public class AdminAddOwnerController {
     }
 
     @FXML
+    public void showManagersInfo() throws IOException {
+        ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
+    }
+
+    @FXML
     public void addOwner(ActionEvent event) throws IOException {
         if(userService.validateFields(new String[] {ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
                 && !userService.checkForExistingData(new String[] {ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(),ownerEmailField.getText()}))
         {
-            if(userService.addUser(new UserModel(ownerEGNField.getText(),ownerNameField.getText(),ownerSurnameField.getText(),ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText(), Hasher.SHA512.hash(ownerPasswordField.getText()),"Собственик",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"потвърден")))
+            if(userService.addUser(new UserModel(ownerEGNField.getText(),ownerNameField.getText(),ownerSurnameField.getText(),ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText(), Hasher.SHA512.hash(ownerPasswordField.getText()),"собственик",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"потвърден")))
             {
                 log.info("New owner has been added successfully.");
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавяне на нов собственик.");

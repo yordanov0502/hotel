@@ -41,7 +41,7 @@ public class AdminLoginController{
 
     @FXML
     public void admin_Login() throws IOException {
-        if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}) && userService.authenticateUser(adminUsernameField.getText(), adminPasswordField.getText(),"Администратор"))
+        if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}) && userService.authenticateUser(adminUsernameField.getText(), adminPasswordField.getText(),"администратор"))
         {
             UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
             //updates last login column of user every time he logs in
