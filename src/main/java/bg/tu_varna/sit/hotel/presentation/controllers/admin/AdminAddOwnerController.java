@@ -43,6 +43,11 @@ public class AdminAddOwnerController {
     }
 
     @FXML
+    public void showOwnersInfo() throws IOException {
+        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+    }
+
+    @FXML
     public void addOwner(ActionEvent event) throws IOException {
         if(userService.validateFields(new String[] {ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
                 && !userService.checkForExistingData(new String[] {ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(),ownerEmailField.getText()}))

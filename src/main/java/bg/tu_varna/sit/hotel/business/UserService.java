@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
-    private final UserRepositoryImpl repository = UserRepositoryImpl.getInstance();
+    private final UserRepositoryImpl userRepository = UserRepositoryImpl.getInstance();
 
     //lazy-loaded singleton pattern
     public static UserService getInstance() {
@@ -33,7 +33,33 @@ public class UserService {
     }
 
     public ObservableList<UserModel> getAllUsers() {
-        List<User> users = repository.getAll();
+        List<User> users = userRepository.getAll();
+
+        if(users.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    users.stream().map(u -> new UserModel(
+                            u.getId(),
+                            u.getFirstName(),
+                            u.getLastName(),
+                            u.getPhone(),
+                            u.getUsername(),
+                            u.getEmail(),
+                            u.getPassword(),
+                            u.getHash(),
+                            u.getRole(),
+                            u.getCreatedAt(),
+                            u.getLastLogin(),
+                            u.getStatus()
+                    )).collect(Collectors.toList())
+            );
+        }
+    }
+
+    public ObservableList<UserModel> getAllByRole(String role) {
+        List<User> users = userRepository.getAllByRole(role);
 
         if(users.isEmpty()){return null;}
 
@@ -59,7 +85,7 @@ public class UserService {
     }
 
     public UserModel getUserById(String id) {
-        User user = repository.getById(id);
+        User user = userRepository.getById(id);
         return (user == null) ? null : new UserModel(user);
     }
 
@@ -68,7 +94,7 @@ public class UserService {
     }
 
     public UserModel getUserByPhone(String phone) {
-        User user = repository.getByPhone(phone);
+        User user = userRepository.getByPhone(phone);
         return (user == null) ? null : new UserModel(user);
     }
 
@@ -77,7 +103,7 @@ public class UserService {
     }
 
     public UserModel getUserByUsername(String username) {
-        User user = repository.getByUsername(username);
+        User user = userRepository.getByUsername(username);
         return (user == null) ? null : new UserModel(user);
     }
 
@@ -86,7 +112,7 @@ public class UserService {
     }
 
     public UserModel getUserByEmail(String email) {
-        User user = repository.getByEmail(email);
+        User user = userRepository.getByEmail(email);
         return (user == null) ? null : new UserModel(user);
     }
 
@@ -95,25 +121,14 @@ public class UserService {
     }
 
     public boolean addUser(UserModel userModel) {
-        return repository.save(userModel.toEntity());
+        return userRepository.save(userModel.toEntity());
     }
 
     public boolean updateUser(UserModel userModel) {
-        return repository.update(userModel.toEntity());
+        return userRepository.update(userModel.toEntity());
     }
 
-    public boolean deleteUser(UserModel userModel){
-        if(repository.delete(userModel.toEntity()))
-        {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно изтриване на данни.");
-            return true;
-        }
-        else
-        {
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни е неуспешно.");
-            return false;
-        }
-    }
+    public boolean deleteUser(UserModel userModel){return userRepository.delete(userModel.toEntity());}
 
     public boolean validateFirstName(String firstName) {
         String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,29})$";
@@ -302,13 +317,13 @@ public class UserService {
     }
 
     public boolean authenticateUser(String username, String password, String role) {
-        User userTmp = repository.getByUsernameAndPassword(username, password, role);
+        User userTmp = userRepository.getByUsernameAndPassword(username, password, role);
         if(userTmp!=null){AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");}
         else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ "+role+" с подобно потребителско име или парола не съществува в системата.");}
         return userTmp != null;
     }
 
-    public boolean checkForCorrectDataUpdate(String [] fields) //proverka pri redaktirane danni na user
+    public boolean checkForCorrectPersonalDataUpdate(String [] fields) //proverka pri redaktirane danni na user
     {
         if(fields.length==6)
         {
@@ -336,12 +351,40 @@ public class UserService {
         else {return false;}
     }
 
-    public void clearFields(TextField [] textFields, PasswordField passwordField)
+    public boolean checkForCorrectDataUpdate(String [] fields,UserModel selectedUser) //proverka pri redaktirane danni na user
     {
-        for(TextField currTextField:textFields)
+        if(fields.length==6)
         {
-            currTextField.clear();
+            if(Objects.equals(selectedUser.getFirstName(), fields[0]) && Objects.equals(selectedUser.getLastName(), fields[1]) && Objects.equals(selectedUser.getPhone(), fields[2]) && Objects.equals(selectedUser.getUsername(), fields[3]) && Objects.equals(selectedUser.getEmail(), fields[4]) && Objects.equals(selectedUser.getPassword(), fields[5]))
+            {
+                return false;
+            }
+            else if(!Objects.equals(selectedUser.getPhone(), fields[2]) && isPhoneExists(fields[2]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[2]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else if(!Objects.equals(selectedUser.getUsername(), fields[3]) &&isUsernameExists(fields[3]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[3]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else if(!Objects.equals(selectedUser.getEmail(), fields[4]) &&isEmailExists(fields[4]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[4]+"\" вече съществува в базата данни.");
+                return false;
+            }
+            else return true;
         }
-        passwordField.clear();
+        else {return false;}
     }
+
+   // public void clearFields(TextField [] textFields, PasswordField passwordField)
+   // {
+    //    for(TextField currTextField:textFields)
+    //    {
+    //        currTextField.clear();
+     //   }
+    //    passwordField.clear();
+   // }
 }

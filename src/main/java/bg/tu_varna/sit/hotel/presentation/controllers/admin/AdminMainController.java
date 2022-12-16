@@ -19,6 +19,11 @@ public class AdminMainController{
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
+    @FXML
+    public void showOwnersInfo() throws IOException {
+        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+    }
+
 
     @FXML
     public void logout() throws IOException {

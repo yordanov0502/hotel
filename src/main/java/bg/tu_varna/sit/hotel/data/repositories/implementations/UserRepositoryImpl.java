@@ -190,4 +190,24 @@ public class UserRepositoryImpl implements UserRepository<User> {
         }
         return user;
     }
+
+    @Override
+    public List<User> getAllByRole(String role) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new LinkedList<>();
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE role = '" + role + "'";
+            users.addAll(session.createQuery(jpql, User.class).getResultList());
+            transaction.commit();
+            if(users.isEmpty()){log.info("There are no owners in the database.");}
+            else{log.info("Got all users by role \""+role+"\" successfully.");}
+        } catch(Exception ex) {
+            log.error("Get all users by role \""+role+"\" error: " + ex.getMessage());
+        } finally {
+           session.close();
+        }
+      return users;
+    }
 }

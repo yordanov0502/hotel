@@ -42,4 +42,6 @@ module bg.tu_varna.sit.hotel {
     exports bg.tu_varna.sit.hotel.data.entities;
     opens bg.tu_varna.sit.hotel.data.entities to org.hibernate.orm.core;
 
+    exports bg.tu_varna.sit.hotel.presentation.models;
+    opens bg.tu_varna.sit.hotel.presentation.models to java.base;
 }

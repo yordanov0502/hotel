@@ -158,7 +158,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USER_PLUS" layoutX="5.0" layoutY="124.0" size="20" />
-            <Button fx:id="ownersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственици" textAlignment="RIGHT">
+            <Button fx:id="ownersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" onAction="#showOwnersInfo" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственици" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
