@@ -51,8 +51,8 @@ public class UserEditInfoController {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данните за "+selectedUser.getRole()+" \""+selectedUser.getFirstName()+" "+selectedUser.getLastName()+"\" .");
                 ViewManager.getSecondaryStage().close();
                 ViewManager.setSecondaryStage(null);
+                refreshView(selectedUser.getRole());//loads specific page again(refreshes), in order to show the new changes
                 UserEditInfoController.setSelectedUser(null);
-                ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
             }
             else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");}
         }
@@ -80,4 +80,17 @@ public class UserEditInfoController {
             showCustomerInfo();
         }
     }
+
+    private void refreshView(String role) throws IOException {
+        switch (role)
+        {
+            //case "администратор:"...///////////////////////////////////////////////////////
+            case "собственик": ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);break;
+            case "мениджър": ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);break;
+            case "рецепционист": ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);break;
+            //case "клиент:"...///////////////////////////////////////////////////////
+            default:break;
+        }
+    }
+
 }

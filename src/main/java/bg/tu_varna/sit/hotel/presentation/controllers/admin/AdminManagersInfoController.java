@@ -60,6 +60,10 @@ public class AdminManagersInfoController {
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
+    @FXML
+    public void showReceptionistsInfo() throws IOException{
+        ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
+    }
 
     public void initialize() {
 
@@ -88,7 +92,7 @@ public class AdminManagersInfoController {
         statusColumn.setStyle("-fx-alignment:center");
         actionColumn.setStyle("-fx-alignment:center");
 
-        managersTable.setItems(userService.getAllByRole("мениджър"));// Inserts all owners in TableView
+        managersTable.setItems(userService.getAllByRole("мениджър"));// Inserts all managers in TableView
         createActionButtons();//insert dynamically created action buttons in every row of TableView
     }
 

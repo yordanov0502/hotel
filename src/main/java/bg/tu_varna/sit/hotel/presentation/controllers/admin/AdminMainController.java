@@ -30,6 +30,11 @@ public class AdminMainController{
     }
 
     @FXML
+    public void showReceptionistsInfo() throws IOException{
+        ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
+    }
+
+    @FXML
     public void logout() throws IOException {
         if(ViewManager.getSecondaryStage()!=null)
         {

@@ -112,7 +112,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
-            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showReceptionistsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

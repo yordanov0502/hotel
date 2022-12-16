@@ -6,9 +6,9 @@
 <?import javafx.scene.control.CustomMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminAddOwnerController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminReceptionistsInfoController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
         <items>
@@ -88,62 +88,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
-      <Pane layoutX="294.0" layoutY="72.0" prefHeight="396.0" prefWidth="355.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
-         <children>
-            <Label layoutX="69.0" layoutY="14.0" text="Въведете данни за собственик" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="ownerNameField" alignment="CENTER" layoutX="90.0" layoutY="45.0" prefHeight="31.0" prefWidth="189.0" promptText="Име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="ownerSurnameField" alignment="CENTER" layoutX="90.0" layoutY="85.0" prefHeight="31.0" prefWidth="189.0" promptText="Фамилия" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="ownerEGNField" alignment="CENTER" layoutX="90.0" layoutY="125.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="ownerPhoneField" alignment="CENTER" layoutX="90.0" layoutY="165.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <PasswordField fx:id="ownerPasswordField" alignment="CENTER" layoutX="90.0" layoutY="205.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </PasswordField>
-            <TextField fx:id="ownerUsernameField" alignment="CENTER" layoutX="90.0" layoutY="245.0" prefHeight="31.0" prefWidth="189.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="ownerEmailField" alignment="CENTER" layoutX="90.0" layoutY="285.0" prefHeight="31.0" prefWidth="189.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <Button fx:id="ownerAddButton" layoutX="126.0" layoutY="336.0" mnemonicParsing="false" onAction="#addOwner" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="65.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="105.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="INFO" layoutX="73.0" layoutY="147.0" size="20" text="" />
-            <FontAwesomeIconView fill="WHITE" glyphName="PHONE" layoutX="68.0" layoutY="187.0" size="20" />
-            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="69.0" layoutY="228.0" size="22" />
-            <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="68.0" layoutY="267.0" size="20" />
-            <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" layoutX="68.0" layoutY="306.0" size="16" />
-         </children>
-      </Pane>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
             <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showAdminMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
@@ -152,7 +96,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addOwnerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addOwnerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственик" textAlignment="RIGHT">
+            <Button fx:id="addOwnerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addOwner" prefHeight="40.0" prefWidth="133.0" styleClass="addOwnerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственик" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -170,7 +114,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
-            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showReceptionistsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -187,13 +131,25 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="BELL" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="275.0" layoutY="14.0" prefHeight="32.0" prefWidth="380.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добавяне на собственик на хотел">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="195.0" layoutY="14.0" prefHeight="32.0" prefWidth="480.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Списък с всички рецепционисти в системата">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
+      <FontAwesomeIconView glyphName="BELL" layoutX="5.0" layoutY="397.0" size="20" />
+      <TableView fx:id="receptionistsTable" layoutX="143.0" layoutY="70.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
+        <columns>
+          <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
+          <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />
+            <TableColumn fx:id="surnameColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Фамилия" />
+            <TableColumn fx:id="phoneColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="Телефон" />
+            <TableColumn fx:id="usernameColumn" prefWidth="79.0" style="-fx-font-family: Arial;" text="Username" />
+            <TableColumn fx:id="emailColumn" prefWidth="87.0" style="-fx-font-family: Arial;" text="Имейл" />
+            <TableColumn fx:id="statusColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Статус" />
+            <TableColumn fx:id="actionColumn" prefWidth="118.0" style="-fx-font-family: Arial;" text="Действия" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
