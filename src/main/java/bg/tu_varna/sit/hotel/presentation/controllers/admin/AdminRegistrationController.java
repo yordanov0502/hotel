@@ -46,19 +46,34 @@ public class AdminRegistrationController {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && !userService.checkForExistingData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
         {
-            if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
+            if(userService.getAllByRole("администратор")==null)//grants direct access to the system only for the first admin registration
             {
-                log.info("Successful admin registration.");
-                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
-                /////////////////////////////////////////////////////////////////////////
-                UserSession.setUser(userService.getUserById(adminEGNField.getText()));//tova ne trqbva da e taka, da e tuk, zashtoto trqbva da se pravi potvurjdenie ot drug admin za napravena registraciq
-                ////////////////////////////////////////////////////////////////////////
-                ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
+                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"потвърден")))
+                {
+                    log.info("Successful admin registration.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
+                    UserSession.setUser(userService.getUserById(adminEGNField.getText()));
+                    ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
+                }
+                else
+                {
+                    log.error("Unsuccessful admin registration.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
+                }
             }
             else
             {
-                log.error("Unsuccessful admin registration.");
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
+                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
+                {
+                    log.info("Successful admin registration.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация, но трябва да бъде потвърдена от някой от администраторите, за да получите достъп до системата.");
+                    ViewManager.changeView(Constants.View.ADMIN_REGISTRATION_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Registration", 800, 500);
+                }
+                else
+                {
+                    log.error("Unsuccessful admin registration.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Регистрацията ви е неуспешна.");
+                }
             }
         }
     }

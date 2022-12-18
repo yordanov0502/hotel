@@ -318,8 +318,7 @@ public class UserService {
 
     public boolean authenticateUser(String username, String password, String role) {
         User userTmp = userRepository.getByUsernameAndPassword(username, password, role);
-        if(userTmp!=null){AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");}
-        else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ "+role+" с подобно потребителско име или парола не съществува в системата.");}
+        if(userTmp==null){AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ "+role+" с подобно потребителско име или парола не съществува в системата.");}
         return userTmp != null;
     }
 

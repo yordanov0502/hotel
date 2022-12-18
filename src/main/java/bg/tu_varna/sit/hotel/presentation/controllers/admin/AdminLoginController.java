@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 
 public class AdminLoginController{
@@ -44,18 +45,30 @@ public class AdminLoginController{
         if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}) && userService.authenticateUser(adminUsernameField.getText(), adminPasswordField.getText(),"администратор"))
         {
             UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
-            //updates last login column of user every time he logs in
-            if(userService.updateUser(new UserModel(UserSession.getUser().getId(),UserSession.getUser().getFirstName(),UserSession.getUser().getLastName(),UserSession.getUser().getPhone(), UserSession.getUser().getUsername(),UserSession.getUser().getEmail(),UserSession.getUser().getPassword(),UserSession.getUser().getHash(),UserSession.getUser().getRole(),UserSession.getUser().getCreatedAt(),new Timestamp(System.currentTimeMillis()), UserSession.getUser().getStatus())))
+
+            if(Objects.equals(UserSession.getUser().getStatus(), "непотвърден"))
             {
+                log.error("Admin \""+UserSession.getUser().getUsername()+"\" failed to log in, because their registration has not been approved by any of the admins yet.");
+                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ Достъпът до системата не е възможен, защото регистрацията ви все още не е потвърдена от администраторите.");
                 UserSession.setUser(null);
-                UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
-                log.info("Admin \""+UserSession.getUser().getUsername()+"\" successfully logged in.");
-                ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
             }
             else
             {
-                log.error("Admin \""+UserSession.getUser().getUsername()+"\" failed to log in.");
-                AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Възникна грешка. Моля опитайте отново.");
+                //updates last login column of user every time he logs in
+                if(userService.updateUser(new UserModel(UserSession.getUser().getId(),UserSession.getUser().getFirstName(),UserSession.getUser().getLastName(),UserSession.getUser().getPhone(), UserSession.getUser().getUsername(),UserSession.getUser().getEmail(),UserSession.getUser().getPassword(),UserSession.getUser().getHash(),UserSession.getUser().getRole(),UserSession.getUser().getCreatedAt(),new Timestamp(System.currentTimeMillis()), UserSession.getUser().getStatus())))
+                {
+                    UserSession.setUser(null);
+                    UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
+                    log.info("Admin \""+UserSession.getUser().getUsername()+"\" successfully logged in.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");
+                    ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
+                }
+                else
+                {
+                    UserSession.setUser(null);
+                    log.error("Admin \""+UserSession.getUser().getUsername()+"\" failed to log in.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Възникна грешка. Моля опитайте отново.");
+                }
             }
         }
     }
