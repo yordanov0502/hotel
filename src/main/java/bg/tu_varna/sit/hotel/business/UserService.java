@@ -323,7 +323,7 @@ public class UserService {
         return userTmp != null;
     }
 
-    public boolean checkForCorrectPersonalDataUpdate(String [] fields) //proverka pri redaktirane danni na user
+    public boolean checkForCorrectPersonalDataUpdate(String [] fields) //proverka pri redaktirane na li4ni danni
     {
         if(fields.length==6)
         {
