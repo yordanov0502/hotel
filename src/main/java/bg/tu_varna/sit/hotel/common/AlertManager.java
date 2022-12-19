@@ -11,7 +11,6 @@ public final class AlertManager {
 
     private AlertManager(){}
 
-    //alerts for primary stage
     public static void showAlert(Alert.AlertType type,String header, String message){
         Alert alert = new Alert(type);
         alert.setHeaderText(header);

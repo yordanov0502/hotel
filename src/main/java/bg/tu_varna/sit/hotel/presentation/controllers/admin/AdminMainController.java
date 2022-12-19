@@ -6,13 +6,19 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Circle;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class AdminMainController{
     private static final Logger log = Logger.getLogger(AdminMainController.class);
-
+    @FXML
+    private Circle notificationCircle;
+    @FXML
+    private Label notificationLabel;
 
     @FXML
     public void addOwner() throws IOException {
@@ -61,6 +67,12 @@ public class AdminMainController{
         }
     }
 
+    public void initialize()
+    {
+      //notificationCircle.setVisible(true);
+      //notificationLabel.setText("7");
+      //notificationLabel.setVisible(true);
+    }
 
 
 }
