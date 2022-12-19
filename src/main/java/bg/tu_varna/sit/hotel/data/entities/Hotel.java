@@ -1,5 +1,9 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -10,7 +14,7 @@ public class Hotel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "id", nullable = false, length = 10)
     private Integer id;
 

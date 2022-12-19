@@ -13,9 +13,9 @@ public class HotelModel implements EntityModel<Hotel>{
 
     public HotelModel(){}
 
-    public HotelModel(Integer id,String name,String address,Timestamp established_at,Integer stars)
+    public HotelModel(/*Integer id,*/String name,String address,Timestamp established_at,Integer stars)
     {
-        this.id=id;
+       /* this.id=id; */
         this.name=name;
         this.address=address;
         this.established_at=established_at;

@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.business;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import org.apache.log4j.Logger;
 
 public class HotelService {
@@ -35,5 +36,17 @@ public class HotelService {
     public boolean isNameExists(String name) {
         return getHotelByName(name) != null;
     }
+
+
+
+    public boolean addHotel(HotelModel hotelModel) {
+        return hotelRepository.save(hotelModel.toEntity());
+    }
+
+    public boolean updateHotel(HotelModel hotelModel) {
+        return hotelRepository.update(hotelModel.toEntity());
+    }
+
+    public boolean deleteHotel(HotelModel hotelModel){return hotelRepository.delete(hotelModel.toEntity());}
 
 }
