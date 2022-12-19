@@ -18,13 +18,22 @@ public class HotelService {
         public static final HotelService INSTANCE = new HotelService();
     }
 
-    public HotelModel getHotelById(String id) {
+    public HotelModel getHotelById(Integer id) {
         Hotel hotel = hotelRepository.getById(id);
         return (hotel == null) ? null : new HotelModel(hotel);
     }
 
-    public boolean isIdExists(String id) {
+    public boolean isIdExists(Integer id) {
         return getHotelById(id) != null;
+    }
+
+    public HotelModel getHotelByName(String name) {
+        Hotel hotel = hotelRepository.getByName(name);
+        return (hotel == null) ? null : new HotelModel(hotel);
+    }
+
+    public boolean isNameExists(String name) {
+        return getHotelByName(name) != null;
     }
 
 }

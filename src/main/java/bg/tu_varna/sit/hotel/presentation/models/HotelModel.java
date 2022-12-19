@@ -5,7 +5,7 @@ import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import java.sql.Timestamp;
 
 public class HotelModel implements EntityModel<Hotel>{
-    private String id;
+    private Integer id;
     private String name;
     private String address;
     private Timestamp established_at;
@@ -13,7 +13,7 @@ public class HotelModel implements EntityModel<Hotel>{
 
     public HotelModel(){}
 
-    public HotelModel(String id,String name,String address,Timestamp established_at,Integer stars)
+    public HotelModel(Integer id,String name,String address,Timestamp established_at,Integer stars)
     {
         this.id=id;
         this.name=name;
@@ -31,13 +31,9 @@ public class HotelModel implements EntityModel<Hotel>{
         this.stars=hotel.getStars();
     }
 
-    public String getId() {
-        return id;
-    }
+    public Integer getId() {return id;}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(Integer id) {this.id = id;}
 
     public String getName() {
         return name;

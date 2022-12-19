@@ -91,8 +91,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         return hotels;
     }
 
-    @Override //unique hotel identifier
-    public Hotel getById(String id) {
+    @Override
+    public Hotel getById(Integer id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Hotel hotel = null;
@@ -111,7 +111,24 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
     }
 
 
+    @Override //unique hotel name
+    public Hotel getByName(String name) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Hotel hotel = null;
 
+        try {
+            String jpql = "SELECT h FROM Hotel h WHERE name = '" + name + "'";
+            hotel = (Hotel) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got hotel by name successfully.");
+        } catch(Exception ex) {
+            log.error("Get hotel by name error: " + ex.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotel;
+    }
 
 
 

@@ -1,9 +1,6 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -13,10 +10,11 @@ public class Hotel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, length = 10)
-    private String id;//unique identifier
+    private Integer id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "address", nullable = false)
@@ -60,11 +58,7 @@ public class Hotel implements Serializable {
         this.name = name;
     }
 
-    public String getId() {
-        return id;
-    }
+    public Integer getId() {return id;}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(Integer id) {this.id = id;}
 }
