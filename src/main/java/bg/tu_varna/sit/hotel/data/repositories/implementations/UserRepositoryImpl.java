@@ -34,8 +34,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();//commit changes to the database
             log.info("User added successfully.");
             return true;
-        } catch (Exception ex) {
-            log.error("User add error: " + ex);
+        } catch (Exception e) {
+            log.error("User add error: " + e);
             return false;
         } finally {
             session.close();
@@ -51,8 +51,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             log.info("User updated successfully.");
             return true;
-        } catch (Exception ex) {
-            log.error("User update error: " + ex);
+        } catch (Exception e) {
+            log.error("User update error: " + e);
             return false;
         } finally {
             session.close();
@@ -86,8 +86,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             users.addAll(session.createQuery(jpql, User.class).getResultList());
             transaction.commit();
             log.info("Got all users successfully.");
-        } catch (Exception ex) {
-            log.error("Get all users error: " + ex.getMessage());
+        } catch (Exception e) {
+            log.error("Get all users error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -105,8 +105,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by id successfully.");
-        } catch(Exception ex) {
-            log.error("Get user by id error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get user by id error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -126,8 +126,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by phone successfully.");
-        } catch(Exception ex) {
-            log.error("Get user by phone error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get user by phone error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -145,8 +145,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by username successfully.");
-        } catch(Exception ex) {
-            log.error("Get user by username error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get user by username error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -164,8 +164,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by email successfully.");
-        } catch(Exception ex) {
-            log.error("Get user by email error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get user by email error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -183,8 +183,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             user = (User) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got user by username & password successfully.");
-        } catch (Exception ex) {
-            log.error("Get user by username & password error: " + ex.getMessage());
+        } catch (Exception e) {
+            log.error("Get user by username & password error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -203,8 +203,8 @@ public class UserRepositoryImpl implements UserRepository<User> {
             transaction.commit();
             if(users.isEmpty()){log.info("There are no owners in the database.");}
             else{log.info("Got all users by role \""+role+"\" successfully.");}
-        } catch(Exception ex) {
-            log.error("Get all users by role \""+role+"\" error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get all users by role \""+role+"\" error: " + e.getMessage());
         } finally {
            session.close();
         }

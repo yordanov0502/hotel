@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="POJOGeneratorSettings">
+    <option name="entityFolderPath" value="$PROJECT_DIR$/src/main/java/bg/tu_varna/sit/hotel/data/entities" />
+  </component>
+</project>

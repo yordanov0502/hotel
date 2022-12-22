@@ -39,9 +39,7 @@ public class HotelService {
 
 
 
-    public boolean addHotel(HotelModel hotelModel) {
-        return hotelRepository.save(hotelModel.toEntity());
-    }
+    public boolean addHotel(HotelModel hotelModel) {return hotelRepository.save(hotelModel.toEntity());}
 
     public boolean updateHotel(HotelModel hotelModel) {
         return hotelRepository.update(hotelModel.toEntity());

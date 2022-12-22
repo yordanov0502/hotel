@@ -9,12 +9,14 @@ public class Connection {
     private static final Logger log = Logger.getLogger(Connection.class);
     private static SessionFactory sessionFactory;
 
+    private Connection(){}
+
     static {
         try {
             sessionFactory = new Configuration().configure().buildSessionFactory();//creates SessionFactory
             log.info("Initial SessionFactory created successfully");
-        } catch (Throwable ex) {
-            log.error("Initial SessionFactory created failed with error: " + ex);
+        } catch (Throwable e) {
+            log.error("Initial SessionFactory created failed with error: " + e);
         }
     }
 
@@ -31,4 +33,5 @@ public class Connection {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
+
 }

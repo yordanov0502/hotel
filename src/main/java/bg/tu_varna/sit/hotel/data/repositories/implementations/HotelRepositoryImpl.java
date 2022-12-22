@@ -2,7 +2,6 @@ package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
-import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.HotelRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -31,8 +30,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             transaction.commit();//commit changes to the database
             log.info("Hotel added successfully.");
             return true;
-        } catch (Exception ex) {
-            log.error("Hotel add error: " + ex);
+        } catch (Exception e) {
+            log.error("Hotel add error: " + e);
             return false;
         } finally {
             session.close();
@@ -48,8 +47,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             transaction.commit();
             log.info("Hotel updated successfully.");
             return true;
-        } catch (Exception ex) {
-            log.error("Hotel update error: " + ex);
+        } catch (Exception e) {
+            log.error("Hotel update error: " + e);
             return false;
         } finally {
             session.close();
@@ -83,8 +82,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             hotels.addAll(session.createQuery(jpql, Hotel.class).getResultList());
             transaction.commit();
             log.info("Got all hotels successfully.");
-        } catch (Exception ex) {
-            log.error("Get all hotels error: " + ex.getMessage());
+        } catch (Exception e) {
+            log.error("Get all hotels error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -102,8 +101,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             hotel = (Hotel) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got hotel by id successfully.");
-        } catch(Exception ex) {
-            log.error("Get hotel by id error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get hotel by id error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -122,8 +121,8 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             hotel = (Hotel) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got hotel by name successfully.");
-        } catch(Exception ex) {
-            log.error("Get hotel by name error: " + ex.getMessage());
+        } catch(Exception e) {
+            log.error("Get hotel by name error: " + e.getMessage());
         } finally {
             session.close();
         }

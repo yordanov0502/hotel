@@ -1,11 +1,10 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -48,7 +47,19 @@ public class User implements Serializable {
 
     @Column(name = "status", nullable = false)
     private String status;
+///////////////////////////////////////////////////////////////
+    @ManyToMany(cascade = { CascadeType.ALL }) /*PERSIST*/
+    @JoinTable(
+            name = "hotels_users",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "hotel_id") }
+    )
+    Set<Hotel> hotels = new HashSet<>();//
 
+    public Set<Hotel> getHotels(){
+        return hotels;
+    }
+////////////////////////////////////////////////////////////////
     public String getHash() {
         return hash;
     }

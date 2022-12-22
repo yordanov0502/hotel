@@ -5,21 +5,25 @@ import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import java.sql.Timestamp;
 
 public class HotelModel implements EntityModel<Hotel>{
-    private Integer id;
+    private Long id;
     private String name;
     private String address;
     private Timestamp established_at;
     private Integer stars;
+    private Boolean hasOwner;
+    private Boolean hasManager;
 
     public HotelModel(){}
 
-    public HotelModel(/*Integer id,*/String name,String address,Timestamp established_at,Integer stars)
+    public HotelModel(/*Integer id,*/String name,String address,Timestamp established_at,Integer stars,Boolean hasOwner,Boolean hasManager)
     {
        /* this.id=id; */
         this.name=name;
         this.address=address;
         this.established_at=established_at;
         this.stars=stars;
+        this.hasOwner=hasOwner;
+        this.hasManager=hasManager;
     }
 
     public HotelModel(Hotel hotel)
@@ -29,11 +33,13 @@ public class HotelModel implements EntityModel<Hotel>{
         this.address= hotel.getAddress();
         this.established_at=hotel.getEstablished_at();
         this.stars=hotel.getStars();
+        this.hasOwner=hotel.getHasOwner();
+        this.hasManager=hotel.getHasManager();
     }
 
-    public Integer getId() {return id;}
+    public Long getId() {return id;}
 
-    public void setId(Integer id) {this.id = id;}
+    public void setId(Long id) {this.id = id;}
 
     public String getName() {
         return name;
@@ -67,6 +73,13 @@ public class HotelModel implements EntityModel<Hotel>{
         this.stars = stars;
     }
 
+    public Boolean getHasOwner() {return hasOwner;}
+
+    public void setHasOwner(Boolean hasOwner) {this.hasOwner = hasOwner;}
+
+    public Boolean getHasManager() {return hasManager;}
+
+    public void setHasManager(Boolean hasManager) {this.hasManager = hasManager;}
 
     @Override
     public Hotel toEntity() {
@@ -76,6 +89,8 @@ public class HotelModel implements EntityModel<Hotel>{
         hotelTemp.setAddress(this.address);
         hotelTemp.setEstablished_at(this.established_at);
         hotelTemp.setStars(this.stars);
+        hotelTemp.setHasOwner(this.hasOwner);
+        hotelTemp.setHasManager(this.hasManager);
         return hotelTemp;
     }
 }
