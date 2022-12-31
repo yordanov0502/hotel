@@ -1,5 +1,9 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
+import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,8 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "hotels")
@@ -24,7 +27,7 @@ public class Hotel implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, unique = true)
     private String address;
 
     @Column(name = "established_at", nullable = false)
@@ -39,19 +42,16 @@ public class Hotel implements Serializable {
     @Column(name = "has_manager", nullable = false)
     private Boolean hasManager = false;
 
-    ////////////////////////////////////////////////////////////////////////
-    @ManyToMany(mappedBy = "hotels")//
-    private Set<User> users = new HashSet<>();
 
-    public Set<User> getUsers(){
+    @ManyToMany(mappedBy = "hotels")
+    private List<User> users = new ArrayList<>();
+
+    public List<User> getUsers(){
         return users;
     }
 
-    public void addUser(User user) {
-        users.add(user);
-        user.getHotels().add(this);
-    }
-    ////////////////////////////////////////////////////////////////////////
+    public void setUsers(List<User> users) {this.users = users;}
+
 
     public Boolean getHasManager() {
         return hasManager;
@@ -104,4 +104,31 @@ public class Hotel implements Serializable {
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", established_at=" + established_at +
+                ", stars=" + stars +
+                ", hasOwner=" + hasOwner +
+                ", hasManager=" + hasManager +
+               // ", users=" + users +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hotel hotel = (Hotel) o;
+        return id.equals(hotel.id) && name.equals(hotel.name) && address.equals(hotel.address) && established_at.equals(hotel.established_at) && stars.equals(hotel.stars) && hasOwner.equals(hotel.hasOwner) && hasManager.equals(hotel.hasManager) && users.equals(hotel.users);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, address, established_at, stars, hasOwner, hasManager, users);
+    }
 }

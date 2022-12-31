@@ -1,9 +1,10 @@
 package bg.tu_varna.sit.hotel.presentation.models;
 
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
 
 import java.sql.Timestamp;
-import java.util.Optional;
+import java.util.*;
 
 public class UserModel implements EntityModel<User> {
     private String id;
@@ -18,10 +19,11 @@ public class UserModel implements EntityModel<User> {
     private Timestamp createdAt;
     private Timestamp lastLogin;
     private String status;
+    private List<Hotel> hotels = new ArrayList<>();//////////////////////////////////////
 
     public UserModel(){}
 
-    public UserModel(String id,String firstName,String lastName,String phone,String username,String email,String password,String hash,String role,Timestamp createdAt,Timestamp lastLogin,String status)
+    public UserModel(String id,String firstName,String lastName,String phone,String username,String email,String password,String hash,String role,Timestamp createdAt,Timestamp lastLogin,String status,List<Hotel> hotels)
     {
         this.id=id;
         this.firstName=firstName;
@@ -35,6 +37,7 @@ public class UserModel implements EntityModel<User> {
         this.createdAt=createdAt;
         this.lastLogin=lastLogin;
         this.status=status;
+        this.hotels=hotels;///////////////////////////////////////////
     }
 
     public UserModel(User user) {
@@ -50,6 +53,7 @@ public class UserModel implements EntityModel<User> {
         this.createdAt=user.getCreatedAt();
         this.lastLogin=user.getLastLogin();
         this.status=user.getStatus();
+        this.hotels=user.getHotels();
     }
 
 
@@ -145,6 +149,9 @@ public class UserModel implements EntityModel<User> {
         this.status = status;
     }
 
+    public List<Hotel> getHotels() {return hotels;}////////////////////////////////////////////////
+
+    public void setHotels(List<Hotel> hotels) {this.hotels = hotels;}//////////////////////////////
 
     @Override
     public User toEntity() {
@@ -161,6 +168,7 @@ public class UserModel implements EntityModel<User> {
         userTemp.setCreatedAt(this.createdAt);
         userTemp.setLastLogin(this.lastLogin);
         userTemp.setStatus(this.status);
+        userTemp.setHotels(this.hotels);
         return userTemp;
     }
 }

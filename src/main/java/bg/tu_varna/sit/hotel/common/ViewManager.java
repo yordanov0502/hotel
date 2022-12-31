@@ -164,6 +164,15 @@ public final class ViewManager {
 
     }
 
+    public static void closeDialogBox()
+    {
+        if(ViewManager.getSecondaryStage()!=null)
+        {
+            ViewManager.getSecondaryStage().close();
+            ViewManager.setSecondaryStage(null);
+        }
+    }
+
     public static Stage getPrimaryStage() {
         return primaryStage;
     }

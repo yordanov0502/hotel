@@ -1,8 +1,10 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.UserService;
-import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.common.AlertManager;
+import bg.tu_varna.sit.hotel.common.Constants;
+import bg.tu_varna.sit.hotel.common.UserSession;
+import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -19,7 +21,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Optional;
 
-public class AdminOwnersInfoController {
+public class AdminsNewRegistrationsInfoController {
     private static final Logger log = Logger.getLogger(AdminMainController.class);
     private final UserService userService = UserService.getInstance();
 
@@ -30,7 +32,7 @@ public class AdminOwnersInfoController {
     @FXML
     public Button clearSearchButton;
     @FXML
-    public TableView<UserModel> ownersTable;
+    public TableView<UserModel> adminsTable;
     @FXML
     public TableColumn<UserModel,String> egnColumn;
     @FXML
@@ -61,6 +63,12 @@ public class AdminOwnersInfoController {
     }
 
     @FXML
+    public void showOwnersInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+    }
+
+    @FXML
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
@@ -78,22 +86,16 @@ public class AdminOwnersInfoController {
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
-    public void showNewlyRegisteredAdmins() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
-    }
-
     public void initialize() {
 
         if(UserSession.user!=null)
         {
-            ownersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
-            ownersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
+            adminsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
+            adminsTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
 
-            Label label = new Label("Няма информация за собственици.");
+            Label label = new Label("Няма информация за новорегистрирани администратори.");
             label.setStyle("-fx-text-fill: black;"+"-fx-background-color: white;"+"-fx-font-size: 20;");
-            ownersTable.setPlaceholder(label); //shows text when there are no owners in the database
+            adminsTable.setPlaceholder(label); //shows text when there are no newly registered admins in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
             egnColumn.setCellValueFactory(new PropertyValueFactory<UserModel,String>("id"));
@@ -113,9 +115,9 @@ public class AdminOwnersInfoController {
             statusColumn.setStyle("-fx-alignment:center");
             actionColumn.setStyle("-fx-alignment:center");
 
-            if(userService.getAllByRole("собственик")!=null)
+            if(userService.getAllNewlyRegisteredAdmins()!=null)
             {
-                ownersTable.setItems(userService.getAllByRole("собственик"));// Inserts all owners in TableView
+                adminsTable.setItems(userService.getAllNewlyRegisteredAdmins());// Inserts all newly registered admins in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
             }
             else
@@ -142,10 +144,12 @@ public class AdminOwnersInfoController {
 
                         TableCell<UserModel, String> cell = new TableCell<UserModel, String>() {
 
-                            FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TRASH);
-                            FontAwesomeIconView editIcon = new FontAwesomeIconView(FontAwesomeIcon.EDIT);
 
-                            public HBox hBox = new HBox(25, editIcon, deleteIcon);
+                            FontAwesomeIconView infoIcon = new FontAwesomeIconView(FontAwesomeIcon.ADDRESS_CARD_ALT);
+                            FontAwesomeIconView approveIcon = new FontAwesomeIconView(FontAwesomeIcon.CHECK_CIRCLE_ALT);
+                            FontAwesomeIconView deleteIcon = new FontAwesomeIconView(FontAwesomeIcon.TIMES_CIRCLE_ALT);
+
+                            public HBox hBox = new HBox(17, infoIcon, approveIcon, deleteIcon);
 
                             @Override
                             protected void updateItem(String item, boolean empty) {
@@ -157,21 +161,22 @@ public class AdminOwnersInfoController {
                                 }
                                 else
                                 {
-                                    editIcon.setStyle("-glyph-size:15px;");
-                                    deleteIcon.setStyle("-glyph-size:15px;");
+                                    infoIcon.setStyle("-glyph-size:17px;");
+                                    approveIcon.setStyle("-glyph-size:17px;");
+                                    deleteIcon.setStyle("-glyph-size:17px;");
 
 
-                                    editIcon.setOnMouseEntered((MouseEvent event) -> {
-                                        Tooltip tooltip = new Tooltip("редактирай");
-                                        Tooltip.install(editIcon,tooltip);
+                                    infoIcon.setOnMouseEntered((MouseEvent event) -> {
+                                        Tooltip tooltip = new Tooltip("подробно");
+                                        Tooltip.install(infoIcon,tooltip);
                                     });
 
-                                    editIcon.setOnMouseClicked((MouseEvent event) -> {
+                                    infoIcon.setOnMouseClicked((MouseEvent event) -> {
 
                                         UserModel userModel = getTableView().getItems().get(getIndex());
                                         try
                                         {
-                                            editRow(userModel);//edits row in TableView
+                                            showInformation(userModel);//shows information for selected admin from the TableView
                                         }
                                         catch (IOException e)
                                         {
@@ -181,19 +186,19 @@ public class AdminOwnersInfoController {
 
 
 
-                                    deleteIcon.setOnMouseEntered((MouseEvent event) -> {
-                                        Tooltip tooltip = new Tooltip("изтрий");
-                                        Tooltip.install(deleteIcon,tooltip);
+                                    approveIcon.setOnMouseEntered((MouseEvent event) -> {
+                                        Tooltip tooltip = new Tooltip("одобри");
+                                        Tooltip.install(approveIcon,tooltip);
                                     });
 
-                                    deleteIcon.setOnMouseClicked((MouseEvent event) -> {
+                                    approveIcon.setOnMouseClicked((MouseEvent event) -> {
 
                                         UserModel userModel = getTableView().getItems().get(getIndex());
 
                                         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                                         alert.setHeaderText("Потвърждение");
                                         alert.initStyle(StageStyle.UNDECORATED);
-                                        alert.setContentText("Наистина ли искате да изтриете данните за "+userModel.getRole()+"\n \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" от системата ?");
+                                        alert.setContentText("Наистина ли искате да потвърдите регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" в системата ?");
                                         alert.setX(ViewManager.getPrimaryStage().getX()+220);
                                         alert.setY(ViewManager.getPrimaryStage().getY()+180);
                                         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -206,7 +211,43 @@ public class AdminOwnersInfoController {
                                         {
                                             try
                                             {
-                                                deleteRow(userModel);//deletes row from TableView
+                                                approveRegistration(userModel);//approves(updates status) selected admin from the TableView
+                                            }
+                                            catch (IOException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+
+
+
+                                    deleteIcon.setOnMouseEntered((MouseEvent event) -> {
+                                        Tooltip tooltip = new Tooltip("отхвърли");
+                                        Tooltip.install(deleteIcon,tooltip);
+                                    });
+
+                                    deleteIcon.setOnMouseClicked((MouseEvent event) -> {
+
+                                        UserModel userModel = getTableView().getItems().get(getIndex());
+
+                                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                                        alert.setHeaderText("Потвърждение");
+                                        alert.initStyle(StageStyle.UNDECORATED);
+                                        alert.setContentText("Наистина ли искате да отхвърлите регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" от системата ?");
+                                        alert.setX(ViewManager.getPrimaryStage().getX()+220);
+                                        alert.setY(ViewManager.getPrimaryStage().getY()+180);
+                                        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                                        ButtonType yesButton = new ButtonType("Да", ButtonBar.ButtonData.YES);
+                                        ButtonType noButton = new ButtonType("Не", ButtonBar.ButtonData.NO);
+                                        alert.getButtonTypes().setAll(yesButton, noButton);
+                                        Optional<ButtonType> answer = alert.showAndWait();
+
+                                        if(answer.isPresent() && answer.get()==yesButton)
+                                        {
+                                            try
+                                            {
+                                                rejectRegistration(userModel);//rejects(updates status) selected admin registration from TableView
                                             }
                                             catch (IOException e)
                                             {
@@ -228,40 +269,48 @@ public class AdminOwnersInfoController {
         actionColumn.setCellFactory(cellCallback);
     }
 
-    private void editRow(UserModel userModel) throws IOException {
+    private void showInformation(UserModel userModel) throws IOException {
 
         UserSession.selectedUser=userModel;
-        ViewManager.openDialogBox(Constants.View.USER_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"User Edit Info",652,352);
+        ViewManager.openDialogBox(Constants.View.ADMIN_USER_INFO,ViewManager.getSecondaryStage(),this.getClass(),"Admin User Info",652,352);
     }
 
-    private void deleteRow(UserModel userModel) throws IOException {
+    private void approveRegistration(UserModel userModel) throws IOException{
 
-        //this loop will have more than 1 iteration because the user is owner (one owner can own many hotels, but every hotel has only one owner)
-        if(!userModel.getHotels().isEmpty())
+        userModel.setStatus("потвърден");
+        if(userService.updateUser(userModel))
         {
-            for(HotelModel h :userService.getAllHotelsOfUser(userModel))
-            {
-                userService.removeHotel(userModel,h,ViewManager.getPrimaryStage().getTitle());//removes user from certain hotel's list and vice versa, and updates hotel's hasOwner and hasManager attributes if the user is owner or manager of a hotel, but his account in the system remains
-            }
+            log.info("Information for admin \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully UPDATED(status = \"потвърден\").");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно потвърдихте регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
+            ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
         }
+        else
+        {
+            log.info("Information for admin \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been UPDATED.");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Потвърждението на регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+" е неуспешно.");
+        }
+    }
 
-        if(userService.deleteUser(userModel))
-          {
-              log.info("Information for owner \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
-              AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
-              ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
-          }
-          else
-          {
-              log.info("Information for owner \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been deleted.");
-              AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни е неуспешно.");
-          }
+    private void rejectRegistration(UserModel userModel) throws IOException {
+
+        userModel.setStatus("отхвърлен");
+        if(userService.updateUser(userModel))
+        {
+            log.info("Information for admin \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully UPDATED(status = \"отхвърлен\").");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно отхвърлихте регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
+            ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
+        }
+        else
+        {
+            log.info("Information for admin \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been UPDATED.");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Отхвърлянето на регистрацията на "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+" е неуспешно.");
+        }
     }
 
     @FXML
-    public void searchOwnerById() {
+    public void searchAdminById() {
 
-        if(userService.getAllByRole("собственик").size()>1 && ownersTable.getItems().size()!=1)
+        if(userService.getAllNewlyRegisteredAdmins().size()>1 && adminsTable.getItems().size()!=1)
         {
             if(searchField.getText().equals(""))
             {
@@ -274,14 +323,14 @@ public class AdminOwnersInfoController {
             }
             else
             {
-                if(userService.isIdExists(searchField.getText()) && userService.getUserById(searchField.getText()).getRole().equals("собственик"))
+                if(userService.getNewlyRegisteredAdminById(searchField.getText())!=null)
                 {
-                    ownersTable.getItems().clear();
-                    ownersTable.getItems().add(userService.getUserById(searchField.getText()));
+                    adminsTable.getItems().clear();
+                    adminsTable.getItems().add(userService.getNewlyRegisteredAdminById(searchField.getText()));
                 }
                 else
                 {
-                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Собственик с ЕГН: "+searchField.getText()+" не съществува в системата.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Новорегистриран администратор с ЕГН: "+searchField.getText()+" не съществува в системата.");
                     searchField.setText("");
                 }
             }
@@ -291,10 +340,10 @@ public class AdminOwnersInfoController {
     @FXML
     public void clearSearch() throws IOException {
         searchField.setText("");
-        if(userService.getAllByRole("собственик").size()>1 && ownersTable.getItems().size()==1)
+        if(userService.getAllNewlyRegisteredAdmins().size()>1 && adminsTable.getItems().size()==1)
         {
             ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+            ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
         }
     }
 

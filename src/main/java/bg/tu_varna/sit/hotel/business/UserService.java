@@ -2,8 +2,12 @@ package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.UserSession;
+import bg.tu_varna.sit.hotel.data.access.Connection;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.HotelsUsersModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +16,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
@@ -52,7 +58,8 @@ public class UserService {
                             u.getRole(),
                             u.getCreatedAt(),
                             u.getLastLogin(),
-                            u.getStatus()
+                            u.getStatus(),
+                            u.getHotels()
                     )).collect(Collectors.toList())
             );
         }
@@ -78,7 +85,57 @@ public class UserService {
                             u.getRole(),
                             u.getCreatedAt(),
                             u.getLastLogin(),
-                            u.getStatus()
+                            u.getStatus(),
+                            u.getHotels()
+                    )).collect(Collectors.toList())
+            );
+        }
+    }
+
+    public ObservableList<HotelModel> getAllHotelsOfUser(UserModel userModel) {
+        List<Hotel> hotels = userModel.getHotels();
+
+        if(hotels.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    hotels.stream().map(h -> new HotelModel(
+                            /**/h.getId(),
+                            h.getName(),
+                            h.getAddress(),
+                            h.getEstablished_at(),
+                            h.getStars(),
+                            h.getHasOwner(),
+                            h.getHasManager(),
+                            h.getUsers()
+                    )).collect(Collectors.toList())
+            );
+        }
+    }
+
+    public ObservableList<UserModel> getAllNewlyRegisteredAdmins() {
+        List<User> users = userRepository.getAllNewlyRegisteredAdmins();
+
+        if(users.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    users.stream().map(u -> new UserModel(
+                            u.getId(),
+                            u.getFirstName(),
+                            u.getLastName(),
+                            u.getPhone(),
+                            u.getUsername(),
+                            u.getEmail(),
+                            u.getPassword(),
+                            u.getHash(),
+                            u.getRole(),
+                            u.getCreatedAt(),
+                            u.getLastLogin(),
+                            u.getStatus(),
+                            u.getHotels()
                     )).collect(Collectors.toList())
             );
         }
@@ -116,6 +173,11 @@ public class UserService {
         return (user == null) ? null : new UserModel(user);
     }
 
+    public UserModel getNewlyRegisteredAdminById(String id) {
+        User user = userRepository.getNewlyRegisteredAdminById(id);
+        return ((user) == null) ? null : new UserModel(user);
+    }
+
     public boolean isEmailExists(String email) {
         return getUserByEmail(email) != null;
     }
@@ -129,6 +191,97 @@ public class UserService {
     }
 
     public boolean deleteUser(UserModel userModel){return userRepository.delete(userModel.toEntity());}
+
+    public boolean addHotel(UserModel userModel, HotelModel hotelModel)
+    {
+        if(!userModel.getRole().equals("администратор"))
+        {
+            if (hotelModel.getHasOwner() && userModel.getRole().equals("собственик"))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Хотел \""+hotelModel.getName()+"\" вече си има собственик.");
+                return false;
+            }
+            else if (hotelModel.getHasManager() && userModel.getRole().equals("мениджър"))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Хотел \""+hotelModel.getName()+"\" вече си има мениджър.");
+                return false;
+            }
+            else
+            {
+                if(!hotelModel.getHasOwner() && userModel.getRole().equals("собственик"))
+                {
+                    hotelModel.setHasOwner(true);
+                }
+                if(!hotelModel.getHasManager() && userModel.getRole().equals("мениджър"))
+                {
+                    hotelModel.setHasManager(true);
+                }
+
+                userModel.toEntity().getHotels().add(hotelModel.toEntity());//adds hotel to user's list of hotels
+                hotelModel.toEntity().getUsers().add(userModel.toEntity());//////adds user to hotel's list of users
+
+
+                if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
+                {
+                    log.info("Successfully added hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" set of hotels and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    return true;
+                }
+                else
+                {
+                    log.info("Failed to add hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" set of hotels and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Неуспешно добавяне на "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Не може да добавяте администратор на системата като служител на хотел \""+hotelModel.getName()+"\".");
+            return false;
+        }
+    }
+
+    public void removeHotel(UserModel userModel,HotelModel hotelModel,String stageTitle)
+    {
+        //removes hotel from user's list of hotels                                                     //////removes user from hotel's list of users
+        if(userModel.toEntity().getHotels().removeIf(h -> h.getName().equals(hotelModel.getName())) && hotelModel.toEntity().getUsers().removeIf(u -> u.getId().equals(userModel.getId())))
+        {
+            if (userModel.getRole().equals("собственик"))
+            {
+                hotelModel.setHasOwner(false);
+            }
+            if (userModel.getRole().equals("мениджър"))
+            {
+                hotelModel.setHasManager(false);
+            }
+
+            if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
+            {
+                if(stageTitle.equals("Hotel Users Info"))
+                {
+                    log.info("Successfully removed hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+userModel.getFirstName()+" "+userModel.getLastName()+" вече не е "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\".");
+                }
+            }
+            else
+            {
+                if(stageTitle.equals("Hotel Users Info"))
+                {
+                    log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+                }
+            }
+        }
+        else
+        {
+            if(stageTitle.equals("Hotel Users Info"))
+            {
+                log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+            }
+        }
+    }
 
     public boolean validateFirstName(String firstName) {
         String regex = "^[\\u0410-\\u042F]{1}([\\u0430-\\u044F]{2,29})$";
@@ -326,21 +479,21 @@ public class UserService {
     {
         if(fields.length==6)
         {
-            if(Objects.equals(UserSession.getUser().getFirstName(), fields[0]) && Objects.equals(UserSession.getUser().getLastName(), fields[1]) && Objects.equals(UserSession.getUser().getPhone(), fields[2]) && Objects.equals(UserSession.getUser().getUsername(), fields[3]) && Objects.equals(UserSession.getUser().getEmail(), fields[4]) && Objects.equals(UserSession.getUser().getPassword(), fields[5]))
+            if(Objects.equals(UserSession.user.getFirstName(), fields[0]) && Objects.equals(UserSession.user.getLastName(), fields[1]) && Objects.equals(UserSession.user.getPhone(), fields[2]) && Objects.equals(UserSession.user.getUsername(), fields[3]) && Objects.equals(UserSession.user.getEmail(), fields[4]) && Objects.equals(UserSession.user.getPassword(), fields[5]))
             {
                  return false;
             }
-            else if(!Objects.equals(UserSession.getUser().getPhone(), fields[2]) && isPhoneExists(fields[2]))
+            else if(!Objects.equals(UserSession.user.getPhone(), fields[2]) && isPhoneExists(fields[2]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[2]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(UserSession.getUser().getUsername(), fields[3]) &&isUsernameExists(fields[3]))
+            else if(!Objects.equals(UserSession.user.getUsername(), fields[3]) &&isUsernameExists(fields[3]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[3]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(UserSession.getUser().getEmail(), fields[4]) &&isEmailExists(fields[4]))
+            else if(!Objects.equals(UserSession.user.getEmail(), fields[4]) &&isEmailExists(fields[4]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[4]+"\" вече съществува в базата данни.");
                 return false;

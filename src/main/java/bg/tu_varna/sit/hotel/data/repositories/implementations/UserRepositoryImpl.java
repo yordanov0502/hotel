@@ -201,7 +201,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
             String jpql = "SELECT u FROM User u WHERE role = '" + role + "'";
             users.addAll(session.createQuery(jpql, User.class).getResultList());
             transaction.commit();
-            if(users.isEmpty()){log.info("There are no owners in the database.");}
+            if(users.isEmpty()){log.info("There are no \""+role+"и\" in the database.");}
             else{log.info("Got all users by role \""+role+"\" successfully.");}
         } catch(Exception e) {
             log.error("Get all users by role \""+role+"\" error: " + e.getMessage());
@@ -210,4 +210,44 @@ public class UserRepositoryImpl implements UserRepository<User> {
         }
       return users;
     }
+
+    @Override
+    public List<User> getAllNewlyRegisteredAdmins() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new LinkedList<>();
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE role = 'администратор' AND status = 'непотвърден'";
+            users.addAll(session.createQuery(jpql, User.class).getResultList());
+            transaction.commit();
+            if(users.isEmpty()){log.info("There are no \"администратори\" in the database.");}
+            else{log.info("Got all users by role \"администратор\" and status \"непотвърден\" successfully.");}
+        } catch(Exception e) {
+            log.error("Get all users by role \"администратор\" and status \"непотвърден\" error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return users;
+    }
+
+    @Override
+    public User getNewlyRegisteredAdminById(String id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        User user = null;
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE role = 'администратор' AND status = 'непотвърден' AND id = '" + id + "'";
+            user = (User) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got newly registered user successfully.");
+        } catch(Exception e) {
+            log.error("Get newly registered user error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return user;
+    }
+
 }

@@ -13,10 +13,12 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 public class AdminRegistrationController {
     private static final Logger log = Logger.getLogger(AdminRegistrationController.class);
-    public final UserService userService = UserService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     public AnchorPane anchorPane;
@@ -46,13 +48,15 @@ public class AdminRegistrationController {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && !userService.checkForExistingData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
         {
+
+
             if(userService.getAllByRole("администратор")==null)//grants direct access to the system only for the first admin registration
             {
-                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"потвърден")))
+                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"потвърден",new ArrayList<>())))
                 {
                     log.info("Successful admin registration.");
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация.");
-                    UserSession.setUser(userService.getUserById(adminEGNField.getText()));
+                    UserSession.user=userService.getUserById(adminEGNField.getText());
                     ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
                 }
                 else
@@ -63,7 +67,7 @@ public class AdminRegistrationController {
             }
             else
             {
-                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден")))
+                if(userService.addUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(),Hasher.SHA512.hash(adminPasswordField.getText()),"администратор",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"непотвърден",new ArrayList<>())))
                 {
                     log.info("Successful admin registration.");
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешна регистрация, но трябва да бъде потвърдена от някой от администраторите, за да получите достъп до системата.");

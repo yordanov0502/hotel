@@ -1,9 +1,18 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import bg.tu_varna.sit.hotel.business.UserService;
+import bg.tu_varna.sit.hotel.data.access.Connection;
+import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
+import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import org.hibernate.Session;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,19 +56,19 @@ public class User implements Serializable {
 
     @Column(name = "status", nullable = false)
     private String status;
-///////////////////////////////////////////////////////////////
-    @ManyToMany(cascade = { CascadeType.ALL }) /*PERSIST*/
-    @JoinTable(
-            name = "hotels_users",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "hotel_id") }
-    )
-    Set<Hotel> hotels = new HashSet<>();//
 
-    public Set<Hotel> getHotels(){
-        return hotels;
-    }
-////////////////////////////////////////////////////////////////
+
+    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @JoinTable(name = "hotels_users",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "hotel_id", referencedColumnName = "id"))
+    List<Hotel> hotels = new ArrayList<>();//
+
+    public void setHotels(List<Hotel> hotels) {this.hotels = hotels;}
+
+    public List<Hotel> getHotels() {return hotels;}
+
+
     public String getHash() {
         return hash;
     }
@@ -154,5 +163,24 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", hash='" + hash + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
+                ", lastLogin=" + lastLogin +
+                ", status='" + status + '\'' +
+                //", hotels=" + hotels +
+                '}';
     }
 }

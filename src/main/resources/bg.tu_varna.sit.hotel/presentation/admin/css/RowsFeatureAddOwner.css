@@ -7,7 +7,7 @@
 }
 
 .table-view .column-header{
-
+    -fx-pref-height: 31;
 }
 
 .table-row-cell{

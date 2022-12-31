@@ -9,6 +9,8 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -120,17 +122,18 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button fx:id="customersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showHotelsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="343.0" size="20" />
-            <Button fx:id="messagesButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Съобщения" textAlignment="RIGHT">
+            <Button fx:id="newAdminsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" onAction="#showNewlyRegisteredAdmins" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="  За потвърждение" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
+            <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
       <Label fx:id="headingLabel" alignment="CENTER" layoutX="221.0" layoutY="14.0" prefHeight="32.0" prefWidth="439.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Списък с всички собственици в системата">
@@ -138,8 +141,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <FontAwesomeIconView glyphName="BELL" layoutX="5.0" layoutY="397.0" size="20" />
-      <TableView fx:id="ownersTable" layoutX="143.0" layoutY="70.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
+      <TableView fx:id="ownersTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
         <columns>
           <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
           <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />
@@ -151,5 +153,34 @@
             <TableColumn fx:id="actionColumn" prefWidth="118.0" style="-fx-font-family: Arial;" text="Действия" />
         </columns>
       </TableView>
+      <TextField fx:id="searchField" alignment="CENTER" layoutX="362.0" layoutY="52.0" prefHeight="30.0" prefWidth="152.0" promptText="Търсене по ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: White;">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </TextField>
+      <Button fx:id="searchButton" alignment="CENTER" layoutX="521.0" layoutY="52.0" mnemonicParsing="false" onAction="#searchOwnerById" prefHeight="25.0" prefWidth="34.0" styleClass="searchButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" size="20" />
+         </graphic>
+         <tooltip>
+            <Tooltip text="търси" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
+      <Button fx:id="clearSearchButton" alignment="CENTER" layoutX="563.0" layoutY="52.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="25.0" prefWidth="34.0" styleClass="clearSearchButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
+         <graphic>
+            <FontAwesomeIconView glyphName="TIMES" size="20" />
+         </graphic>
+         <tooltip>
+            <Tooltip text="изчисти" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>

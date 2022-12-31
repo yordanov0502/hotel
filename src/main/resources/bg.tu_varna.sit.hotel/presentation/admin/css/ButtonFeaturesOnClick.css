@@ -197,7 +197,7 @@
 .messagesButton{
     -fx-background-color: white;
     -fx-background-radius: 30 0 0 30;
-    -fx-font-size: 14;
+    -fx-font-size: 13;
     -fx-font-family: Arial;
     -fx-text-alignment: right;
 }
@@ -214,3 +214,117 @@
     -fx-scale-y: 1.03;
 }
 
+.removeOwnerButton{
+    -fx-background-color:  #DC143C;
+    -fx-text-fill: White;
+}
+
+.removeOwnerButton:hover{
+    -fx-background-color:  #a30f2d;
+}
+
+.removeOwnerButton:pressed{
+    -fx-border-color: #5d091a;
+    -fx-border-width: 1;
+}
+
+.searchButton{
+    -fx-background-color:  #00b3b3;
+}
+
+.searchButton:hover{
+    -fx-background-color:  #006666;
+}
+
+.searchButton:pressed{
+    -fx-border-color: #003333;
+    -fx-border-width: 1;
+}
+
+.clearSearchButton{
+    -fx-background-color:  #de5454;
+}
+
+.clearSearchButton:hover{
+    -fx-background-color:  #ac2020;
+}
+
+.clearSearchButton:pressed{
+    -fx-border-color: #811818;
+    -fx-border-width: 1;
+}
+
+.addOwnerButton1{
+    -fx-background-color: #33bbff;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.addOwnerButton1:hover{
+    -fx-background-color: #0077b3;
+}
+
+.addOwnerButton1:pressed{
+    -fx-border-color: #004466;
+    -fx-border-width: 1;
+}
+
+.addOwnerButton2{
+    -fx-background-color: #ffcc66;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.addOwnerButton2:hover{
+    -fx-background-color: #ffaa00;
+}
+
+.addOwnerButton2:pressed{
+    -fx-border-color: #805500;
+    -fx-border-width: 1;
+}
+
+.addOwnerButton3{
+    -fx-background-color: #9966cc;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.addOwnerButton3:hover{
+    -fx-background-color: #663399;
+}
+
+.addOwnerButton3:pressed{
+    -fx-border-color: #33194d;
+    -fx-border-width: 1;
+}
+
+.backButton{
+    -fx-background-color: #0099ff;
+}
+
+.backButton:hover{
+    -fx-background-color: #0052cc;
+}
+
+.backButton:pressed{
+    -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
+}
+
+.combo-box-popup > .list-view {
+    -fx-pref-width: 256;
+    -fx-pref-height: 240;
+}
+
+.combo-box{
+    -fx-background-color: #bfbfbf;
+}
+
+.comboBox:hover{
+    -fx-background-color:  #999999;
+}
+
+.comboBox:pressed{
+    -fx-border-color:  #666666;
+}

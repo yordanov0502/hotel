@@ -2,13 +2,16 @@ package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
+import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.HotelRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class HotelRepositoryImpl implements HotelRepository<Hotel> {
 
@@ -91,7 +94,43 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
     }
 
     @Override
-    public Hotel getById(Integer id) {
+    public List<Hotel> getAllVacant() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Hotel> hotels = new LinkedList<>();
+        try{
+            String jpql = "SELECT h FROM Hotel h WHERE hasOwner = '"+ 0 + "'";
+            hotels.addAll(session.createQuery(jpql, Hotel.class).getResultList());
+            transaction.commit();
+            log.info("Got all hotels successfully.");
+        } catch (Exception e) {
+            log.error("Get all hotels error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotels;
+    }
+
+    @Override
+    public List<String> getAllVacantNames() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<String> hotelsNames = new LinkedList<>();
+        try{
+            String jpql = "SELECT name FROM Hotel  WHERE hasOwner = '"+ 0 + "'";
+            hotelsNames.addAll(session.createQuery(jpql, String.class).getResultList());
+            transaction.commit();
+            log.info("Got all hotels successfully.");
+        } catch (Exception e) {
+            log.error("Get all hotels error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotelsNames;
+    }
+
+    @Override
+    public Hotel getById(Long id) {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         Hotel hotel = null;
@@ -128,8 +167,6 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         }
         return hotel;
     }
-
-
 
 
 }

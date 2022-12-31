@@ -7,11 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class AdminEditInfoController {
 
-    public final UserService userService = UserService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     public AnchorPane anchorPane;
@@ -34,42 +38,57 @@ public class AdminEditInfoController {
     @FXML
     public Button closeButton;
 
-    public void editAdminInfo(){
+    @FXML
+    public void editAdminInfo() throws IOException {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && userService.checkForCorrectPersonalDataUpdate(new String[] {adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText(),adminPasswordField.getText()}))
         {
-            if(userService.updateUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),UserSession.getUser().getRole(), UserSession.getUser().getCreatedAt(),UserSession.getUser().getLastLogin(), "редактиран")))
+            if(userService.updateUser(new UserModel(adminEGNField.getText(),adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText(), Hasher.SHA512.hash(adminPasswordField.getText()),UserSession.user.getRole(), UserSession.user.getCreatedAt(),UserSession.user.getLastLogin(), "редактиран",UserSession.user.getHotels())))
             {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
-                UserSession.setUser(null);
-                UserSession.setUser(userService.getUserById(adminEGNField.getText()));//zadavame sushtiq user za tekusht user session, no s update-nati danni
+                UserSession.user=null;
+                UserSession.user=userService.getUserById(adminEGNField.getText());//zadavame sushtiq user za tekusht user session, no s update-nati danni
                 ViewManager.getSecondaryStage().close();
                 ViewManager.setSecondaryStage(null);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+          //      if(ViewManager.getPrimaryStage().getTitle().equals("Admin Hotels Info"))
+          //      {
+           //         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
+
+         //       }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
             else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");}
         }
     }
 
+    @FXML
     public void closeEditInfoPage(){
-        ViewManager.getSecondaryStage().close();
-        ViewManager.setSecondaryStage(null);
+        ViewManager.closeDialogBox();
     }
 
     public void showCustomerInfo(){
-        adminNameField.setText(UserSession.getUser().getFirstName());
-        adminSurnameField.setText(UserSession.getUser().getLastName());
-        adminEGNField.setText(UserSession.getUser().getId());
-        adminPhoneField.setText(UserSession.getUser().getPhone());
-        adminUsernameField.setText(UserSession.getUser().getUsername());
-        adminEmailField.setText(UserSession.getUser().getEmail());
-        adminPasswordField.setText(UserSession.getUser().getPassword());
+        adminNameField.setText(UserSession.user.getFirstName());
+        adminSurnameField.setText(UserSession.user.getLastName());
+        adminEGNField.setText(UserSession.user.getId());
+        adminPhoneField.setText(UserSession.user.getPhone());
+        adminUsernameField.setText(UserSession.user.getUsername());
+        adminEmailField.setText(UserSession.user.getEmail());
+        adminPasswordField.setText(UserSession.user.getPassword());
     }
 
     public void initialize()
     {
-        if(UserSession.getUser()!=null)
+        if(UserSession.user!=null)
         {
             showCustomerInfo();
+
+            anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+                if(keyEvent.getCode() == KeyCode.ENTER){
+                    adminEditInfoButton.fire();
+                    keyEvent.consume();
+                }
+            });
         }
     }
 

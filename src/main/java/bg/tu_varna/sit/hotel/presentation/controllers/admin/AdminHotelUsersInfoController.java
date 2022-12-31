@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
+import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
@@ -22,19 +24,18 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Optional;
 
-public class AdminReceptionistsInfoController {
-
-    private static final Logger log = Logger.getLogger(AdminMainController.class);
+public class AdminHotelUsersInfoController {
+    private static final Logger log = Logger.getLogger(AdminHotelUsersInfoController.class);
+    private final HotelService hotelService = HotelService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private HotelModel selectedHotel;
 
     @FXML
-    public TextField searchField;
+    public AnchorPane anchorPane;
     @FXML
-    public Button searchButton;
+    public TableView<UserModel> hotelUsersTable;
     @FXML
-    public Button clearSearchButton;
-    @FXML
-    public TableView<UserModel> receptionistsTable;
+    public TableColumn<UserModel,String> roleColumn;
     @FXML
     public TableColumn<UserModel,String> egnColumn;
     @FXML
@@ -51,55 +52,22 @@ public class AdminReceptionistsInfoController {
     public TableColumn<UserModel,String> statusColumn;
     @FXML
     public TableColumn actionColumn;
-
     @FXML
-    public void showAdminMainView() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
-    }
-
-    @FXML
-    public void addOwner() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
-    }
-
-    @FXML
-    public void showOwnersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
-    }
-
-    @FXML
-    public void showManagersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
-    }
-
-    @FXML
-    public void showHotelsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-    }
-
-    @FXML
-    public void showNewlyRegisteredAdmins() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
-    }
+    public Button removeOwnerButton;
 
     public void initialize() {
 
         if(UserSession.user!=null)
         {
-            receptionistsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
-            receptionistsTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
+            hotelUsersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
+            hotelUsersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
 
-            Label label = new Label("Няма информация за рецепционисти.");
+            Label label = new Label("Няма информация за служители.");
             label.setStyle("-fx-text-fill: black;" + "-fx-background-color: white;" + "-fx-font-size: 20;");
-            receptionistsTable.setPlaceholder(label); //shows text when there are no owners in the database
+            hotelUsersTable.setPlaceholder(label); //shows text when there are no owners in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
+            roleColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("role"));
             egnColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("id"));
             nameColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("firstName"));
             surnameColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("lastName"));
@@ -108,6 +76,7 @@ public class AdminReceptionistsInfoController {
             emailColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("email"));
             statusColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("status"));
 
+            roleColumn.setStyle("-fx-alignment:center");
             egnColumn.setStyle("-fx-alignment:center");
             nameColumn.setStyle("-fx-alignment:center");
             surnameColumn.setStyle("-fx-alignment:center");
@@ -117,23 +86,22 @@ public class AdminReceptionistsInfoController {
             statusColumn.setStyle("-fx-alignment:center");
             actionColumn.setStyle("-fx-alignment:center");
 
-            if(userService.getAllByRole("рецепционист")!=null)
-            {
-                receptionistsTable.setItems(userService.getAllByRole("рецепционист"));// Inserts all receptionists in TableView
-                createActionButtons();//insert dynamically created action buttons in every row of TableView
-            }
-            else
-            {
-                searchField.setDisable(true);
-                searchButton.setDisable(true);
-                clearSearchButton.setDisable(true);
-            }
-        }
-        else
-        {
-            searchField.setDisable(true);
-            searchButton.setDisable(true);
-            clearSearchButton.setDisable(true);
+
+            selectedHotel=UserSession.selectedHotel;
+            UserSession.selectedHotel=null;
+            hotelUsersTable.setItems(hotelService.getAllHotelUsers(selectedHotel));// Inserts all users of hotel in TableView
+            createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+            Label hotelName = new Label("\""+selectedHotel.getName()+"\"");
+            hotelName.setText("\""+selectedHotel.getName()+"\"");
+            hotelName.setStyle("-fx-text-fill: white;" + "-fx-background-color: blue;" + "-fx-font-size: 20;" + "-fx-background-radius: 25;"+"-fx-alignment: center;"+"-fx-font-family: Arial;");
+            hotelName.setLayoutX(192);
+            hotelName.setLayoutY(45);
+            hotelName.setPrefWidth(364);
+            hotelName.setPrefHeight(28);
+            anchorPane.getChildren().add(hotelName);
+
+            if(!selectedHotel.getHasOwner()) {removeOwnerButton.setDisable(true);}
         }
     }
 
@@ -160,7 +128,6 @@ public class AdminReceptionistsInfoController {
                                 }
                                 else
                                 {
-
                                     editIcon.setStyle("-glyph-size:15px;");
                                     deleteIcon.setStyle("-glyph-size:15px;");
 
@@ -182,6 +149,7 @@ public class AdminReceptionistsInfoController {
                                             e.printStackTrace();
                                         }
                                     });
+
 
 
                                     deleteIcon.setOnMouseEntered((MouseEvent event) -> {
@@ -239,7 +207,7 @@ public class AdminReceptionistsInfoController {
 
     private void deleteRow(UserModel userModel) throws IOException {
 
-        //this loop will have only 1 iteration because the user is receptionist (one receptionist can work for only one hotel)
+        //this loop may have more than 1 iteration because the user can be owner, manager or receptionist
         if(!userModel.getHotels().isEmpty())
         {
             for (HotelModel h : userService.getAllHotelsOfUser(userModel))
@@ -249,78 +217,49 @@ public class AdminReceptionistsInfoController {
         }
         if(userService.deleteUser(userModel))
         {
-            log.info("Information for receptionist \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
+            log.info("Information for "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
-            ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
+            ViewManager.closeDialogBox();
+            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
         }
         else
         {
-            log.info("Information for receptionist \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been deleted.");
+            log.info("Information for "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been deleted.");
             AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни е неуспешно.");
         }
     }
 
     @FXML
-    public void searchReceptionistById(){
+    private void removeOwner() throws IOException{
 
-        if(userService.getAllByRole("рецепционист").size()>1 && receptionistsTable.getItems().size()!=1)
+        if(selectedHotel.getHasOwner())
         {
-            if(searchField.getText().equals(""))
+            UserModel hotelOwner = hotelService.getHotelOwner(selectedHotel);
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Потвърждение");
+            alert.initStyle(StageStyle.UNDECORATED);
+            alert.setContentText("Наистина ли искате да премахнете "+hotelOwner.getRole()+" "+hotelOwner.getFirstName()+" "+hotelOwner.getLastName()+" на хотел \""+selectedHotel.getName()+"\"?");
+            alert.setX(ViewManager.getPrimaryStage().getX()+220);
+            alert.setY(ViewManager.getPrimaryStage().getY()+180);
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            ButtonType yesButton = new ButtonType("Да", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("Не", ButtonBar.ButtonData.NO);
+            alert.getButtonTypes().setAll(yesButton, noButton);
+            Optional<ButtonType> answer = alert.showAndWait();
+
+            if(answer.isPresent() && answer.get()==yesButton)
             {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля въведете ЕГН в полето за търсене.");
-            }
-            else if(!userService.validateId(searchField.getText()))
-            {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН-то трябва да съдържа 10 цифри [0-9] и да бъде валидно.");
-                searchField.setText("");
-            }
-            else
-            {
-                if(userService.isIdExists(searchField.getText()) && userService.getUserById(searchField.getText()).getRole().equals("рецепционист"))
-                {
-                    receptionistsTable.getItems().clear();
-                    receptionistsTable.getItems().add(userService.getUserById(searchField.getText()));
-                }
-                else
-                {
-                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Рецепционист с ЕГН: "+searchField.getText()+" не съществува в системата.");
-                    searchField.setText("");
-                }
+                userService.removeHotel(hotelOwner,selectedHotel,ViewManager.getPrimaryStage().getTitle());//removes user(owner) from certain hotel's list and vice versa, but his account in the system remains,just in case(if) he is owner of other hotels
+                ViewManager.closeDialogBox();
+                ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
             }
         }
     }
 
     @FXML
-    public void clearSearch() throws IOException {
-        searchField.setText("");
-        if(userService.getAllByRole("рецепционист").size()>1 && receptionistsTable.getItems().size()==1)
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
-        }
-    }
-
-    @FXML
-    public void logout() throws IOException {
+    public void closeWindow(){
         ViewManager.closeDialogBox();
-        if(UserSession.user!=null)
-        {
-            log.info("Admin \""+UserSession.user.getUsername()+"\" successfully logged out.");
-            UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
-        }
-        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
-    public void showAccountInformation() throws IOException {
-        if(UserSession.user==null)
-        {
-            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Няма заредени данни за администратор.");
-        }
-        else
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.openDialogBox(Constants.View.ADMIN_INFO_VIEW, null,this.getClass(),"Admin Info", 652, 352);
-        }
-    }
 }

@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface HotelRepository<T> extends Repository<T>{
     List<T> getAll();
-    Hotel getById(Integer id);
+    List<T> getAllVacant();
+    List<String> getAllVacantNames();
+    Hotel getById(Long id);
     Hotel getByName(String name);
 }

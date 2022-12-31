@@ -1,12 +1,13 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
-import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -15,25 +16,40 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
 
-public class AdminAddOwnerController {
+public class AdminAddNewOwnerController {
     private static final Logger log = Logger.getLogger(AdminMainController.class);
-    private final HotelService hotelService = HotelService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     public AnchorPane anchorPane;
     @FXML
-    public Button addOwnerButton1;
+    public TextField ownerNameField;
     @FXML
-    public Button addOwnerButton2;
+    public TextField ownerSurnameField;
     @FXML
-    public Button addOwnerButton3;
+    public TextField ownerEGNField;
+    @FXML
+    public TextField ownerPhoneField;
+    @FXML
+    public TextField ownerUsernameField;
+    @FXML
+    public TextField ownerEmailField;
+    @FXML
+    public PasswordField ownerPasswordField;
+    @FXML
+    public Button addNewOwnerButton;
 
     @FXML
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
+    }
+
+    @FXML
+    public void addOwner() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
     @FXML
@@ -68,34 +84,28 @@ public class AdminAddOwnerController {
 
     @FXML
     public void addNewOwner() throws IOException {
+            if (userService.validateFields(new String[]{ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
+                    && !userService.checkForExistingData(new String[]{ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText()}))
+            {
+                if (userService.addUser(new UserModel(ownerEGNField.getText(), ownerNameField.getText(), ownerSurnameField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText(), Hasher.SHA512.hash(ownerPasswordField.getText()), "собственик", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), "потвърден", new ArrayList<>())))
+                {
+                    log.info("New owner has been added successfully.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно добавяне на нов собственик.");
+                    ViewManager.closeDialogBox();
+                    ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add New Owner", 800, 500);
+                }
+                else
+                {
+                    log.error("Owner has not been added successfully.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов собственик.");
+                }
+            }
+    }
+
+    @FXML
+    public void backToAdminAddOwner() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Add New Owner",800,500);
-    }
-
-    @FXML
-    public void addNewOwnerToVacantHotel() throws IOException {
-        if(hotelService.getAllVacantHotels()!=null)
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Add New Owner To Vacant Hotel",800,500);
-        }
-        else
-        {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента няма хотели без собственик.");
-        }
-    }
-
-    @FXML
-    public void addOwnerToVacantHotel() throws IOException {
-        if(hotelService.getAllVacantHotels()!=null)
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_TO_VACANT_HOTEL_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add Owner To Vacant Hotel", 800, 500);
-        }
-        else
-        {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента няма хотели без собственик.");
-        }
+        ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
     @FXML
@@ -124,18 +134,11 @@ public class AdminAddOwnerController {
 
     public void initialize()
     {
-        if(UserSession.user==null)
-        {
-            addOwnerButton1.setDisable(true);
-            addOwnerButton2.setDisable(true);
-            addOwnerButton3.setDisable(true);
-        }
-       // anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
-        //    if(keyEvent.getCode() == KeyCode.ENTER){
-         //       ownerAddButton.fire();
-        //        keyEvent.consume();
-        //    }
-      //  });
+         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if(keyEvent.getCode() == KeyCode.ENTER){
+                addNewOwnerButton.fire();
+                keyEvent.consume();
+            }
+          });
     }
-
 }

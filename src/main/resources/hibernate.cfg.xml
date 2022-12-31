@@ -12,10 +12,13 @@
     <property name = "hibernate.connection.password">29520293</property>
     <property name = "hibernate.show_sql">true</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
+    <!--[CAUTION/WARN] THIS MIGHT HAVE SIDE EFFECTS -->
+    <property name="hibernate.enable_lazy_load_no_trans">true</property>
+    <!--[CAUTION/WARN] THIS MIGHT HAVE SIDE EFFECTS -->
 
     <mapping class="bg.tu_varna.sit.hotel.data.entities.User"/>
     <mapping class="bg.tu_varna.sit.hotel.data.entities.Hotel"/>
-    <mapping class="bg.tu_varna.sit.hotel.data.entities.HotelsUsers"/>
+   <!-- <mapping class="bg.tu_varna.sit.hotel.data.entities.HotelsUsers"/>-->
 
   </session-factory>
 </hibernate-configuration>

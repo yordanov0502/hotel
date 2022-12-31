@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class AdminLoginController{
     private static final Logger log = Logger.getLogger(AdminLoginController.class);
-    public final UserService userService = UserService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     public AnchorPane anchorPane;
@@ -44,30 +44,46 @@ public class AdminLoginController{
     public void admin_Login() throws IOException {
         if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}) && userService.authenticateUser(adminUsernameField.getText(), adminPasswordField.getText(),"администратор"))
         {
-            UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
+            UserSession.user=userService.getUserByUsername(adminUsernameField.getText());//Got user by username successfully
 
-            if(Objects.equals(UserSession.getUser().getStatus(), "непотвърден"))
+            if(Objects.equals(UserSession.user.getStatus(), "непотвърден"))
             {
-                log.error("Admin \""+UserSession.getUser().getUsername()+"\" failed to log in, because their registration has not been approved by any of the admins yet.");
+                log.error("Admin \""+UserSession.user.getUsername()+"\" failed to log in, because their registration has not been approved by any of the admins yet.");
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ Достъпът до системата не е възможен, защото регистрацията ви все още не е потвърдена от администраторите.");
-                UserSession.setUser(null);
+                UserSession.user=null;
+                ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
+            }
+            else if(Objects.equals(UserSession.user.getStatus(), "отхвърлен"))
+            {
+                log.error("Admin \""+UserSession.user.getUsername()+"\" failed to log in, because their registration has been rejected and their data will be deleted.");
+                if(userService.deleteUser(UserSession.user))
+                {
+                    log.info("Information for rejected admin \""+UserSession.user.getFirstName()+" "+UserSession.user.getLastName()+"\" has been successfully deleted.");
+                }
+                else
+                {
+                    log.info("Information for rejected admin \""+UserSession.user.getFirstName()+" "+UserSession.user.getLastName()+"\" has NOT been deleted.");
+                }
+                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ Достъпът до системата не е възможен, защото регистрацията ви e била отхвърлена.");
+                UserSession.user=null;
+                ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
             }
             else
             {
                 //updates last login column of user every time he logs in
-                if(userService.updateUser(new UserModel(UserSession.getUser().getId(),UserSession.getUser().getFirstName(),UserSession.getUser().getLastName(),UserSession.getUser().getPhone(), UserSession.getUser().getUsername(),UserSession.getUser().getEmail(),UserSession.getUser().getPassword(),UserSession.getUser().getHash(),UserSession.getUser().getRole(),UserSession.getUser().getCreatedAt(),new Timestamp(System.currentTimeMillis()), UserSession.getUser().getStatus())))
+                if(userService.updateUser(new UserModel(UserSession.user.getId(),UserSession.user.getFirstName(),UserSession.user.getLastName(),UserSession.user.getPhone(), UserSession.user.getUsername(),UserSession.user.getEmail(),UserSession.user.getPassword(),UserSession.user.getHash(),UserSession.user.getRole(),UserSession.user.getCreatedAt(),new Timestamp(System.currentTimeMillis()), "редактиран",UserSession.user.getHotels())))
                 {
-                    UserSession.setUser(null);
-                    UserSession.setUser(userService.getUserByUsername(adminUsernameField.getText()));//Got user by username successfully
-                    log.info("Admin \""+UserSession.getUser().getUsername()+"\" successfully logged in.");
+                    UserSession.user=null;
+                    UserSession.user=userService.getUserByUsername(adminUsernameField.getText());//Got user by username successfully
+                    log.info("Admin \""+UserSession.user.getUsername()+"\" successfully logged in.");
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешен вход в системата.");
                     ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
                 }
                 else
                 {
-                    UserSession.setUser(null);
-                    log.error("Admin \""+UserSession.getUser().getUsername()+"\" failed to log in.");
+                    log.error("Admin \""+UserSession.user.getUsername()+"\" failed to log in.");
                     AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Възникна грешка. Моля опитайте отново.");
+                    UserSession.user=null;
                 }
             }
         }

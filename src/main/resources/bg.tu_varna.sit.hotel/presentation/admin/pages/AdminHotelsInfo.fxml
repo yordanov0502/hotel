@@ -7,6 +7,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminAddOwnerController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminHotelsInfoController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
         <items>
@@ -86,26 +90,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="275.0" layoutY="14.0" prefHeight="32.0" prefWidth="380.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добавяне на собственик на хотел">
-         <font>
-            <Font name="Arial" size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="addOwnerButton1" defaultButton="true" layoutX="342.0" layoutY="131.0" mnemonicParsing="false" onAction="#addNewOwner" prefHeight="64.0" prefWidth="246.0" styleClass="addOwnerButton1" stylesheets="@../css/ButtonFeaturesOnClick.css" text=" Добави нов собственик" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
-      <Button fx:id="addOwnerButton2" defaultButton="true" layoutX="264.0" layoutY="239.0" mnemonicParsing="false" onAction="#addNewOwnerToVacantHotel" prefHeight="64.0" prefWidth="402.0" styleClass="addOwnerButton2" stylesheets="@../css/ButtonFeaturesOnClick.css" text=" Добави нов собственик към свободен хотел" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
-      <Button fx:id="addOwnerButton3" defaultButton="true" layoutX="264.0" layoutY="348.0" mnemonicParsing="false" onAction="#addOwnerToVacantHotel" prefHeight="64.0" prefWidth="402.0" styleClass="addOwnerButton3" stylesheets="@../css/ButtonFeaturesOnClick.css" text=" Добави собственик към свободен хотел" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
             <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showAdminMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
@@ -114,7 +98,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addOwnerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addOwnerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственик" textAlignment="RIGHT">
+            <Button fx:id="addOwnerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addOwner" prefHeight="40.0" prefWidth="133.0" styleClass="addOwnerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Собственик" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -138,7 +122,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showHotelsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -152,5 +136,48 @@
             <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="221.0" layoutY="14.0" prefHeight="32.0" prefWidth="439.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Списък с всички хотели в системата">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="hotelsTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="100.0" style="-fx-font-family: Arial;" text="Име" />
+          <TableColumn fx:id="addressColumn" prefWidth="200.0" style="-fx-font-family: Arial;" text="Адрес" />
+            <TableColumn fx:id="establishedAtColumn" prefWidth="145.0" style="-fx-font-family: Arial;" text="Създаден през" />
+            <TableColumn fx:id="starsColumn" prefWidth="86.0" style="-fx-font-family: Arial;" text="Звезди ★" />
+            <TableColumn fx:id="actionColumn" prefWidth="118.0" style="-fx-font-family: Arial;" text="Служители" />
+        </columns>
+      </TableView>
+      <TextField fx:id="searchField" alignment="CENTER" layoutX="314.0" layoutY="52.0" prefHeight="30.0" prefWidth="258.0" promptText="Търсене по име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: White;">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </TextField>
+      <Button fx:id="searchButton" alignment="CENTER" layoutX="579.0" layoutY="52.0" mnemonicParsing="false" onAction="#searchHotelByName" prefHeight="20.0" prefWidth="34.0" styleClass="searchButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" size="19" />
+         </graphic>
+         <tooltip>
+            <Tooltip text="търси" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
+      <Button fx:id="clearSearchButton" alignment="CENTER" layoutX="620.0" layoutY="52.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="20.0" prefWidth="34.0" styleClass="clearSearchButton" stylesheets="@../css/ButtonFeaturesOnClick.css">
+         <graphic>
+            <FontAwesomeIconView glyphName="TIMES" size="19" />
+         </graphic>
+         <tooltip>
+            <Tooltip text="изчисти" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>

@@ -34,8 +34,7 @@ public class AdminInfoController {
     public Button closeButton;
 
     public void closeInfoPage(){
-        ViewManager.getSecondaryStage().close();
-        ViewManager.setSecondaryStage(null);
+        ViewManager.closeDialogBox();
     }
 
     public void openEditInfoPage() throws IOException {
@@ -43,18 +42,18 @@ public class AdminInfoController {
     }
 
     public void showCustomerInfo(){
-        nameLabel.setText(UserSession.getUser().getFirstName());
-        surnameLabel.setText(UserSession.getUser().getLastName());
-        egnLabel.setText(UserSession.getUser().getId());
-        phoneLabel.setText(UserSession.getUser().getPhone());
-        usernameLabel.setText(UserSession.getUser().getUsername());
-        emailLabel.setText(UserSession.getUser().getEmail());
-        passwordLabel.setText(UserSession.getUser().getPassword());
+        nameLabel.setText(UserSession.user.getFirstName());
+        surnameLabel.setText(UserSession.user.getLastName());
+        egnLabel.setText(UserSession.user.getId());
+        phoneLabel.setText(UserSession.user.getPhone());
+        usernameLabel.setText(UserSession.user.getUsername());
+        emailLabel.setText(UserSession.user.getEmail());
+        passwordLabel.setText(UserSession.user.getPassword());
     }
 
     public void initialize()
     {
-        if(UserSession.getUser()!=null)
+        if(UserSession.user!=null)
         {
             showCustomerInfo();
         }

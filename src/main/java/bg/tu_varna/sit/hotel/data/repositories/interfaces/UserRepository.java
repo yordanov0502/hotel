@@ -12,4 +12,6 @@ public interface UserRepository<T> extends Repository<T> {
     User getByEmail(String email);
     User getByUsernameAndPassword(String username, String password, String role);
     List<T> getAllByRole(String role);
+    List<T> getAllNewlyRegisteredAdmins();
+    User getNewlyRegisteredAdminById(String id);
 }
