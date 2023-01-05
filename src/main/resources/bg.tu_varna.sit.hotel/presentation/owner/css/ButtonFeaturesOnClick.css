@@ -23,3 +23,44 @@
     -fx-border-color: DarkBlue;
     -fx-border-width: 2;
 }
+
+.removeAccountButton{
+    -fx-background-color:  #DC143C;
+    -fx-text-fill: White;
+}
+
+.removeAccountButton:hover{
+    -fx-background-color:  #a30f2d;
+}
+
+.removeAccountButton:pressed{
+    -fx-border-color: #5d091a;
+    -fx-border-width: 1;
+}
+
+.denyRemovalButton{
+    -fx-background-color: #0099ff;
+}
+
+.denyRemovalButton:hover{
+    -fx-background-color: #0052cc;
+}
+
+.denyRemovalButton:pressed{
+    -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
+}
+
+.confirmRemovalButton{
+    -fx-background-color:  #DC143C;
+    -fx-text-fill: White;
+}
+
+.confirmRemovalButton:hover{
+    -fx-background-color:  #a30f2d;
+}
+
+.confirmRemovalButton:pressed{
+    -fx-border-color: #5d091a;
+    -fx-border-width: 1;
+}

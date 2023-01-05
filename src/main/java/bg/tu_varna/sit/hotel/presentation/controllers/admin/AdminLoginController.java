@@ -82,7 +82,7 @@ public class AdminLoginController{
                 else
                 {
                     log.error("Admin \""+UserSession.user.getUsername()+"\" failed to log in.");
-                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Възникна грешка. Моля опитайте отново.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Възникна грешка. Моля опитайте отново.");
                     UserSession.user=null;
                 }
             }

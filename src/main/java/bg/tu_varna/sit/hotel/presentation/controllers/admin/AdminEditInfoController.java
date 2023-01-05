@@ -48,8 +48,7 @@ public class AdminEditInfoController {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно актуализиране на данни.");
                 UserSession.user=null;
                 UserSession.user=userService.getUserById(adminEGNField.getText());//zadavame sushtiq user za tekusht user session, no s update-nati danni
-                ViewManager.getSecondaryStage().close();
-                ViewManager.setSecondaryStage(null);
+                ViewManager.closeDialogBox();
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
           //      if(ViewManager.getPrimaryStage().getTitle().equals("Admin Hotels Info"))
           //      {

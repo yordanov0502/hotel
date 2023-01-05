@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../application/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerLoginController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../application/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerLoginController">
    <children>
       <Button fx:id="closeWindowButton" layoutX="757.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: Red;" styleClass="closeWindowButton" stylesheets="@../../application/css/ButtonFeatures.css" text="X" textFill="WHITE">
          <font>
@@ -22,7 +22,7 @@
       </Button>
       <Pane layoutX="280.0" layoutY="131.0" prefHeight="239.0" prefWidth="241.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <TextField fx:id="ownerEmailField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="ownerUsernameField" alignment="CENTER" layoutX="21.0" layoutY="51.0" prefHeight="27.0" prefWidth="200.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -32,7 +32,7 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </PasswordField>
-            <Button fx:id="ownerEnterButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="66.0" styleClass="ownerEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
+            <Button fx:id="ownerLoginButton" alignment="CENTER" layoutX="31.0" layoutY="154.0" mnemonicParsing="false" onAction="#owner_Login" prefHeight="41.0" prefWidth="66.0" styleClass="ownerEnterButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Вход" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

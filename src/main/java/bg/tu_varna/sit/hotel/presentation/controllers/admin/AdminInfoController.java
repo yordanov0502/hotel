@@ -33,12 +33,14 @@ public class AdminInfoController {
     @FXML
     public Button closeButton;
 
-    public void closeInfoPage(){
-        ViewManager.closeDialogBox();
+    @FXML
+    public void openEditInfoPage() throws IOException {
+        ViewManager.openDialogBox(Constants.View.ADMIN_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Admin Edit Info",652,352);
     }
 
-    public void openEditInfoPage() throws IOException {
-            ViewManager.openDialogBox(Constants.View.ADMIN_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Admin Edit Info",652,352);
+    @FXML
+    public void closeInfoPage(){
+        ViewManager.closeDialogBox();
     }
 
     public void showCustomerInfo(){
