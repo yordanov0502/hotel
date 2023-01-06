@@ -38,33 +38,6 @@ public class UserService {
         public static final UserService INSTANCE = new UserService();
     }
 
-    public ObservableList<UserModel> getAllUsers() {
-        List<User> users = userRepository.getAll();
-
-        if(users.isEmpty()){return null;}
-
-        else
-        {
-            return FXCollections.observableList(
-                    users.stream().map(u -> new UserModel(
-                            u.getId(),
-                            u.getFirstName(),
-                            u.getLastName(),
-                            u.getPhone(),
-                            u.getUsername(),
-                            u.getEmail(),
-                            u.getPassword(),
-                            u.getHash(),
-                            u.getRole(),
-                            u.getCreatedAt(),
-                            u.getLastLogin(),
-                            u.getStatus(),
-                            u.getHotels()
-                    )).collect(Collectors.toList())
-            );
-        }
-    }
-
     public ObservableList<UserModel> getAllByRole(String role) {
         List<User> users = userRepository.getAllByRole(role);
 
@@ -141,6 +114,28 @@ public class UserService {
         }
     }
 
+    public ObservableList<UserModel> getAllConfirmedAdmins() {
+        List<User> users = userRepository.getAllConfirmedAdmins();
+
+        return FXCollections.observableList(
+                users.stream().map(u -> new UserModel(
+                        u.getId(),
+                        u.getFirstName(),
+                        u.getLastName(),
+                        u.getPhone(),
+                        u.getUsername(),
+                        u.getEmail(),
+                        u.getPassword(),
+                        u.getHash(),
+                        u.getRole(),
+                        u.getCreatedAt(),
+                        u.getLastLogin(),
+                        u.getStatus(),
+                        u.getHotels()
+                )).collect(Collectors.toList())
+            );
+    }
+
     public UserModel getUserById(String id) {
         User user = userRepository.getById(id);
         return (user == null) ? null : new UserModel(user);
@@ -173,13 +168,13 @@ public class UserService {
         return (user == null) ? null : new UserModel(user);
     }
 
+    public boolean isEmailExists(String email) {
+        return getUserByEmail(email) != null;
+    }
+
     public UserModel getNewlyRegisteredAdminById(String id) {
         User user = userRepository.getNewlyRegisteredAdminById(id);
         return ((user) == null) ? null : new UserModel(user);
-    }
-
-    public boolean isEmailExists(String email) {
-        return getUserByEmail(email) != null;
     }
 
     public boolean addUser(UserModel userModel) {

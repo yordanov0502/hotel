@@ -1,11 +1,9 @@
-package bg.tu_varna.sit.hotel.presentation.controllers.owner;
+package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -13,25 +11,22 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-public class OwnerDeleteAccountConfirmationController {
+public class AdminDeleteAccountConfirmationController {
     private final UserService userService = UserService.getInstance();
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
     public AnchorPane anchorPane;
     @FXML
-    public TextField ownerUsernameField;
+    public TextField adminUsernameField;
     @FXML
-    public TextField ownerPasswordField;
+    public TextField adminPasswordField;
     @FXML
     public Button confirmRemovalButton;
     @FXML
@@ -40,9 +35,9 @@ public class OwnerDeleteAccountConfirmationController {
     @FXML
     public void confirmRemoval(){
 
-        if(userService.validateLoginFields(new String[] {ownerUsernameField.getText(), ownerPasswordField.getText()}))
+        if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}))
         {
-            if(UserSession.user.getUsername().equals(ownerUsernameField.getText()) && UserSession.user.getHash().equals(Hasher.SHA512.hash(ownerPasswordField.getText())))
+            if(UserSession.user.getUsername().equals(adminUsernameField.getText()) && UserSession.user.getHash().equals(Hasher.SHA512.hash(adminPasswordField.getText())))
             {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setHeaderText("Потвърждение");
@@ -60,30 +55,23 @@ public class OwnerDeleteAccountConfirmationController {
                 {
                     try
                     {
-                        List<HotelModel> hotelsOfOwner = new ArrayList<>();
-
-                        if(!UserSession.user.getHotels().isEmpty())
+                        if(userService.getAllConfirmedAdmins().size()>1)
                         {
-                            hotelsOfOwner = userService.getAllHotelsOfUser(UserSession.user);
-                        }
-
-                        if(userService.deleteUser(UserSession.user))
-                        {
-                            if(!hotelsOfOwner.isEmpty())
+                            if(userService.deleteUser(UserSession.user))
                             {
-                                for(HotelModel h: hotelsOfOwner)
-                                {
-                                    h.setHasOwner(false);//if the user(owner) had hotels, I set each of them free(hasOwner=false)
-                                    hotelService.updateHotel(h);
-                                }
+                                AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Вие изтрихте акаунтът си успешно от системата.");
+                                UserSession.user=null;
+                                ViewManager.closeDialogBox();
+                                ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
                             }
-
-                            AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Вие изтрихте акаунтът си успешно от системата.");
-                            UserSession.user=null;
-                            ViewManager.closeDialogBox();
-                            ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
+                            else
+                            {AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно изтриване на акаунт от системата.");}
                         }
-                        else { AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно изтриване на акаунт от системата.");}
+                        else
+                        {
+                            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Не можете да изтриете акаунтът си, защото вие сте единствения упълномощен администратор в системата към момента.");
+                            ViewManager.closeDialogBox();
+                        }
                     }
                     catch (IOException e)
                     {

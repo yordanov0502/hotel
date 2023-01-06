@@ -32,9 +32,6 @@ public class Main extends Application {
     {
         Connection.createSessionFactory();
         ViewManager.changeView(Constants.View.WELCOME_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System",800,500);
-
-       // UserService.getInstance().addHotel(UserService.getInstance().getUserById("0146301011"),HotelService.getInstance().getHotelById(1L) );
-       // UserService.getInstance().addHotel(UserService.getInstance().getUserById("0146301010"),HotelService.getInstance().getHotelById(2L) );
     }
 
     public static void main(String[] args) {launch();}

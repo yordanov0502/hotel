@@ -212,6 +212,26 @@ public class UserRepositoryImpl implements UserRepository<User> {
     }
 
     @Override
+    public List<User> getAllConfirmedAdmins(){
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = new LinkedList<>();
+
+        try{
+            String jpql = "SELECT u FROM User u WHERE role = 'администратор' AND status != 'непотвърден'";
+            users.addAll(session.createQuery(jpql, User.class).getResultList());
+            transaction.commit();
+            if(users.isEmpty()){log.info("There are no confirmed \"администратори\" in the database.");}
+            else{log.info("Got all users by role \"администратор\" and status != \"непотвърден\" successfully.");}
+        } catch(Exception e) {
+            log.error("Get all users by role \"администратор\" and status != \"непотвърден\" error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return users;
+    }
+
+    @Override
     public List<User> getAllNewlyRegisteredAdmins() {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
