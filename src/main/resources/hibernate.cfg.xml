@@ -18,7 +18,6 @@
 
     <mapping class="bg.tu_varna.sit.hotel.data.entities.User"/>
     <mapping class="bg.tu_varna.sit.hotel.data.entities.Hotel"/>
-   <!-- <mapping class="bg.tu_varna.sit.hotel.data.entities.HotelsUsers"/>-->
 
   </session-factory>
 </hibernate-configuration>

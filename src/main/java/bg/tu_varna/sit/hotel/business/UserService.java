@@ -2,22 +2,16 @@ package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.UserSession;
-import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
-import bg.tu_varna.sit.hotel.presentation.models.HotelsUsersModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import java.util.List;
 import java.util.Objects;
