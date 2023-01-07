@@ -149,19 +149,92 @@ public class HotelService {
 
     public boolean addUser(HotelModel hotelModel,UserModel userModel)
     {
-        hotelModel.toEntity().getUsers().add(userModel.toEntity());//adds user in hotel's set of users
-        //userModel.toEntity().getHotels().add(hotelModel.toEntity());//adds hotel to user's list of hotels
-        if(updateHotel(hotelModel) /*&& UserService.getInstance().updateUser(userModel)*/)
+        if(!userModel.getRole().equals("администратор"))
         {
-            log.info("Successfully added user to hotel's set of users.");
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
-            return true;
+            if (hotelModel.getHasOwner() && userModel.getRole().equals("собственик"))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Хотел \""+hotelModel.getName()+"\" вече си има собственик.");
+                return false;
+            }
+            else if (hotelModel.getHasManager() && userModel.getRole().equals("мениджър"))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Хотел \""+hotelModel.getName()+"\" вече си има мениджър.");
+                return false;
+            }
+            else
+            {
+                if(!hotelModel.getHasOwner() && userModel.getRole().equals("собственик"))
+                {
+                    hotelModel.setHasOwner(true);
+                }
+                if(!hotelModel.getHasManager() && userModel.getRole().equals("мениджър"))
+                {
+                    hotelModel.setHasManager(true);
+                }
+
+                hotelModel.toEntity().getUsers().add(userModel.toEntity());//adds user to hotel's list of users
+                userModel.toEntity().getHotels().add(hotelModel.toEntity());//adds hotel to user's list of hotels
+
+
+                if(updateHotel(hotelModel) && UserService.getInstance().updateUser(userModel))
+                {
+                    log.info("Successfully added user \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" to hotel's \""+hotelModel.getName()+"\" list of users and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    return true;
+                }
+                else
+                {
+                    log.info("Failed to add user \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" to hotel's \""+hotelModel.getName()+"\" list of users and vice versa.");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Неуспешно добавяне на "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    return false;
+                }
+            }
         }
         else
         {
-            log.info("Failed to add user to hotel's set of users.");
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Неуспешно добавяне на "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Не може да добавяте администратор на системата като служител на хотел \""+hotelModel.getName()+"\".");
             return false;
+        }
+    }
+
+    public void removeUser(HotelModel hotelModel,UserModel userModel,String stageTitle)
+    {
+           //removes user from hotel's list of users                                      //removes hotel from user's list of hotels
+        if(hotelModel.toEntity().getUsers().removeIf(u -> u.getId().equals(userModel.getId())) && userModel.toEntity().getHotels().removeIf(h -> h.getName().equals(hotelModel.getName())) )
+        {
+            if (userModel.getRole().equals("собственик"))
+            {
+                hotelModel.setHasOwner(false);
+            }
+            if (userModel.getRole().equals("мениджър"))
+            {
+                hotelModel.setHasManager(false);
+            }
+
+            if(updateHotel(hotelModel) && UserService.getInstance().updateUser(userModel))
+            {
+                log.info("Successfully removed user \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" from hotel's \""+hotelModel.getName()+"\" list of users and vice versa.");
+                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")*/)
+                {
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+userModel.getFirstName()+" "+userModel.getLastName()+" вече не е "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\".");
+                }
+            }
+            else
+            {
+                log.info("Failed to remove user \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" from hotel's \""+hotelModel.getName()+"\" list of users and vice versa.");
+                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")*/)
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+                }
+            }
+        }
+        else
+        {
+            log.info("Failed to remove user \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" from hotel's \""+hotelModel.getName()+"\" list of users and vice versa.");
+            if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")*/)
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+            }
         }
     }
 

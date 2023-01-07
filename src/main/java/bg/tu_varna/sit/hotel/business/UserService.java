@@ -213,13 +213,13 @@ public class UserService {
 
                 if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
                 {
-                    log.info("Successfully added hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" set of hotels and vice versa.");
+                    log.info("Successfully added hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" list of hotels and vice versa.");
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
                     return true;
                 }
                 else
                 {
-                    log.info("Failed to add hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" set of hotels and vice versa.");
+                    log.info("Failed to add hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" list of hotels and vice versa.");
                     AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Неуспешно добавяне на "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
                     return false;
                 }
@@ -234,7 +234,7 @@ public class UserService {
 
     public void removeHotel(UserModel userModel,HotelModel hotelModel,String stageTitle)
     {
-        //removes hotel from user's list of hotels                                                     //////removes user from hotel's list of users
+        //removes hotel from user's list of hotels                                        ////removes user from hotel's list of users
         if(userModel.toEntity().getHotels().removeIf(h -> h.getName().equals(hotelModel.getName())) && hotelModel.toEntity().getUsers().removeIf(u -> u.getId().equals(userModel.getId())))
         {
             if (userModel.getRole().equals("собственик"))
@@ -248,26 +248,26 @@ public class UserService {
 
             if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
             {
-                if(stageTitle.equals("Hotel Users Info"))
+                log.info("Successfully removed hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
+                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")...*/)
                 {
-                    log.info("Successfully removed hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+userModel.getFirstName()+" "+userModel.getLastName()+" вече не е "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\".");
                 }
             }
             else
             {
-                if(stageTitle.equals("Hotel Users Info"))
+                log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
+                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")...*/)
                 {
-                    log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
                     AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
                 }
             }
         }
         else
         {
-            if(stageTitle.equals("Hotel Users Info"))
+            log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
+            if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")*/)
             {
-                log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's set of hotels and vice versa.");
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
             }
         }
