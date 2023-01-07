@@ -76,6 +76,7 @@ public class UserService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
+                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }

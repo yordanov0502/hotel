@@ -63,6 +63,7 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         try {
+            //obj.getChildren().clear();
             session.delete(obj);
             transaction.commit();
             log.info("Hotel deleted successfully.");

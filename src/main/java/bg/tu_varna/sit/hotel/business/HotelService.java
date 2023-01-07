@@ -50,6 +50,7 @@ public class HotelService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
+                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }
@@ -99,6 +100,7 @@ public class HotelService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
+                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }
@@ -148,7 +150,8 @@ public class HotelService {
     public boolean addUser(HotelModel hotelModel,UserModel userModel)
     {
         hotelModel.toEntity().getUsers().add(userModel.toEntity());//adds user in hotel's set of users
-        if(updateHotel(hotelModel))
+        //userModel.toEntity().getHotels().add(hotelModel.toEntity());//adds hotel to user's list of hotels
+        if(updateHotel(hotelModel) /*&& UserService.getInstance().updateUser(userModel)*/)
         {
             log.info("Successfully added user to hotel's set of users.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");

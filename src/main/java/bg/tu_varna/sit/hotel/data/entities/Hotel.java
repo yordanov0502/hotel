@@ -20,7 +20,8 @@ public class Hotel implements Serializable {
 
     //https://stackoverflow.com/questions/24009042/org-hibernate-dialect-oracledialect-does-not-support-identity-key-generation
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hotel_id_generator")
+    @SequenceGenerator(name="hotel_id_generator",sequenceName = "hotel_seq",allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -45,6 +46,17 @@ public class Hotel implements Serializable {
 
     @ManyToMany(mappedBy = "hotels")
     private List<User> users = new ArrayList<>();
+
+    //@OneToMany(mappedBy = "hotels", cascade = CascadeType.ALL)
+    //private List<Room> rooms = new ArrayList<>();
+
+   // public List<Room> getRooms() {
+   //     return rooms;
+   // }
+
+   // public void setRooms(List<Room> rooms) {
+   //     this.rooms = rooms;
+   // }
 
     public List<User> getUsers(){
         return users;

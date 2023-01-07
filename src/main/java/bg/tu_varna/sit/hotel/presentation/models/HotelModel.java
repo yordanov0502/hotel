@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.models;
 
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
+import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.entities.User;
 
 import java.sql.Timestamp;
@@ -18,10 +19,11 @@ public class HotelModel implements EntityModel<Hotel>{
     private Boolean hasOwner;
     private Boolean hasManager;
     private List<User> users = new ArrayList<>();//////////////////////////////////////
+    //private List<Room> rooms = new ArrayList<>();//////////////////////////////////////
 
     public HotelModel(){}
 
-    public HotelModel(/**/Long id,String name,String address,Timestamp established_at,Integer stars,Boolean hasOwner,Boolean hasManager, List<User> users)
+    public HotelModel(/**/Long id,String name,String address,Timestamp established_at,Integer stars,Boolean hasOwner,Boolean hasManager, List<User> users/*, List<Room> rooms*/)
     {
         /**/this.id=id;
         this.name=name;
@@ -31,6 +33,7 @@ public class HotelModel implements EntityModel<Hotel>{
         this.hasOwner=hasOwner;
         this.hasManager=hasManager;
         this.users=users;
+        //this.rooms=rooms;
     }
 
     public HotelModel(Hotel hotel)
@@ -43,6 +46,7 @@ public class HotelModel implements EntityModel<Hotel>{
         this.hasOwner=hotel.getHasOwner();
         this.hasManager=hotel.getHasManager();
         this.users=hotel.getUsers();
+     //   this.rooms=hotel.getRooms();
     }
 
     public Long getId() {return id;}
@@ -93,6 +97,10 @@ public class HotelModel implements EntityModel<Hotel>{
 
     public void setUsers(List<User> users) {this.users = users;}
 
+   // public List<Room> getRooms() {return rooms;}
+
+   // public void setRooms(List<Room> rooms) {this.rooms = rooms;}
+
     @Override
     public Hotel toEntity() {
         Hotel hotelTemp = new Hotel();
@@ -104,6 +112,7 @@ public class HotelModel implements EntityModel<Hotel>{
         hotelTemp.setHasOwner(this.hasOwner);
         hotelTemp.setHasManager(this.hasManager);
         hotelTemp.setUsers(this.users);
+     //  hotelTemp.setRooms(this.rooms);
         return hotelTemp;
     }
 }
