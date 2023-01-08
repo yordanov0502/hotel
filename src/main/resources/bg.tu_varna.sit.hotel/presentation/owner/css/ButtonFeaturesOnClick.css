@@ -160,3 +160,55 @@
     -fx-border-color: DarkGreen;
     -fx-border-width: 2;
 }
+
+.addNewHotelAndNewManagerButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addNewHotelAndNewManagerButton:hover{
+    -fx-background-color: #00994d;
+}
+
+.addNewHotelAndNewManagerButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.addMajorInformationButton{
+    -fx-background-color:  #6800b3;
+}
+
+.addMajorInformationButton:hover{
+    -fx-background-color: #3b0066;
+}
+
+.addMajorInformationButton:pressed{
+    -fx-border-color: #1e0033;
+    -fx-border-width: 2;
+}
+
+.addRoomsInformationButton{
+    -fx-background-color:  #e68a00;
+}
+
+.addRoomsInformationButton:hover{
+    -fx-background-color: #995c00;
+}
+
+.addRoomsInformationButton:pressed{
+    -fx-border-color: #663d00;
+    -fx-border-width: 2;
+}
+
+.addAdditionalServicesInformationButton{
+    -fx-background-color:  #00e6e6;
+}
+
+.addAdditionalServicesInformationButton:hover{
+    -fx-background-color: #009999;
+}
+
+.addAdditionalServicesInformationButton:pressed{
+    -fx-border-color: #003333;
+    -fx-border-width: 2;
+}

@@ -30,6 +30,7 @@ public final class Constants {
         public static final String OWNER_DELETE_ACCOUNT_CONFIRMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerDeleteAccountConfirmation.fxml";
         public static final String OWNER_ADD_HOTEL_AND_MANAGER_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddHotelAndManager.fxml";
         public static final String OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddNewManagerToVacantHotel.fxml";
+        public static final String OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddNewHotelAndNewManager.fxml";
         public static final String MANAGER_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerLogin.fxml";
         public static final String RECEPTIONIST_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistLogin.fxml";
         public static final String ADMINS_NEW_REGISTRATIONS_INFO = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminsNewRegistrationsInfo.fxml";

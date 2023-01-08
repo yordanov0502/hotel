@@ -36,7 +36,8 @@ public class OwnerAddHotelAndManagerController {
 
     @FXML
     public void addNewHotelAndNewManager() throws IOException {
-
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Hotel And New Manager",800,500);
     }
 
 /*

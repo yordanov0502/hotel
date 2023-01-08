@@ -86,6 +86,21 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="259.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на хотел с мениджър">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="addHotelAndManagerButton1" defaultButton="true" layoutX="290.0" layoutY="149.0" mnemonicParsing="false" onAction="#addNewHotelAndNewManager" prefHeight="64.0" prefWidth="289.0" styleClass="addHotelAndManagerButton1" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов хотел с нов мениджър" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="addHotelAndManagerButton2" defaultButton="true" layoutX="246.0" layoutY="279.0" mnemonicParsing="false" onAction="#addNewManagerToVacantHotel" prefHeight="64.0" prefWidth="377.0" styleClass="addHotelAndManagerButton2" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър към съществуващ хотел" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
             <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showOwnerMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
@@ -132,20 +147,5 @@
             <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="259.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на хотел с мениджър">
-         <font>
-            <Font name="Arial" size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="addHotelAndManagerButton1" defaultButton="true" layoutX="290.0" layoutY="149.0" mnemonicParsing="false" onAction="#addNewHotelAndNewManager" prefHeight="64.0" prefWidth="289.0" styleClass="addHotelAndManagerButton1" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов хотел с нов мениджър" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
-      <Button fx:id="addHotelAndManagerButton2" defaultButton="true" layoutX="246.0" layoutY="279.0" mnemonicParsing="false" onAction="#addNewManagerToVacantHotel" prefHeight="64.0" prefWidth="377.0" styleClass="addHotelAndManagerButton2" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър към съществуващ хотел" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="16.0" />
-         </font>
-      </Button>
    </children>
 </AnchorPane>
