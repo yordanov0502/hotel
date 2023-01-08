@@ -38,7 +38,9 @@ public class Main extends Application {
        // System.out.println(UserService.getInstance().getUserById("0146301024").getHotels().toString());
        // HotelService.getInstance().removeUser(HotelService.getInstance().getHotelById(1L),UserService.getInstance().getUserById("0146301024"),"dasda" );
 
-      //UserService.getInstance().removeHotel(UserService.getInstance().getUserById("0146301024"),HotelService.getInstance().getHotelById(1L),"dasda");
+        //UserService.getInstance().removeHotel(UserService.getInstance().getUserById("0146301024"),HotelService.getInstance().getHotelById(1L),"dasda");
+
+
     }
 
     public static void main(String[] args) {launch();}

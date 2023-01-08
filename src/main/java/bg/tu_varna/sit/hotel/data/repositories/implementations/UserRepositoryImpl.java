@@ -218,7 +218,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
         List<User> users = new LinkedList<>();
 
         try{
-            String jpql = "SELECT u FROM User u WHERE role = 'администратор' AND status != 'непотвърден'";
+            String jpql = "SELECT u FROM User u WHERE role = 'администратор' AND status != 'непотвърден' AND status != 'отхвърлен'";
             users.addAll(session.createQuery(jpql, User.class).getResultList());
             transaction.commit();
             if(users.isEmpty()){log.info("There are no confirmed \"администратори\" in the database.");}
