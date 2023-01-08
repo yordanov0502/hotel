@@ -19,7 +19,7 @@ public class UserModel implements EntityModel<User> {
     private Timestamp createdAt;
     private Timestamp lastLogin;
     private String status;
-    private List<Hotel> hotels = new ArrayList<>();//////////////////////////////////////
+    private List<Hotel> hotels = new ArrayList<>();
 
     public UserModel(){}
 
@@ -37,7 +37,7 @@ public class UserModel implements EntityModel<User> {
         this.createdAt=createdAt;
         this.lastLogin=lastLogin;
         this.status=status;
-        this.hotels=hotels;///////////////////////////////////////////
+        this.hotels=hotels;
     }
 
     public UserModel(User user) {
@@ -149,9 +149,9 @@ public class UserModel implements EntityModel<User> {
         this.status = status;
     }
 
-    public List<Hotel> getHotels() {return hotels;}////////////////////////////////////////////////
+    public List<Hotel> getHotels() {return hotels;}
 
-    public void setHotels(List<Hotel> hotels) {this.hotels = hotels;}//////////////////////////////
+    public void setHotels(List<Hotel> hotels) {this.hotels = hotels;}
 
     @Override
     public User toEntity() {

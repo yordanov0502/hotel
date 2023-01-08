@@ -1,8 +1,6 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
-import bg.tu_varna.sit.hotel.common.Constants;
-import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
@@ -10,7 +8,6 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.SubScene;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
@@ -34,7 +31,7 @@ public class HotelService {
     }
 
     public ObservableList<HotelModel> getAllHotels() {
-        List<Hotel> hotels = hotelRepository.getAll();
+        List<Hotel> hotels = hotelRepository.getAllHotels();
 
         if(hotels.isEmpty()){return null;}
 
@@ -83,8 +80,8 @@ public class HotelService {
         }
     }
 
-    public ObservableList<HotelModel> getAllVacantHotels() {
-        List<Hotel> hotels = hotelRepository.getAllVacant();
+    public ObservableList<HotelModel> getAllHotelsWithoutOwner() {
+        List<Hotel> hotels = hotelRepository.getAllHotelsWithoutOwner();
 
         if(hotels.isEmpty()){return null;}
 
@@ -92,7 +89,7 @@ public class HotelService {
         {
             return FXCollections.observableList(
                     hotels.stream().map(h -> new HotelModel(
-                            /**/h.getId(),
+                            h.getId(),
                             h.getName(),
                             h.getAddress(),
                             h.getEstablished_at(),
@@ -100,14 +97,48 @@ public class HotelService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
-                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }
     }
 
-    public ObservableList<String> getAllVacantHotelsNames() {
-        List<String> hotelsNames = hotelRepository.getAllVacantNames();
+    public ObservableList<String> getAllHotelNamesWithoutOwner() {
+        List<String> hotelsNames = hotelRepository.getAllHotelNamesWithoutOwner();
+
+        if(hotelsNames.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    new ArrayList<>(hotelsNames)
+            );
+        }
+    }
+
+    public ObservableList<HotelModel> getAllHotelsWithoutManager() {
+        List<Hotel> hotels = hotelRepository.getAllHotelsWithoutManager();
+
+        if(hotels.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    hotels.stream().map(h -> new HotelModel(
+                            h.getId(),
+                            h.getName(),
+                            h.getAddress(),
+                            h.getEstablished_at(),
+                            h.getStars(),
+                            h.getHasOwner(),
+                            h.getHasManager(),
+                            h.getUsers()
+                    )).collect(Collectors.toList())
+            );
+        }
+    }
+
+    public ObservableList<String> getAllHotelNamesWithoutManager() {
+        List<String> hotelsNames = hotelRepository.getAllHotelNamesWithoutManager();
 
         if(hotelsNames.isEmpty()){return null;}
 

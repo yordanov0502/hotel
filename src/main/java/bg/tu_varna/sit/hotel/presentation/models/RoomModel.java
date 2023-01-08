@@ -10,11 +10,11 @@ public class RoomModel implements EntityModel<Room> {
     private Double price;
     private String type;
     private Integer size;
-    private Integer rating;
+    private Double rating;
 
     public RoomModel(){}
 
-    public RoomModel(Long id,Integer number,HotelModel hotel,Double price,String type,Integer size,Integer rating)
+    public RoomModel(Long id,Integer number,HotelModel hotel,Double price,String type,Integer size,Double rating)
     {
       this.id=id;
       this.number=number;
@@ -84,13 +84,9 @@ public class RoomModel implements EntityModel<Room> {
         this.size = size;
     }
 
-    public Integer getRating() {
-        return rating;
-    }
+    public Double getRating() {return rating;}
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
+    public void setRating(Double rating) {this.rating = rating;}
 
     @Override
     public Room toEntity() {

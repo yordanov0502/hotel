@@ -64,3 +64,99 @@
     -fx-border-color: #5d091a;
     -fx-border-width: 1;
 }
+
+.beginningButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.beginningButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.beginningButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.addHotelAndManagerButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 12;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.addHotelAndManagerButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.addHotelAndManagerButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.addHotelAndManagerButton1{
+    -fx-background-color: #eb2d53;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.addHotelAndManagerButton1:hover{
+    -fx-background-color: #a30f2d;
+}
+
+.addHotelAndManagerButton1:pressed{
+    -fx-border-color: #460713;
+    -fx-border-width: 1;
+}
+
+.addHotelAndManagerButton2{
+    -fx-background-color: #00fa9a;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+}
+
+.addHotelAndManagerButton2:hover{
+    -fx-background-color: #00995e;
+}
+
+.addHotelAndManagerButton2:pressed{
+    -fx-border-color: #004d2e;
+    -fx-border-width: 1;
+}
+
+.backButton{
+    -fx-background-color: #0099ff;
+}
+
+.backButton:hover{
+    -fx-background-color: #0052cc;
+}
+
+.backButton:pressed{
+    -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
+}
+
+.addNewManagerButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addNewManagerButton:hover{
+    -fx-background-color: #00994d;
+}
+
+.addNewManagerButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}

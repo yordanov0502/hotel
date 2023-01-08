@@ -1,29 +1,44 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
+import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.shape.Circle;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-public class OwnerMainController {
-    private static final Logger log = Logger.getLogger(OwnerMainController.class);
-    @FXML
-    public Circle notificationCircle;
-    @FXML
-    public Label notificationLabel;
+public class OwnerAddHotelAndManagerController {
+    private static final Logger log = Logger.getLogger(OwnerAddHotelAndManagerController.class);
+    private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public void addHotelAndManager() throws IOException {
+    public void showOwnerMainView() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
+
+    @FXML
+    public void addNewManagerToVacantHotel() throws IOException {
+        if(hotelService.getAllHotelsWithoutManager()!=null)
+        {
+            ViewManager.closeDialogBox();
+            ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента нямате хотели без мениджър.");
+        }
+    }
+
+    @FXML
+    public void addNewHotelAndNewManager() throws IOException {
+
+    }
+
 /*
     @FXML
     public void showOwnersInfo() throws IOException {

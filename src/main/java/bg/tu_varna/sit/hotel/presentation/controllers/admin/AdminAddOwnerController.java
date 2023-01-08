@@ -1,21 +1,13 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
-import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 public class AdminAddOwnerController {
     private static final Logger log = Logger.getLogger(AdminMainController.class);
@@ -74,7 +66,7 @@ public class AdminAddOwnerController {
 
     @FXML
     public void addNewOwnerToVacantHotel() throws IOException {
-        if(hotelService.getAllVacantHotels()!=null)
+        if(hotelService.getAllHotelsWithoutOwner()!=null)
         {
             ViewManager.closeDialogBox();
             ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Add New Owner To Vacant Hotel",800,500);
@@ -87,7 +79,7 @@ public class AdminAddOwnerController {
 
     @FXML
     public void addOwnerToVacantHotel() throws IOException {
-        if(hotelService.getAllVacantHotels()!=null)
+        if(hotelService.getAllHotelsWithoutOwner()!=null)
         {
             ViewManager.closeDialogBox();
             ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_TO_VACANT_HOTEL_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add Owner To Vacant Hotel", 800, 500);

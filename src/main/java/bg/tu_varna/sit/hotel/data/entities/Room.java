@@ -34,15 +34,11 @@ public class Room implements Serializable {
     private Integer size;
 
     @Column(name = "rating", nullable = false)
-    private Integer rating;
+    private Double rating;
 
-    public Integer getRating() {
-        return rating;
-    }
+    public Double getRating() {return rating;}
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
+    public void setRating(Double rating) {this.rating = rating;}
 
     public Integer getSize() {
         return size;

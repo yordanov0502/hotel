@@ -77,7 +77,7 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
     }
 
     @Override
-    public List<Hotel> getAll() {
+    public List<Hotel> getAllHotels() {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         List<Hotel> hotels = new LinkedList<>();
@@ -95,7 +95,7 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
     }
 
     @Override
-    public List<Hotel> getAllVacant() {
+    public List<Hotel> getAllHotelsWithoutOwner() {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         List<Hotel> hotels = new LinkedList<>();
@@ -113,7 +113,7 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
     }
 
     @Override
-    public List<String> getAllVacantNames() {
+    public List<String> getAllHotelNamesWithoutOwner() {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         List<String> hotelsNames = new LinkedList<>();
@@ -121,9 +121,45 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
             String jpql = "SELECT name FROM Hotel  WHERE hasOwner = '"+ 0 + "'";
             hotelsNames.addAll(session.createQuery(jpql, String.class).getResultList());
             transaction.commit();
+            log.info("Got all hotel names successfully.");
+        } catch (Exception e) {
+            log.error("Get all hotel names error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotelsNames;
+    }
+
+    @Override
+    public List<Hotel> getAllHotelsWithoutManager() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Hotel> hotels = new LinkedList<>();
+        try{
+            String jpql = "SELECT h FROM Hotel h WHERE hasManager = '"+ 0 + "'";
+            hotels.addAll(session.createQuery(jpql, Hotel.class).getResultList());
+            transaction.commit();
             log.info("Got all hotels successfully.");
         } catch (Exception e) {
             log.error("Get all hotels error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotels;
+    }
+
+    @Override
+    public List<String> getAllHotelNamesWithoutManager() {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<String> hotelsNames = new LinkedList<>();
+        try{
+            String jpql = "SELECT name FROM Hotel  WHERE hasManager = '"+ 0 + "'";
+            hotelsNames.addAll(session.createQuery(jpql, String.class).getResultList());
+            transaction.commit();
+            log.info("Got all hotel names successfully.");
+        } catch (Exception e) {
+            log.error("Get all hotel names error: " + e.getMessage());
         } finally {
             session.close();
         }

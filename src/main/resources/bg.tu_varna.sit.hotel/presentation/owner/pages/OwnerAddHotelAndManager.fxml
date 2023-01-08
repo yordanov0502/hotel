@@ -12,10 +12,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerMainController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerAddHotelAndManagerController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
@@ -89,13 +88,13 @@
       </MenuButton>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
-            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
+            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showOwnerMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addHotelAndManagerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addHotelAndManager" prefHeight="40.0" prefWidth="133.0" styleClass="addHotelAndManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотел/Мениджър" textAlignment="RIGHT">
+            <Button fx:id="addHotelAndManagerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addHotelAndManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотел/Мениджър" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -130,19 +129,23 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="CHECK_CIRCLE" size="20" text="" x="5.0" y="397.0" />
-            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
-            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Label>
+            <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добре дошли в Хотелска Информационна Система">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="259.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на хотел с мениджър">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
+      <Button fx:id="addHotelAndManagerButton1" defaultButton="true" layoutX="290.0" layoutY="149.0" mnemonicParsing="false" onAction="#addNewHotelAndNewManager" prefHeight="64.0" prefWidth="289.0" styleClass="addHotelAndManagerButton1" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов хотел с нов мениджър" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="addHotelAndManagerButton2" defaultButton="true" layoutX="246.0" layoutY="279.0" mnemonicParsing="false" onAction="#addNewManagerToVacantHotel" prefHeight="64.0" prefWidth="377.0" styleClass="addHotelAndManagerButton2" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър към съществуващ хотел" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

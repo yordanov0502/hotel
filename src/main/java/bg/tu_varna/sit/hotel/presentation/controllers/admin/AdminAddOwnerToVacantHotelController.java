@@ -91,7 +91,7 @@ public class AdminAddOwnerToVacantHotelController {
 
     public void initialize()
     {
-        comboBox.setItems(hotelService.getAllVacantHotelsNames());
+        comboBox.setItems(hotelService.getAllHotelNamesWithoutOwner());
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
@@ -242,7 +242,7 @@ public class AdminAddOwnerToVacantHotelController {
             {
                 if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue().toString())))
                 {
-                    if(hotelService.getAllVacantHotels()!=null)
+                    if(hotelService.getAllHotelsWithoutOwner()!=null)
                     {
                         ViewManager.closeDialogBox();
                         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_TO_VACANT_HOTEL_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add Owner To Vacant Hotel", 800, 500);

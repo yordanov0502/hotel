@@ -3,10 +3,7 @@ package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -17,7 +14,6 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AdminAddNewOwnerToVacantHotelController {
     private static final Logger log = Logger.getLogger(AdminMainController.class);
@@ -101,7 +97,7 @@ public class AdminAddNewOwnerToVacantHotelController {
                         log.info("New owner has been added successfully.");
                         if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue().toString())))
                         {
-                            if(hotelService.getAllVacantHotels()!=null)
+                            if(hotelService.getAllHotelsWithoutOwner()!=null)
                             {
                                 ViewManager.closeDialogBox();
                                 ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_TO_VACANT_HOTEL_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add New Owner To Vacant Hotel", 800, 500);
@@ -115,6 +111,7 @@ public class AdminAddNewOwnerToVacantHotelController {
                         else
                         {
                             userService.deleteUser(userModel);
+                            ViewManager.closeDialogBox();
                             ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_TO_VACANT_HOTEL_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Admin Add New Owner To Vacant Hotel", 800, 500);
                             AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов собственик към хотел \""+hotelService.getHotelByName(comboBox.getValue().toString()).getName()+"\".");
                         }
@@ -166,7 +163,7 @@ public class AdminAddNewOwnerToVacantHotelController {
 
     public void initialize()
     {
-        comboBox.setItems(hotelService.getAllVacantHotelsNames());
+        comboBox.setItems(hotelService.getAllHotelNamesWithoutOwner());
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){

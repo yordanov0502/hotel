@@ -3,19 +3,21 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.CustomMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerMainController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerAddNewManagerToVacantHotelController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
@@ -89,7 +91,7 @@
       </MenuButton>
       <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
          <children>
-            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
+            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showOwnerMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -130,19 +132,84 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="CHECK_CIRCLE" size="20" text="" x="5.0" y="397.0" />
-            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
-            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
+            <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
+         </children>
+      </Pane>
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="153.0" layoutY="14.0" prefHeight="32.0" prefWidth="560.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на нов мениджър към съществуващ хотел">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <Pane layoutX="166.0" layoutY="72.0" prefHeight="355.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="38.0" layoutY="14.0" text="Въведете данни за мениджър" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="managerNameField" alignment="CENTER" layoutX="55.0" layoutY="45.0" prefHeight="31.0" prefWidth="189.0" promptText="Име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="managerSurnameField" alignment="CENTER" layoutX="55.0" layoutY="85.0" prefHeight="31.0" prefWidth="189.0" promptText="Фамилия" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="managerEGNField" alignment="CENTER" layoutX="55.0" layoutY="125.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="managerPhoneField" alignment="CENTER" layoutX="55.0" layoutY="165.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="managerPasswordField" alignment="CENTER" layoutX="55.0" layoutY="205.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </PasswordField>
+            <TextField fx:id="managerUsernameField" alignment="CENTER" layoutX="55.0" layoutY="245.0" prefHeight="31.0" prefWidth="189.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="managerEmailField" alignment="CENTER" layoutX="55.0" layoutY="285.0" prefHeight="31.0" prefWidth="189.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="35.0" layoutY="65.0" size="15" />
+            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="35.0" layoutY="105.0" size="15" />
+            <FontAwesomeIconView fill="WHITE" glyphName="INFO" layoutX="38.0" layoutY="147.0" size="20" text="" />
+            <FontAwesomeIconView fill="WHITE" glyphName="PHONE" layoutX="33.0" layoutY="187.0" size="20" />
+            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="34.0" layoutY="228.0" size="22" />
+            <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="33.0" layoutY="267.0" size="20" />
+            <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" layoutX="33.0" layoutY="306.0" size="16" />
+         </children>
+      </Pane>
+      <Pane layoutX="484.0" layoutY="72.0" prefHeight="355.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <ComboBox fx:id="comboBox" layoutX="14.0" layoutY="43.0" prefHeight="31.0" prefWidth="257.0" promptText="Изберете хотел" styleClass="comboBox" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" />
+            <Label layoutX="61.0" layoutY="14.0" text="Хотели без мениджър :" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добре дошли в Хотелска Информационна Система">
+      <Button fx:id="addNewManagerButton" layoutX="342.0" layoutY="440.0" mnemonicParsing="false" onAction="#addNewManagerToVacantHotel" prefHeight="38.0" prefWidth="109.0" styleClass="addNewManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
          <font>
-            <Font name="Arial" size="22.0" />
+            <Font name="Arial" size="15.0" />
          </font>
-      </Label>
+      </Button>
+      <Button fx:id="backButton" layoutX="484.0" layoutY="440.0" mnemonicParsing="false" onAction="#backToOwnerAddHotelAndManager" prefHeight="38.0" prefWidth="109.0" styleClass="backButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
