@@ -17,47 +17,47 @@ import java.net.PortUnreachableException;
 public class AdminMainController{
     private static final Logger log = Logger.getLogger(AdminMainController.class);
     @FXML
-    public Circle notificationCircle;
+    private Circle notificationCircle;
     @FXML
-    public Label notificationLabel;
+    private Label notificationLabel;
 
-    @FXML
+
     public void addOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showReceptionistsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
     }
 
-    @FXML
+
     public void showHotelsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -68,7 +68,7 @@ public class AdminMainController{
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

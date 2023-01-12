@@ -25,65 +25,65 @@ public class AdminAddOwnerToVacantHotelController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField searchField;
+    private TextField searchField;
     @FXML
-    public Button searchButton;
+    private Button searchButton;
     @FXML
-    public Button clearSearchButton;
+    private Button clearSearchButton;
     @FXML
-    public TableView<UserModel> ownersTable;
+    private TableView<UserModel> ownersTable;
     @FXML
-    public TableColumn<UserModel,String> egnColumn;
+    private TableColumn<UserModel,String> egnColumn;
     @FXML
-    public TableColumn<UserModel, String> nameColumn;
+    private TableColumn<UserModel, String> nameColumn;
     @FXML
-    public TableColumn<UserModel,String> surnameColumn;
+    private TableColumn<UserModel,String> surnameColumn;
     @FXML
-    public TableColumn actionColumn;
+    private TableColumn actionColumn;
     @FXML
-    public Button addOwnerToHotelButton;
+    private Button addOwnerToHotelButton;
     @FXML
-    public ComboBox comboBox;
+    private ComboBox<String> comboBox;
 
-    @FXML
+
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
     }
 
-    @FXML
+
     public void addOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showReceptionistsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
     }
 
-    @FXML
+
     public void showHotelsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
@@ -193,7 +193,7 @@ public class AdminAddOwnerToVacantHotelController {
         ViewManager.openDialogBox(Constants.View.ADMIN_USER_INFO,ViewManager.getSecondaryStage(),this.getClass(),"Admin User Info",652,352);
     }
 
-    @FXML
+
     public void searchOwnerById(){
 
         if(userService.getAllByRole("собственик").size()>1 && ownersTable.getItems().size()!=1)
@@ -223,7 +223,7 @@ public class AdminAddOwnerToVacantHotelController {
         }
     }
 
-    @FXML
+
     public void clearSearch() throws IOException {
         searchField.setText("");
         if(userService.getAllByRole("собственик").size()>1 && ownersTable.getItems().size()==1)
@@ -233,7 +233,7 @@ public class AdminAddOwnerToVacantHotelController {
         }
     }
 
-    @FXML
+
     public void addOwnerToVacantHotel() throws IOException {
         UserModel userModel = ownersTable.getSelectionModel().getSelectedItem();
         if(userModel!=null)
@@ -267,13 +267,13 @@ public class AdminAddOwnerToVacantHotelController {
 
 
 
-    @FXML
+
     public void backToAdminAddOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -284,7 +284,7 @@ public class AdminAddOwnerToVacantHotelController {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

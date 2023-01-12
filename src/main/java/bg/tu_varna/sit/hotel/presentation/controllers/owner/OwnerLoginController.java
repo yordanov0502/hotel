@@ -31,19 +31,19 @@ public class OwnerLoginController{
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField ownerUsernameField;
+    private TextField ownerUsernameField;
     @FXML
-    public PasswordField ownerPasswordField;
+    private PasswordField ownerPasswordField;
     @FXML
-    public Button ownerLoginButton;
+    private Button ownerLoginButton;
     @FXML
-    public Button ownerBackButton;
+    private Button ownerBackButton;
     @FXML
-    public Button closeWindowButton;
+    private Button closeWindowButton;
 
-    @FXML
+
     public void owner_Login() throws IOException {
         if(userService.validateLoginFields(new String[] {ownerUsernameField.getText(), ownerPasswordField.getText()}) && userService.authenticateUser(ownerUsernameField.getText(), ownerPasswordField.getText(),"собственик"))
         {
@@ -67,7 +67,7 @@ public class OwnerLoginController{
         }
     }
 
-    @FXML
+
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
         ViewManager.changeView(Constants.View.WELCOME_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System", 800, 500);
     }

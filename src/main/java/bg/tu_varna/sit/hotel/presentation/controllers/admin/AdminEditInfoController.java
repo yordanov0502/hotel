@@ -18,28 +18,28 @@ public class AdminEditInfoController {
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField adminNameField;
+    private TextField adminNameField;
     @FXML
-    public TextField adminSurnameField;
+    private TextField adminSurnameField;
     @FXML
-    public TextField adminEGNField;
+    private TextField adminEGNField;
     @FXML
-    public TextField adminPhoneField;
+    private TextField adminPhoneField;
     @FXML
-    public TextField adminUsernameField;
+    private TextField adminUsernameField;
     @FXML
-    public TextField adminEmailField;
+    private TextField adminEmailField;
     @FXML
-    public TextField adminPasswordField;
+    private TextField adminPasswordField;
     @FXML
-    public Button adminEditInfoButton;
+    private Button adminEditInfoButton;
     @FXML
-    public Button closeButton;
+    private Button closeButton;
 
-    @FXML
-    public void editAdminInfo() throws IOException {
+
+    public void editAdminInfo() {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
                 && userService.checkForCorrectPersonalDataUpdate(new String[] {adminNameField.getText(),adminSurnameField.getText(),adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText(),adminPasswordField.getText()}))
         {
@@ -61,7 +61,7 @@ public class AdminEditInfoController {
         }
     }
 
-    @FXML
+
     public void closeEditInfoPage(){
         ViewManager.closeDialogBox();
     }

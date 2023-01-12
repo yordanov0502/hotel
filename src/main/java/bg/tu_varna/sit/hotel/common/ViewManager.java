@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.common;
 
 import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminInfoController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.NewHotelInformation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,7 +34,7 @@ public final class ViewManager {
         {
             primaryStage = new Stage();
             PropertyConfigurator.configure(ViewManager.class.getResource(Constants.Configurations.LOG4J_PROPERTIES));
-            URL path = ViewManager.class.getResource(to);/////////////////////////////////////////////////////////////////
+            URL path = ViewManager.class.getResource(to);
 
             if(path != null)
             {
@@ -101,7 +102,7 @@ public final class ViewManager {
         {
             secondaryStage = new Stage();
             PropertyConfigurator.configure(ViewManager.class.getResource(Constants.Configurations.LOG4J_PROPERTIES));
-            URL path = ViewManager.class.getResource(to);//
+            URL path = ViewManager.class.getResource(to);
 
             if(path != null)
             {
@@ -109,7 +110,6 @@ public final class ViewManager {
                 secondaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
                 secondaryStage.setTitle("Secondary Stage");
                 secondaryStage.setScene(new Scene(root, width, height));
-                //secondaryStage.sizeToScene();////////////////////////////////////////////////////////////////
                 secondaryStage.setX(primaryStage.getX()+75);
                 secondaryStage.setY(primaryStage.getY()+75);
                 sx = secondaryStage.getX();
@@ -145,7 +145,6 @@ public final class ViewManager {
             stage.setX(sx);
             stage.setY(sy);
             stage.setScene(new Scene(root, width, height));
-            //secondaryStage.sizeToScene();//////////////////////////////////////////////////////////////
 
             root.setOnMousePressed(event -> {
                 sxx = event.getSceneX();
@@ -172,6 +171,8 @@ public final class ViewManager {
             ViewManager.setSecondaryStage(null);
         }
     }
+
+    //public static void transferHotelInformation(NewHotelInformation newHotelInformation){}
 
     public static Stage getPrimaryStage() {
         return primaryStage;

@@ -15,35 +15,35 @@ import java.io.IOException;
 public class WelcomeViewController{
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public Button adminLoginButton;
+    private Button adminLoginButton;
     @FXML
-    public Button ownerLoginButton;
+    private Button ownerLoginButton;
     @FXML
-    public Button managerLoginButton;
+    private Button managerLoginButton;
     @FXML
-    public Button receptionistLoginButton;
+    private Button receptionistLoginButton;
     @FXML
-    public Button closeWindowButton;
+    private Button closeWindowButton;
 
-    @FXML
-    void admin_Login(ActionEvent event) throws IOException {
+
+    public void admin_Login() throws IOException {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
-    void owner_Login(ActionEvent event) throws IOException {
+
+    public void owner_Login() throws IOException {
         ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
-    @FXML
-    void manager_Login(ActionEvent event) throws IOException {
+
+    public void manager_Login() throws IOException {
         ViewManager.changeView(Constants.View.MANAGER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Login", 800, 500);
     }
 
-    @FXML
-    void receptionist_Login(ActionEvent event) throws IOException {
+
+    public void receptionist_Login() throws IOException {
         ViewManager.changeView(Constants.View.RECEPTIONIST_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Login", 800, 500);
     }
 

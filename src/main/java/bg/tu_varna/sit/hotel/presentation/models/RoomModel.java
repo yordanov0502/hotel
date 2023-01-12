@@ -7,14 +7,14 @@ public class RoomModel implements EntityModel<Room> {
     private Long id;
     private Integer number;
     private HotelModel hotel;
-    private Double price;
+    private Integer price;
     private String type;
     private Integer size;
     private Double rating;
 
     public RoomModel(){}
 
-    public RoomModel(Long id,Integer number,HotelModel hotel,Double price,String type,Integer size,Double rating)
+    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating)
     {
       this.id=id;
       this.number=number;
@@ -60,11 +60,11 @@ public class RoomModel implements EntityModel<Room> {
         this.hotel = hotel;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

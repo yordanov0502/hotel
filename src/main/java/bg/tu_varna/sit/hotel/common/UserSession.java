@@ -10,6 +10,4 @@ public final class UserSession {//this class holds the last UserModel, which was
     public static HotelModel selectedHotel;//represents selected hotel from one of the TableViews in the system
 
     private UserSession(){}
-
-
 }

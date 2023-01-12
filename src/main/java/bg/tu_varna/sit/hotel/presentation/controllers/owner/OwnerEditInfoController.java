@@ -20,27 +20,27 @@ public class OwnerEditInfoController {
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField ownerNameField;
+    private TextField ownerNameField;
     @FXML
-    public TextField ownerSurnameField;
+    private TextField ownerSurnameField;
     @FXML
-    public TextField ownerEGNField;
+    private TextField ownerEGNField;
     @FXML
-    public TextField ownerPhoneField;
+    private TextField ownerPhoneField;
     @FXML
-    public TextField ownerUsernameField;
+    private TextField ownerUsernameField;
     @FXML
-    public TextField ownerEmailField;
+    private TextField ownerEmailField;
     @FXML
-    public TextField ownerPasswordField;
+    private TextField ownerPasswordField;
     @FXML
-    public Button ownerEditInfoButton;
+    private Button ownerEditInfoButton;
     @FXML
-    public Button closeButton;
+    private Button closeButton;
 
-    @FXML
+
     public void editOwnerInfo() throws IOException {
         if(userService.validateFields(new String[] {ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
                 && userService.checkForCorrectPersonalDataUpdate(new String[] {ownerNameField.getText(), ownerSurnameField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()}))
@@ -63,7 +63,7 @@ public class OwnerEditInfoController {
         }
     }
 
-    @FXML
+
     public void closeEditInfoPage(){
         ViewManager.closeDialogBox();
     }

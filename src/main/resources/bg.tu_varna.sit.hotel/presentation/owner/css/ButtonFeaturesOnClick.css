@@ -212,3 +212,69 @@
     -fx-border-color: #003333;
     -fx-border-width: 2;
 }
+
+
+.addHotelMajorInfoButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addHotelMajorInfoButton:hover{
+    -fx-background-color:  #00994d;
+}
+
+.addHotelMajorInfoButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.closeButton{
+    -fx-background-color: #0099ff;
+}
+
+.closeButton:hover{
+    -fx-background-color: #0052cc;
+}
+
+.closeButton:pressed{
+    -fx-border-color: DarkBlue;
+    -fx-border-width: 2;
+}
+
+.addHotelManagerButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addHotelManagerButton:hover{
+    -fx-background-color:  #00994d;
+}
+
+.addHotelManagerButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.addHotelManagerInformationButton{
+    -fx-background-color:  #ff0066;
+}
+
+.addHotelManagerInformationButton:hover{
+    -fx-background-color:  #99003d;
+}
+
+.addHotelManagerInformationButton:pressed{
+    -fx-border-color: #4d001f;
+    -fx-border-width: 2;
+}
+
+.enterHotelFloorsButton{
+    -fx-background-color:  #e68a00;
+}
+
+.enterHotelFloorsButton:hover{
+    -fx-background-color: #995c00;
+}
+
+.enterHotelFloorsButton:pressed{
+    -fx-border-color: #663d00;
+    -fx-border-width: 2;
+}

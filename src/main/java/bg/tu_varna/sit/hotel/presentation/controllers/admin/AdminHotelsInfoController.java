@@ -28,55 +28,55 @@ public class AdminHotelsInfoController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public TextField searchField;
+    private TextField searchField;
     @FXML
-    public Button searchButton;
+    private Button searchButton;
     @FXML
-    public Button clearSearchButton;
+    private Button clearSearchButton;
     @FXML
-    public TableView<HotelModel> hotelsTable;
+    private TableView<HotelModel> hotelsTable;
     @FXML
-    public TableColumn<HotelModel, String> nameColumn;
+    private TableColumn<HotelModel, String> nameColumn;
     @FXML
-    public TableColumn<HotelModel,String> addressColumn;
+    private TableColumn<HotelModel,String> addressColumn;
     @FXML
-    public TableColumn<HotelModel, String> establishedAtColumn;
+    private TableColumn<HotelModel, String> establishedAtColumn;
     @FXML
-    public TableColumn<HotelModel,String> starsColumn;
+    private TableColumn<HotelModel,String> starsColumn;
     @FXML
-    public TableColumn actionColumn;
+    private TableColumn actionColumn;
 
-    @FXML
+
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
     }
 
-    @FXML
+
     public void addOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showReceptionistsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
@@ -187,7 +187,7 @@ public class AdminHotelsInfoController {
         ViewManager.openDialogBox(Constants.View.ADMIN_HOTEL_USERS_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Hotel Users Info",750,450);
     }
 
-    @FXML
+
     public void searchHotelByName(){
 
         if(hotelService.getAllHotels().size()>1 && hotelsTable.getItems().size()!=1)
@@ -198,7 +198,7 @@ public class AdminHotelsInfoController {
             }
             else if(!hotelService.validateName(searchField.getText()))
             {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името на хотела трябва да съдържа от 3 до 61 символа като трябва да започва с главна буква на кирилица или на латиница, последвана от малки букви на кирилица или на латиница като може да съдържа цифрите [0-9], интервали (\" \") както и символите (_) и (.).");
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името на хотела трябва да съдържа от 3 до 61 символа като трябва да започва с главна буква на кирилица или на латиница, последвана от малки букви на кирилица или на латиница като може да съдържа цифрите [0-9], интервали (\" \") както и символите (_) и (.) и (,).");
                 searchField.setText("");
             }
             else
@@ -217,7 +217,7 @@ public class AdminHotelsInfoController {
         }
     }
 
-    @FXML
+
     public void clearSearch() throws IOException {
         searchField.setText("");
         if(hotelService.getAllHotels().size()>1 && hotelsTable.getItems().size()==1)
@@ -227,7 +227,7 @@ public class AdminHotelsInfoController {
         }
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -238,7 +238,7 @@ public class AdminHotelsInfoController {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

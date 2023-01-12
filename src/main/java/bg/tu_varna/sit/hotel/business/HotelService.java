@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -168,6 +169,14 @@ public class HotelService {
         return getHotelByName(name) != null;
     }
 
+    public HotelModel getHotelByAddress(String address) {
+        Hotel hotel = hotelRepository.getByAddress(address);
+        return (hotel == null) ? null : new HotelModel(hotel);
+    }
+
+    public boolean isAddressExists(String address) {
+        return getHotelByAddress(address) != null;
+    }
 
 
     public boolean addHotel(HotelModel hotelModel) {return hotelRepository.save(hotelModel.toEntity());}
@@ -285,7 +294,7 @@ public class HotelService {
     }
 
     public boolean validateName(String hotelName) {
-        String regex = "^[\\u0410-\\u042F OR A-Z]{1}([\\u0430-\\u044F OR \\u0410-\\u042F OR a-zA-Z0-9._]{2,60})$";
+        String regex = "^[\\u0410-\\u042F OR A-Z]{1}([\\u0430-\\u044F OR \\u0410-\\u042F OR a-zA-Z0-9.,_]{2,60})$";
 
         Pattern p = Pattern.compile(regex);
         if(hotelName == null) {return false;}
@@ -296,7 +305,56 @@ public class HotelService {
         }
     }
 
+    public boolean validateAddress(String hotelAddress) {
+        String regex = "^([\\u0430-\\u044F OR \\u0410-\\u042F OR a-zA-Z0-9.,_№]{10,200})$";
 
+        Pattern p = Pattern.compile(regex);
+        if(hotelAddress == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(hotelAddress);
+            return m.matches();
+        }
+    }
+
+
+    public boolean validateMajorInfoFields(String [] fields) //validate fields for hotel major information
+    {
+        if(Objects.equals(fields[0], "")||Objects.equals(fields[1], ""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля въведете данни във всички полета.");
+            return false;
+        }
+        else if(!validateName(fields[0]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Името на хотела трябва да съдържа от 3 до 61 символа като трябва да започва с главна буква на кирилица или на латиница, последвана от малки букви на кирилица или на латиница като може да съдържа цифрите [0-9], интервали (\" \") както и символите (_) и (.) и (,).");
+            return false;
+        }
+        else if(!validateAddress(fields[1]))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Адреса на хотела трябва да съдържа от 10 да 200 символа като трябва да съдържа само големи и малки букви на кирилица или на латиница като може да съдържа и цифрите [0-9], интервали (\" \") както и символите (_) и (.) и (,) и (№).");
+            return false;
+        }
+        else {return true;}
+    }
+    public boolean checkForExistingHotelData(String [] fields) //checks for already existing hotel data in the database
+    {
+        if(fields.length==2) //proverka pri suzdavane na hotel
+        {
+            if(isNameExists(fields[0]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Хотел с име: \""+fields[0]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else if(isAddressExists(fields[1]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Хотел с адрес: \""+fields[1]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else {return false;}
+        }
+        else return true;
+    }
 
    // public void printAllUsersInformation(HotelModel hotelModel)
    // {

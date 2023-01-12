@@ -68,7 +68,7 @@ public class UserService {
         {
             return FXCollections.observableList(
                     hotels.stream().map(h -> new HotelModel(
-                            /**/h.getId(),
+                            h.getId(),
                             h.getName(),
                             h.getAddress(),
                             h.getEstablished_at(),
@@ -76,7 +76,6 @@ public class UserService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
-                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }
@@ -330,7 +329,7 @@ public class UserService {
     }
 
     public boolean validateUsername(String username) {
-        String regex = "^[^0-9][a-zA-Z0-9._]{5,50}$";
+        String regex = "^[^0-9][a-zA-Z0-9._]{4,50}$";
 
         Pattern p = Pattern.compile(regex);
         if(username == null) {return false;}
@@ -410,7 +409,7 @@ public class UserService {
         }
         else {return true;}
     }
-    public boolean checkForExistingData(String [] fields) //checks for already existing data in the database
+    public boolean checkForExistingUserData(String [] fields) //checks for already existing user data in the database
     {
         if(fields.length==4) //proverka pri registraciq na user
         {
@@ -493,7 +492,7 @@ public class UserService {
         else {return false;}
     }
 
-    public boolean checkForCorrectDataUpdate(String [] fields,UserModel selectedUser) //proverka pri redaktirane danni na user
+    public boolean checkForCorrectUserDataUpdate(String [] fields, UserModel selectedUser) //proverka pri redaktirane danni na user
     {
         if(fields.length==6)
         {

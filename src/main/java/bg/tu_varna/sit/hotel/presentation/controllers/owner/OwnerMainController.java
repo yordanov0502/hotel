@@ -12,14 +12,15 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-public class OwnerMainController {
+public class OwnerMainController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerMainController.class);
-    @FXML
-    public Circle notificationCircle;
-    @FXML
-    public Label notificationLabel;
 
     @FXML
+    private Circle notificationCircle;
+    @FXML
+    private Label notificationLabel;
+
+
     public void addHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
@@ -55,7 +56,7 @@ public class OwnerMainController {
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
     }*/
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -66,7 +67,7 @@ public class OwnerMainController {
         ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {
@@ -81,6 +82,10 @@ public class OwnerMainController {
 
     public void initialize()
     {
+        if(UserSession.user!=null)
+        {
+            NewHotelInformation.makeRefreshedFalse(this);
+        }
         //notificationCircle.setVisible(true);
         //notificationLabel.setText("7");
         //notificationLabel.setVisible(true);

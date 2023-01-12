@@ -7,21 +7,28 @@ import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-public class OwnerAddHotelAndManagerController {
-    private static final Logger log = Logger.getLogger(OwnerAddHotelAndManagerController.class);
+public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerController {
+    private static final Logger log = Logger.getLogger(OwnerAddHotelAndManagerOwnerController.class);
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
+    private Button addHotelAndManagerButton1;
+    @FXML
+    private Button addHotelAndManagerButton2;
+
+
+
     public void showOwnerMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-    @FXML
+
     public void addNewManagerToVacantHotel() throws IOException {
         if(hotelService.getAllHotelsWithoutManager()!=null)
         {
@@ -34,7 +41,7 @@ public class OwnerAddHotelAndManagerController {
         }
     }
 
-    @FXML
+
     public void addNewHotelAndNewManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Hotel And New Manager",800,500);
@@ -71,7 +78,7 @@ public class OwnerAddHotelAndManagerController {
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
     }*/
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -82,7 +89,7 @@ public class OwnerAddHotelAndManagerController {
         ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {
@@ -97,6 +104,15 @@ public class OwnerAddHotelAndManagerController {
 
     public void initialize()
     {
+        if(UserSession.user!=null)
+        {
+            NewHotelInformation.makeRefreshedFalse(this);
+        }
+        else
+        {
+            addHotelAndManagerButton1.setDisable(true);
+            addHotelAndManagerButton2.setDisable(true);
+        }
         //notificationCircle.setVisible(true);
         //notificationLabel.setText("7");
         //notificationLabel.setVisible(true);

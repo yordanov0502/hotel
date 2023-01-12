@@ -22,70 +22,70 @@ public class AdminAddNewOwnerController {
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField ownerNameField;
+    private TextField ownerNameField;
     @FXML
-    public TextField ownerSurnameField;
+    private TextField ownerSurnameField;
     @FXML
-    public TextField ownerEGNField;
+    private TextField ownerEGNField;
     @FXML
-    public TextField ownerPhoneField;
+    private TextField ownerPhoneField;
     @FXML
-    public TextField ownerUsernameField;
+    private TextField ownerUsernameField;
     @FXML
-    public TextField ownerEmailField;
+    private TextField ownerEmailField;
     @FXML
-    public PasswordField ownerPasswordField;
+    private PasswordField ownerPasswordField;
     @FXML
-    public Button addNewOwnerButton;
+    private Button addNewOwnerButton;
 
-    @FXML
+    
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
     }
 
-    @FXML
+
     public void addOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showReceptionistsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
     }
 
-    @FXML
+
     public void showHotelsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
     }
 
-    @FXML
+
     public void addNewOwner() throws IOException {
             if (userService.validateFields(new String[]{ownerNameField.getText(), ownerSurnameField.getText(), ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText()})
-                    && !userService.checkForExistingData(new String[]{ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText()}))
+                    && !userService.checkForExistingUserData(new String[]{ownerEGNField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText()}))
             {
                 if (userService.addUser(new UserModel(ownerEGNField.getText(), ownerNameField.getText(), ownerSurnameField.getText(), ownerPhoneField.getText(), ownerUsernameField.getText(), ownerEmailField.getText(), ownerPasswordField.getText(), Hasher.SHA512.hash(ownerPasswordField.getText()), "собственик", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), "потвърден", new ArrayList<>())))
                 {
@@ -102,13 +102,13 @@ public class AdminAddNewOwnerController {
             }
     }
 
-    @FXML
+
     public void backToAdminAddOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -119,7 +119,7 @@ public class AdminAddNewOwnerController {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

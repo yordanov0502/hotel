@@ -27,17 +27,17 @@ public class OwnerDeleteAccountConfirmationController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField ownerUsernameField;
+    private TextField ownerUsernameField;
     @FXML
-    public TextField ownerPasswordField;
+    private TextField ownerPasswordField;
     @FXML
-    public Button confirmRemovalButton;
+    private Button confirmRemovalButton;
     @FXML
-    public Button denyRemovalButton;
+    private Button denyRemovalButton;
 
-    @FXML
+
     public void confirmRemoval(){
 
         if(userService.validateLoginFields(new String[] {ownerUsernameField.getText(), ownerPasswordField.getText()}))
@@ -96,7 +96,7 @@ public class OwnerDeleteAccountConfirmationController {
         }
     }
 
-    @FXML
+
     public void denyRemoval(){
         ViewManager.closeDialogBox();
     }

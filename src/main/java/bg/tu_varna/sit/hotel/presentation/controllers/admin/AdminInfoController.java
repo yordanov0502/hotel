@@ -15,32 +15,32 @@ import java.util.Optional;
 public class AdminInfoController {
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public Label nameLabel;
+    private Label nameLabel;
     @FXML
-    public Label surnameLabel;
+    private Label surnameLabel;
     @FXML
-    public Label egnLabel;
+    private Label egnLabel;
     @FXML
-    public Label phoneLabel;
+    private Label phoneLabel;
     @FXML
-    public Label usernameLabel;
+    private Label usernameLabel;
     @FXML
-    public Label emailLabel;
+    private Label emailLabel;
     @FXML
-    public Label passwordLabel;
+    private Label passwordLabel;
     @FXML
-    public Button adminEditInfoButton;
+    private Button adminEditInfoButton;
     @FXML
-    public Button closeButton;
+    private Button closeButton;
 
-    @FXML
+
     public void openEditInfoPage() throws IOException {
         ViewManager.openDialogBox(Constants.View.ADMIN_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Admin Edit Info",652,352);
     }
 
-    @FXML
+
     public void deleteAccount(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("Потвърждение");
@@ -67,7 +67,7 @@ public class AdminInfoController {
         }
     }
 
-    @FXML
+
     public void closeInfoPage(){
         ViewManager.closeDialogBox();
     }

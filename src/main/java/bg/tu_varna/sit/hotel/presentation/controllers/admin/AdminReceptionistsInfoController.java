@@ -28,61 +28,61 @@ public class AdminReceptionistsInfoController {
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public TextField searchField;
+    private TextField searchField;
     @FXML
-    public Button searchButton;
+    private Button searchButton;
     @FXML
-    public Button clearSearchButton;
+    private Button clearSearchButton;
     @FXML
-    public TableView<UserModel> receptionistsTable;
+    private TableView<UserModel> receptionistsTable;
     @FXML
-    public TableColumn<UserModel,String> egnColumn;
+    private TableColumn<UserModel,String> egnColumn;
     @FXML
-    public TableColumn<UserModel, String> nameColumn;
+    private TableColumn<UserModel, String> nameColumn;
     @FXML
-    public TableColumn<UserModel,String> surnameColumn;
+    private TableColumn<UserModel,String> surnameColumn;
     @FXML
-    public TableColumn<UserModel, String> phoneColumn;
+    private TableColumn<UserModel, String> phoneColumn;
     @FXML
-    public TableColumn<UserModel,String> usernameColumn;
+    private TableColumn<UserModel,String> usernameColumn;
     @FXML
-    public TableColumn<UserModel, String> emailColumn;
+    private TableColumn<UserModel, String> emailColumn;
     @FXML
-    public TableColumn<UserModel,String> statusColumn;
+    private TableColumn<UserModel,String> statusColumn;
     @FXML
-    public TableColumn actionColumn;
+    private TableColumn actionColumn;
 
-    @FXML
+
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
     }
 
-    @FXML
+
     public void addOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showHotelsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
@@ -260,7 +260,7 @@ public class AdminReceptionistsInfoController {
         }
     }
 
-    @FXML
+
     public void searchReceptionistById(){
 
         if(userService.getAllByRole("рецепционист").size()>1 && receptionistsTable.getItems().size()!=1)
@@ -290,7 +290,7 @@ public class AdminReceptionistsInfoController {
         }
     }
 
-    @FXML
+
     public void clearSearch() throws IOException {
         searchField.setText("");
         if(userService.getAllByRole("рецепционист").size()>1 && receptionistsTable.getItems().size()==1)
@@ -300,7 +300,7 @@ public class AdminReceptionistsInfoController {
         }
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -311,7 +311,7 @@ public class AdminReceptionistsInfoController {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

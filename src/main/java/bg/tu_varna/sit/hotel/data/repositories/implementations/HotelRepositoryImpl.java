@@ -63,7 +63,6 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         Session session = Connection.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            //obj.getChildren().clear();
             session.delete(obj);
             transaction.commit();
             log.info("Hotel deleted successfully.");
@@ -205,5 +204,23 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         return hotel;
     }
 
+    @Override //unique hotel address
+    public Hotel getByAddress(String address) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Hotel hotel = null;
+
+        try {
+            String jpql = "SELECT h FROM Hotel h WHERE address = '" + address + "'";
+            hotel = (Hotel) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got hotel by address successfully.");
+        } catch(Exception e) {
+            log.error("Get hotel by address error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return hotel;
+    }
 
 }

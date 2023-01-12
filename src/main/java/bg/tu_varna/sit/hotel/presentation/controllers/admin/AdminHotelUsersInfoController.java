@@ -31,29 +31,29 @@ public class AdminHotelUsersInfoController {
     private HotelModel selectedHotel;
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TableView<UserModel> hotelUsersTable;
+    private TableView<UserModel> hotelUsersTable;
     @FXML
-    public TableColumn<UserModel,String> roleColumn;
+    private TableColumn<UserModel,String> roleColumn;
     @FXML
-    public TableColumn<UserModel,String> egnColumn;
+    private TableColumn<UserModel,String> egnColumn;
     @FXML
-    public TableColumn<UserModel, String> nameColumn;
+    private TableColumn<UserModel, String> nameColumn;
     @FXML
-    public TableColumn<UserModel,String> surnameColumn;
+    private TableColumn<UserModel,String> surnameColumn;
     @FXML
-    public TableColumn<UserModel, String> phoneColumn;
+    private TableColumn<UserModel, String> phoneColumn;
     @FXML
-    public TableColumn<UserModel,String> usernameColumn;
+    private TableColumn<UserModel,String> usernameColumn;
     @FXML
-    public TableColumn<UserModel, String> emailColumn;
+    private TableColumn<UserModel, String> emailColumn;
     @FXML
-    public TableColumn<UserModel,String> statusColumn;
+    private TableColumn<UserModel,String> statusColumn;
     @FXML
-    public TableColumn actionColumn;
+    private TableColumn actionColumn;
     @FXML
-    public Button removeOwnerButton;
+    private Button removeOwnerButton;
 
     public void initialize() {
 
@@ -229,8 +229,8 @@ public class AdminHotelUsersInfoController {
         }
     }
 
-    @FXML
-    private void removeOwner() throws IOException{
+
+    public void removeOwner() throws IOException{
 
         if(selectedHotel.getHasOwner())
         {
@@ -257,7 +257,7 @@ public class AdminHotelUsersInfoController {
         }
     }
 
-    @FXML
+
     public void closeWindow(){
         ViewManager.closeDialogBox();
     }

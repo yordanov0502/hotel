@@ -22,43 +22,43 @@ public class OwnerAddNewManagerToVacantHotelController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField managerNameField;
+    private TextField managerNameField;
     @FXML
-    public TextField managerSurnameField;
+    private TextField managerSurnameField;
     @FXML
-    public TextField managerEGNField;
+    private TextField managerEGNField;
     @FXML
-    public TextField managerPhoneField;
+    private TextField managerPhoneField;
     @FXML
-    public TextField managerUsernameField;
+    private TextField managerUsernameField;
     @FXML
-    public TextField managerEmailField;
+    private TextField managerEmailField;
     @FXML
-    public PasswordField managerPasswordField;
+    private PasswordField managerPasswordField;
     @FXML
-    public Button addNewManagerButton;
+    private Button addNewManagerButton;
     @FXML
-    public ComboBox comboBox;
+    private ComboBox<String> comboBox;
 
-    @FXML
+
     public void showOwnerMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-    @FXML
+
     public void addHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
 
-    @FXML
+
     public void addNewManagerToVacantHotel() throws IOException {
 
         if (userService.validateFields(new String[]{managerNameField.getText(), managerSurnameField.getText(), managerEGNField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText(), managerPasswordField.getText()})
-                && !userService.checkForExistingData(new String[]{managerEGNField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText()}))
+                && !userService.checkForExistingUserData(new String[]{managerEGNField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText()}))
         {
             if(comboBox.getValue()!=null)
             {
@@ -102,13 +102,13 @@ public class OwnerAddNewManagerToVacantHotelController {
         }
     }
 
-    @FXML
+
     public void backToOwnerAddHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -119,7 +119,7 @@ public class OwnerAddNewManagerToVacantHotelController {
         ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {

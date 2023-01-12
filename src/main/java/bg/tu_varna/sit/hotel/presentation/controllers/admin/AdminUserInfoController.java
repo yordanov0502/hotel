@@ -15,23 +15,23 @@ public class AdminUserInfoController {
 
     private UserModel selectedUser;
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public Label nameLabel;
+    private Label nameLabel;
     @FXML
-    public Label surnameLabel;
+    private Label surnameLabel;
     @FXML
-    public Label egnLabel;
+    private Label egnLabel;
     @FXML
-    public Label phoneLabel;
+    private Label phoneLabel;
     @FXML
-    public Label usernameLabel;
+    private Label usernameLabel;
     @FXML
-    public Label emailLabel;
+    private Label emailLabel;
     @FXML
-    public Label passwordLabel;
+    private Label passwordLabel;
 
-    @FXML
+
     public void closeInfoPage(){
         ViewManager.closeDialogBox();
     }

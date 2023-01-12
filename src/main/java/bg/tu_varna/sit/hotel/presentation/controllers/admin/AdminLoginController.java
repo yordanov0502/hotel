@@ -26,21 +26,21 @@ public class AdminLoginController{
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField adminUsernameField;
+    private TextField adminUsernameField;
     @FXML
-    public PasswordField adminPasswordField;
+    private PasswordField adminPasswordField;
     @FXML
-    public Button adminLoginButton;
+    private Button adminLoginButton;
     @FXML
-    public Button adminBackButton;
+    private Button adminBackButton;
     @FXML
-    public Button adminRegisterButton;
+    private Button adminRegisterButton;
     @FXML
-    public Button closeWindowButton;
+    private Button closeWindowButton;
 
-    @FXML
+
     public void admin_Login() throws IOException {
         if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}) && userService.authenticateUser(adminUsernameField.getText(), adminPasswordField.getText(),"администратор"))
         {
@@ -89,12 +89,12 @@ public class AdminLoginController{
         }
     }
 
-    @FXML
+
     public void backToWelcomePage(ActionEvent actionEvent) throws IOException {
         ViewManager.changeView(Constants.View.WELCOME_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System", 800, 500);
     }
 
-    @FXML
+
     public void admin_Registration(ActionEvent actionEvent) throws IOException {
         ViewManager.changeView(Constants.View.ADMIN_REGISTRATION_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Registration", 800, 500);
     }

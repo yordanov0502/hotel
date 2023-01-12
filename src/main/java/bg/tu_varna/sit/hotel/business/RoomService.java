@@ -1,17 +1,21 @@
 package bg.tu_varna.sit.hotel.business;
 
+import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.Room;
-import bg.tu_varna.sit.hotel.data.entities.User;
-import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.RoomRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class RoomService {
@@ -57,4 +61,219 @@ public class RoomService {
     }
 
     public boolean deleteRoom(RoomModel roomModel){return roomRepository.delete(roomModel.toEntity());}
+
+
+
+    //used when creating new hotel + new manager
+    public boolean validateFloorsField(String floorsNumber) {
+        String regex = "^[^0]([0-9]{0,3})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(floorsNumber == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(floorsNumber);
+            return m.matches();
+        }
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateFloorsNumber(String floorsNumber)
+    {
+        if(floorsNumber.equals(""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете брой ежати на хотела.");
+            return false;
+        }
+        else if(!validateFloorsField(floorsNumber))//validates that floors number is an actual number
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Етажите на хотел могат да бъдат от 1 до 100.");
+            return false;
+        }
+        else if(Integer.parseInt(floorsNumber)<1 || Integer.parseInt(floorsNumber)>100)//validates that floors number is [1-100]
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Етажите на хотел могат да бъдат от 1 до 100.");
+            return false;
+        }
+        else
+        {
+            return true;//everything is OK
+        }
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateRoomsNumberDynamicField(String roomsNumber) {
+        String regex = "^[^0]([0-9]{0,2})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(roomsNumber == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(roomsNumber);
+            return m.matches();
+        }
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateRoomsNumberPerFloor(int floor, List<String> roomsNumberPerFloorList)
+    {
+        for (String roomsNumber : roomsNumberPerFloorList)
+        {
+            if (roomsNumber.equals(""))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете брой стаи за етаж " + floor + " на хотела.");
+                return false;
+            }
+            else if (!validateRoomsNumberDynamicField(roomsNumber))//validates that rooms number is an actual number
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Стаите на етаж " + floor + " на хотелa могат да бъдат от 1 до 98.");
+                return false;
+            }
+            else if (Integer.parseInt(roomsNumber) < 1 || Integer.parseInt(roomsNumber) > 98)//validates that floors number is [1-100]
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Стаите на етаж " + floor + " на хотелa могат да бъдат от 1 до 98.");
+                return false;
+            }
+        }
+        return true;//everything is OK
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateRoomTypesCheckBoxesSelection(int floor, List<CheckBox> roomTypesCheckBoxesList) {
+        int counter=0;
+        for(CheckBox checkBox :roomTypesCheckBoxesList)
+        {
+            if(!checkBox.isSelected()){counter++;}//counts all checkboxes which are NOT selected
+        }
+        if(roomTypesCheckBoxesList.size()==counter)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля изберете минимум 1 тип стая за етаж "+floor+" на вашия хотел.");
+            return false;//No checkBox for room type was selected
+        }
+        else
+        {
+            return true;//everything is OK
+        }
+    }
+
+    //used when creating new hotel + new manager
+    //overloaded
+    public boolean validateRoomTypesCheckBoxesSelection(List<CheckBox> roomTypesCheckBoxesList) {
+        int counter=0;
+        for(CheckBox checkBox :roomTypesCheckBoxesList)
+        {
+            if(!checkBox.isSelected()){counter++;}//counts all checkboxes which are NOT selected
+        }
+        if(roomTypesCheckBoxesList.size()==counter)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля изберете минимум 1 тип стая за етажите на вашия хотел.");
+            return false;//No checkBox for room type was selected
+        }
+        else
+        {
+            return true;//everything is OK
+        }
+    }
+
+    public List<CheckBox> getSelectedRoomTypesCheckBoxes(List<CheckBox> roomTypesCheckBoxesList)
+    {
+        List<CheckBox> selectedRoomTypesCheckBoxesList = new ArrayList<>();
+        for (CheckBox checkBox : roomTypesCheckBoxesList)
+        {
+            if (checkBox.isSelected())
+            {
+                selectedRoomTypesCheckBoxesList.add(checkBox);
+            }
+        }
+        return selectedRoomTypesCheckBoxesList;
+    }
+
+    public void changeColorOfSelectedRoomTypesCheckBoxes(List<CheckBox> selectedRoomTypesCheckBoxesList)
+    {
+        for (CheckBox checkBox : selectedRoomTypesCheckBoxesList)
+        {
+            checkBox.setStyle("-fx-text-fill:  #e68a00;");
+        }
+    }
+
+    //used when creating new hotel + new manager
+    //Room area[10-10000]
+    public boolean validateRoomAreaField(String roomAreaNumber) {
+        String regex = "^[^0]([0-9]{1,5})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(roomAreaNumber == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(roomAreaNumber);
+            return m.matches();
+        }
+    }
+
+    //used when creating new hotel + new manager
+    //Room price[1-100000]
+    public boolean validateRoomPriceField(String roomPriceNumber) {
+        String regex = "^[^0]([0-9]{0,5})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(roomPriceNumber == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(roomPriceNumber);
+            return m.matches();
+        }
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateRoomTypeAreaAndPriceFields(List<CheckBox> roomTypesCheckBoxesList, List<TextField>roomTypesAreaFieldsList, List<TextField>roomTypesPriceFieldsList) {
+
+        for(int i=0;i< roomTypesCheckBoxesList.size();i++)
+        {
+            if(roomTypesCheckBoxesList.get(i).isSelected())
+            {
+                if(roomTypesAreaFieldsList.get(i).getText().equals(""))
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете размер на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\".");
+                    return false;
+                }
+                else if (!validateRoomAreaField(roomTypesAreaFieldsList.get(i).getText()))//validates that room size is an actual number
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Размерът на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\" може да бъде от "+roomTypesAreaFieldsList.get(i).getPromptText().substring(5,7)+" до 10000 кв.м.");
+                    return false;
+                }
+                else if (Integer.parseInt(roomTypesAreaFieldsList.get(i).getText())<Integer.parseInt(roomTypesAreaFieldsList.get(i).getPromptText().substring(5,7)) || Integer.parseInt(roomTypesAreaFieldsList.get(i).getText())>10000)//validates that room size is [custom-10000]
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Размерът на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\" може да бъде от "+roomTypesAreaFieldsList.get(i).getPromptText().substring(5,7)+" до 10000 кв.м.");
+                    return false;
+                }
+
+
+
+                if(roomTypesPriceFieldsList.get(i).getText().equals(""))
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете цена на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\".");
+                    return false;
+                }
+                else if (!validateRoomPriceField(roomTypesPriceFieldsList.get(i).getText()))//validates that room price is an actual number
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Цената на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\" може да бъде от 1 до 100000 лв.");
+                    return false;
+                }
+                else if (Integer.parseInt(roomTypesPriceFieldsList.get(i).getText())<1 || Integer.parseInt(roomTypesPriceFieldsList.get(i).getText())>100000)//validates that room price is [1-100000]
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Цената на стая от тип \""+roomTypesCheckBoxesList.get(i).getText()+"\" може да бъде от 1 до 100000 лв.");
+                    return false;
+                }
+            }
+        }
+        return true;//everything is OK
+    }
+
+    //used when creating new hotel + new manager
+    public boolean validateRoomsInformationFields(String floorsNumber, List<CheckBox> roomTypesCheckBoxesList,List<TextField>roomTypesAreaFieldsList, List<TextField>roomTypesPriceFieldsList){
+        return validateFloorsNumber(floorsNumber) && validateRoomTypesCheckBoxesSelection(roomTypesCheckBoxesList) && validateRoomTypeAreaAndPriceFields(roomTypesCheckBoxesList, roomTypesAreaFieldsList, roomTypesPriceFieldsList);
+    }
+
+
+
 }

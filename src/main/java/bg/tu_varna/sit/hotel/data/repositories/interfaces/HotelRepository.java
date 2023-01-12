@@ -12,4 +12,5 @@ public interface HotelRepository<T> extends Repository<T>{
     List<String> getAllHotelNamesWithoutManager();
     Hotel getById(Long id);
     Hotel getByName(String name);
+    Hotel getByAddress(String address);
 }

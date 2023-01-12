@@ -2,7 +2,6 @@ package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,30 +20,30 @@ public class UserEditInfoController {
     private UserModel selectedUser;
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField userNameField;
+    private TextField userNameField;
     @FXML
-    public TextField userSurnameField;
+    private TextField userSurnameField;
     @FXML
-    public TextField userEGNField;
+    private TextField userEGNField;
     @FXML
-    public TextField userPhoneField;
+    private TextField userPhoneField;
     @FXML
-    public TextField userUsernameField;
+    private TextField userUsernameField;
     @FXML
-    public TextField userEmailField;
+    private TextField userEmailField;
     @FXML
-    public TextField userPasswordField;
+    private TextField userPasswordField;
     @FXML
-    public Button userEditInfoButton;
+    private Button userEditInfoButton;
     @FXML
-    public Button closeButton;
+    private Button closeButton;
 
-    @FXML
+
     public void editUserInfo() throws IOException {
         if(userService.validateFields(new String[] {userNameField.getText(), userSurnameField.getText(), userEGNField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText()})
-                && userService.checkForCorrectDataUpdate(new String[] {userNameField.getText(), userSurnameField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText()},selectedUser))
+                && userService.checkForCorrectUserDataUpdate(new String[] {userNameField.getText(), userSurnameField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText()},selectedUser))
         {
             if(userService.updateUser(new UserModel(userEGNField.getText(),userNameField.getText(), userSurnameField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText(), Hasher.SHA512.hash(userPasswordField.getText()),selectedUser.getRole(), selectedUser.getCreatedAt(),selectedUser.getLastLogin(), "редактиран",selectedUser.getHotels())))
             {
@@ -66,7 +65,7 @@ public class UserEditInfoController {
         }
     }
 
-    @FXML
+
     public void closeEditInfoPage(){
         ViewManager.closeDialogBox();
     }

@@ -25,7 +25,7 @@ public class Room implements Serializable {
     private Hotel hotel;
 
     @Column(name = "price", nullable = false)
-    private Double price;
+    private Integer price;
 
     @Column(name = "type", nullable = false)
     private String type;
@@ -56,11 +56,11 @@ public class Room implements Serializable {
         this.type = type;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 

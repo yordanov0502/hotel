@@ -14,39 +14,38 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class AdminRegistrationController {
     private static final Logger log = Logger.getLogger(AdminRegistrationController.class);
     private final UserService userService = UserService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField adminNameField;
+    private TextField adminNameField;
     @FXML
-    public TextField adminSurnameField;
+    private TextField adminSurnameField;
     @FXML
-    public TextField adminEGNField;
+    private TextField adminEGNField;
     @FXML
-    public TextField adminPhoneField;
+    private TextField adminPhoneField;
     @FXML
-    public TextField adminUsernameField;
+    private TextField adminUsernameField;
     @FXML
-    public TextField adminEmailField;
+    private TextField adminEmailField;
     @FXML
-    public PasswordField adminPasswordField;
+    private PasswordField adminPasswordField;
     @FXML
-    public Button adminRegistrationButton;
+    private Button adminRegistrationButton;
     @FXML
-    public Button adminBackButton;
+    private Button adminBackButton;
     @FXML
-    public Button closeWindowButton;
+    private Button closeWindowButton;
 
-    @FXML
+
     public void registerAdmin(ActionEvent event) throws IOException {
         if(userService.validateFields(new String[] {adminNameField.getText(), adminSurnameField.getText(), adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(), adminEmailField.getText(), adminPasswordField.getText()})
-                && !userService.checkForExistingData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
+                && !userService.checkForExistingUserData(new String[] {adminEGNField.getText(), adminPhoneField.getText(), adminUsernameField.getText(),adminEmailField.getText()}))
         {
 
 
@@ -82,7 +81,7 @@ public class AdminRegistrationController {
         }
     }
 
-    @FXML
+
     public void backToAdminLoginPage(ActionEvent event) throws IOException {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }

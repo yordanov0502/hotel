@@ -14,57 +14,57 @@ public class AdminAddOwnerController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public Button addOwnerButton1;
+    private Button addOwnerButton1;
     @FXML
-    public Button addOwnerButton2;
+    private Button addOwnerButton2;
     @FXML
-    public Button addOwnerButton3;
+    private Button addOwnerButton3;
 
-    @FXML
+
     public void showAdminMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
     }
 
-    @FXML
+
     public void showOwnersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
     }
 
-    @FXML
+
     public void showManagersInfo() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
     }
 
-    @FXML
+
     public void showReceptionistsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
     }
 
-    @FXML
+
     public void showHotelsInfo() throws IOException{
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
     }
 
-    @FXML
+
     public void showNewlyRegisteredAdmins() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
     }
 
-    @FXML
+
     public void addNewOwner() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.ADMIN_ADD_NEW_OWNER_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Add New Owner",800,500);
     }
 
-    @FXML
+
     public void addNewOwnerToVacantHotel() throws IOException {
         if(hotelService.getAllHotelsWithoutOwner()!=null)
         {
@@ -77,7 +77,7 @@ public class AdminAddOwnerController {
         }
     }
 
-    @FXML
+
     public void addOwnerToVacantHotel() throws IOException {
         if(hotelService.getAllHotelsWithoutOwner()!=null)
         {
@@ -90,7 +90,7 @@ public class AdminAddOwnerController {
         }
     }
 
-    @FXML
+
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
@@ -101,7 +101,7 @@ public class AdminAddOwnerController {
         ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
     }
 
-    @FXML
+
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {
@@ -122,12 +122,6 @@ public class AdminAddOwnerController {
             addOwnerButton2.setDisable(true);
             addOwnerButton3.setDisable(true);
         }
-       // anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
-        //    if(keyEvent.getCode() == KeyCode.ENTER){
-         //       ownerAddButton.fire();
-        //        keyEvent.consume();
-        //    }
-      //  });
     }
 
 }

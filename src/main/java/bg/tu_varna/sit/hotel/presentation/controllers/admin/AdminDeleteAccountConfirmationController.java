@@ -22,17 +22,17 @@ public class AdminDeleteAccountConfirmationController {
     private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public TextField adminUsernameField;
+    private TextField adminUsernameField;
     @FXML
-    public TextField adminPasswordField;
+    private TextField adminPasswordField;
     @FXML
-    public Button confirmRemovalButton;
+    private Button confirmRemovalButton;
     @FXML
-    public Button denyRemovalButton;
+    private Button denyRemovalButton;
 
-    @FXML
+
     public void confirmRemoval(){
 
         if(userService.validateLoginFields(new String[] {adminUsernameField.getText(), adminPasswordField.getText()}))
@@ -84,7 +84,7 @@ public class AdminDeleteAccountConfirmationController {
         }
     }
 
-    @FXML
+
     public void denyRemoval(){
         ViewManager.closeDialogBox();
     }
