@@ -240,7 +240,7 @@ public class AdminAddOwnerToVacantHotelController {
         {
             if(comboBox.getValue()!=null)
             {
-                if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue().toString())))
+                if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue())))
                 {
                     if(hotelService.getAllHotelsWithoutOwner()!=null)
                     {

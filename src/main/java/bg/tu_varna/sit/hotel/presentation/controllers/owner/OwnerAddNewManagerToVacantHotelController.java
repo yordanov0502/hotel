@@ -66,7 +66,7 @@ public class OwnerAddNewManagerToVacantHotelController {
                 if (userService.addUser(userModel))
                 {
                     log.info("New manager has been added successfully.");
-                    if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue().toString())))
+                    if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue())))
                     {
                         if(hotelService.getAllHotelsWithoutManager()!=null)
                         {
@@ -84,7 +84,7 @@ public class OwnerAddNewManagerToVacantHotelController {
                         userService.deleteUser(userModel);
                         ViewManager.closeDialogBox();
                         ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
-                        AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов мениджър към хотел \""+hotelService.getHotelByName(comboBox.getValue().toString()).getName()+"\".");
+                        AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов мениджър към хотел \""+hotelService.getHotelByName(comboBox.getValue()).getName()+"\".");
                     }
                 }
                 else
