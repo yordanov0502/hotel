@@ -5,6 +5,8 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

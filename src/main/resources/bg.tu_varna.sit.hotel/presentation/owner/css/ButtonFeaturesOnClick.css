@@ -278,3 +278,29 @@
     -fx-border-color: #663d00;
     -fx-border-width: 2;
 }
+
+.addHotelRoomsInformationButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addHotelRoomsInformationButton:hover{
+    -fx-background-color:  #00994d;
+}
+
+.addHotelRoomsInformationButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.removeHotelRoomsInformationButton{
+    -fx-background-color:  #ff0000;
+}
+
+.removeHotelRoomsInformationButton:hover{
+    -fx-background-color: #990000;
+}
+
+.removeHotelRoomsInformationButton:pressed{
+    -fx-border-color: #4d0000;
+    -fx-border-width: 2;
+}

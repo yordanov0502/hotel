@@ -1,7 +1,5 @@
 package bg.tu_varna.sit.hotel.common;
 
-import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminInfoController;
-import bg.tu_varna.sit.hotel.presentation.controllers.owner.NewHotelInformation;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

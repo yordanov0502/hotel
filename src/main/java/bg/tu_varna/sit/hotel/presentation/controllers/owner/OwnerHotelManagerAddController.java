@@ -2,6 +2,8 @@ package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInfoProvider;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

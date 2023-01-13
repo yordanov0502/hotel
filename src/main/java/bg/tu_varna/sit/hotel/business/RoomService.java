@@ -7,12 +7,13 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -115,27 +116,27 @@ public class RoomService {
     }
 
     //used when creating new hotel + new manager
-    public boolean validateRoomsNumberPerFloor(int floor, List<String> roomsNumberPerFloorList)
+    public boolean validateRoomsNumberPerFloor(int floor, String roomsNumberPerFloor)
     {
-        for (String roomsNumber : roomsNumberPerFloorList)
-        {
-            if (roomsNumber.equals(""))
+            if (roomsNumberPerFloor.equals(""))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете брой стаи за етаж " + floor + " на хотела.");
                 return false;
             }
-            else if (!validateRoomsNumberDynamicField(roomsNumber))//validates that rooms number is an actual number
+            else if (!validateRoomsNumberDynamicField(roomsNumberPerFloor))//validates that rooms number is an actual number
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Стаите на етаж " + floor + " на хотелa могат да бъдат от 1 до 98.");
                 return false;
             }
-            else if (Integer.parseInt(roomsNumber) < 1 || Integer.parseInt(roomsNumber) > 98)//validates that floors number is [1-100]
+            else if (Integer.parseInt(roomsNumberPerFloor) < 1 || Integer.parseInt(roomsNumberPerFloor) > 98)//validates that rooms number per floor is [1-98]
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Стаите на етаж " + floor + " на хотелa могат да бъдат от 1 до 98.");
                 return false;
             }
-        }
-        return true;//everything is OK
+            else
+            {
+                return true;//everything is OK
+            }
     }
 
     //used when creating new hotel + new manager
@@ -195,6 +196,7 @@ public class RoomService {
             checkBox.setStyle("-fx-text-fill:  #e68a00;");
         }
     }
+
 
     //used when creating new hotel + new manager
     //Room area[10-10000]
@@ -274,6 +276,9 @@ public class RoomService {
         return validateFloorsNumber(floorsNumber) && validateRoomTypesCheckBoxesSelection(roomTypesCheckBoxesList) && validateRoomTypeAreaAndPriceFields(roomTypesCheckBoxesList, roomTypesAreaFieldsList, roomTypesPriceFieldsList);
     }
 
-
+    //used when creating new hotel + new manager(but cached data is loaded in the rooms information controller)
+    public boolean validateRoomsInformationFields(List<CheckBox> roomTypesCheckBoxesList,List<TextField>roomTypesAreaFieldsList, List<TextField>roomTypesPriceFieldsList){
+        return validateRoomTypesCheckBoxesSelection(roomTypesCheckBoxesList) && validateRoomTypeAreaAndPriceFields(roomTypesCheckBoxesList, roomTypesAreaFieldsList, roomTypesPriceFieldsList);
+    }
 
 }

@@ -22,7 +22,12 @@
             <FontAwesomeIconView fill="WHITE" glyphName="MINUS" layoutX="52.0" layoutY="72.0" size="25" />
             <FontAwesomeIconView fill="WHITE" glyphName="MINUS" layoutX="44.0" layoutY="80.0" size="25" />
             <FontAwesomeIconView fill="WHITE" glyphName="MINUS" layoutX="36.0" layoutY="88.0" size="25" />
-            <Button fx:id="addHotelRoomsInformationButton" layoutX="446.0" layoutY="375.0" mnemonicParsing="false" onAction="#addHotelRoomsInformation" prefHeight="38.0" prefWidth="109.0" styleClass="addHotelMajorInfoButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
+            <Button fx:id="addHotelRoomsInformationButton" layoutX="446.0" layoutY="375.0" mnemonicParsing="false" onAction="#addHotelRoomsInformation" prefHeight="38.0" prefWidth="109.0" styleClass="addHotelRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="removeHotelRoomsInformationButton" layoutX="446.0" layoutY="375.0" mnemonicParsing="false" onAction="#removeHotelRoomsInformation" prefHeight="38.0" prefWidth="109.0" styleClass="removeHotelRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Изчисти" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -52,37 +57,37 @@
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <CheckBox fx:id="singleCheckBox" layoutX="406.0" layoutY="149.0" mnemonicParsing="false" onAction="#a" text="единична" textFill="WHITE">
+            <CheckBox fx:id="singleCheckBox" layoutX="406.0" layoutY="149.0" mnemonicParsing="false" onAction="#checkSingleCheckBoxState" text="единична" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="doubleCheckBox" layoutX="406.0" layoutY="179.0" mnemonicParsing="false" text="двойна" textFill="WHITE">
+            <CheckBox fx:id="doubleCheckBox" layoutX="406.0" layoutY="179.0" mnemonicParsing="false" onAction="#checkDoubleCheckBoxState" text="двойна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="tripleCheckBox" layoutX="406.0" layoutY="209.0" mnemonicParsing="false" text="тройна" textFill="WHITE">
+            <CheckBox fx:id="tripleCheckBox" layoutX="406.0" layoutY="209.0" mnemonicParsing="false" onAction="#checkTripleCheckBoxState" text="тройна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="quadCheckBox" layoutX="406.0" layoutY="239.0" mnemonicParsing="false" text="четворна" textFill="WHITE">
+            <CheckBox fx:id="quadCheckBox" layoutX="406.0" layoutY="239.0" mnemonicParsing="false" onAction="#checkQuadCheckBoxState" text="четворна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="studioCheckBox" layoutX="406.0" layoutY="269.0" mnemonicParsing="false" text="студио" textFill="WHITE">
+            <CheckBox fx:id="studioCheckBox" layoutX="406.0" layoutY="269.0" mnemonicParsing="false" onAction="#checkStudioCheckBoxState" text="студио" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="mezonetCheckBox" layoutX="406.0" layoutY="299.0" mnemonicParsing="false" text="мезонет" textFill="WHITE">
+            <CheckBox fx:id="mezonetCheckBox" layoutX="406.0" layoutY="299.0" mnemonicParsing="false" onAction="#checkMezonetCheckBoxState" text="мезонет" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="apartmentCheckBox" layoutX="406.0" layoutY="329.0" mnemonicParsing="false" text="апартамент" textFill="WHITE">
+            <CheckBox fx:id="apartmentCheckBox" layoutX="406.0" layoutY="329.0" mnemonicParsing="false" onAction="#checkApartmentCheckBoxState" text="апартамент" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

@@ -44,4 +44,6 @@ module bg.tu_varna.sit.hotel {
 
     exports bg.tu_varna.sit.hotel.presentation.models;
     opens bg.tu_varna.sit.hotel.presentation.models to java.base;
+    exports bg.tu_varna.sit.hotel.presentation.controllers.owner.cache;
+    opens bg.tu_varna.sit.hotel.presentation.controllers.owner.cache to javafx.fxml;
 }

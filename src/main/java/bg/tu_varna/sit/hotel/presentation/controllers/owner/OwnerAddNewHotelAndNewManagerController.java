@@ -5,15 +5,13 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
 
 public class OwnerAddNewHotelAndNewManagerController {
     private static final Logger log = Logger.getLogger(OwnerAddNewHotelAndNewManagerController.class);
@@ -112,10 +110,10 @@ public class OwnerAddNewHotelAndNewManagerController {
     {
         if(NewHotelInformation.isRefreshed())
         {
-            if(NewHotelInformation.getCheckBoxesStates().get(1)){managerCheckBox.setSelected(true);}
-            if(NewHotelInformation.getCheckBoxesStates().get(2)){hotelCheckBox.setSelected(true);}
-            if(NewHotelInformation.getCheckBoxesStates().get(3)){roomsCheckBox.setSelected(true);}
-            if(NewHotelInformation.getCheckBoxesStates().get(4)){servicesCheckBox.setSelected(true);}
+            managerCheckBox.setSelected(NewHotelInformation.getHotelManagerInformation() != null);
+            hotelCheckBox.setSelected(NewHotelInformation.getHotelMajorInformation() != null);
+            roomsCheckBox.setSelected(NewHotelInformation.getHotelRoomsInformation() != null);
+            servicesCheckBox.setSelected(NewHotelInformation.getHotelServicesInformation() != null);
         }
         else
         {
