@@ -2,7 +2,6 @@ package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInfoProvider;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
@@ -19,7 +18,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-public class OwnerHotelManagerAddController implements NewHotelInfoProvider {
+public class OwnerHotelManagerAddController {
     private static final Logger log = Logger.getLogger(OwnerHotelManagerAddController.class);
     private final UserService userService = UserService.getInstance();
 
@@ -47,7 +46,7 @@ public class OwnerHotelManagerAddController implements NewHotelInfoProvider {
         if (userService.validateFields(new String[]{managerNameField.getText(), managerSurnameField.getText(), managerEGNField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText(), managerPasswordField.getText()})
                 && !userService.checkForExistingUserData(new String[]{managerEGNField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText()}))
         {
-            NewHotelInformation.transferHotelInformation(new UserModel(managerEGNField.getText(), managerNameField.getText(), managerSurnameField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText(), managerPasswordField.getText(), Hasher.SHA512.hash(managerPasswordField.getText()), "мениджър", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), "потвърден", new ArrayList<>()),this);
+            NewHotelInformation.transferNewManagerInformation(new UserModel(managerEGNField.getText(), managerNameField.getText(), managerSurnameField.getText(), managerPhoneField.getText(), managerUsernameField.getText(), managerEmailField.getText(), managerPasswordField.getText(), Hasher.SHA512.hash(managerPasswordField.getText()), "мениджър", new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), "потвърден", new ArrayList<>()),this);
             log.info("New data for manager added.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно добавени данни за нов мениджър.");
             ViewManager.closeDialogBox();

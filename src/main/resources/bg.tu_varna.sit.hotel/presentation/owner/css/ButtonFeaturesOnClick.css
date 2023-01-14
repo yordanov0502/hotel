@@ -304,3 +304,28 @@
     -fx-border-color: #4d0000;
     -fx-border-width: 2;
 }
+
+.addHotelServicesInformationButton{
+    -fx-background-color:  #00cc66;
+}
+
+.addHotelServicesInformationButton:hover{
+    -fx-background-color:  #00994d;
+}
+
+.addHotelServicesInformationButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.combo-box{
+    -fx-background-color: #bfbfbf;
+}
+
+.comboBox:hover{
+    -fx-background-color:  #999999;
+}
+
+.comboBox:pressed{
+    -fx-border-color:  #666666;
+}

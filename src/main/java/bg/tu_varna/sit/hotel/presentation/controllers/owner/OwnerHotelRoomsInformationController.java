@@ -3,12 +3,9 @@ package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 import bg.tu_varna.sit.hotel.business.RoomService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
-import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInfoProvider;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
-import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -23,7 +20,7 @@ import org.controlsfx.glyphfont.Glyph;
 import java.io.IOException;
 import java.util.*;
 
-public class OwnerHotelRoomsInformationController implements NewHotelInfoProvider {
+public class OwnerHotelRoomsInformationController {
     private static final Logger log = Logger.getLogger(OwnerHotelRoomsInformationController.class);
     private final RoomService roomService = RoomService.getInstance();
 
@@ -44,6 +41,13 @@ public class OwnerHotelRoomsInformationController implements NewHotelInfoProvide
 
     @FXML
     private Label noTabPaneLabel;
+
+    @FXML
+    private Label infoLabel1;
+    @FXML
+    private Label infoLabel2;
+    @FXML
+    private Label infoLabel3;
 
     @FXML
     private CheckBox singleCheckBox;
@@ -183,7 +187,7 @@ public class OwnerHotelRoomsInformationController implements NewHotelInfoProvide
           if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField))
            && validateDynmaicTabsInformation())
         {
-            NewHotelInformation.transferHotelInformation(new RoomsInformation(this,this.tabPane,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),this.floorsField.getText()));//transfers the rooms information to a static class which is used as a cache for all new hotel information during the whole process of creating[new hotel + new manager]
+            NewHotelInformation.transferNewRoomsInformation(new RoomsInformation(this,this.tabPane,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),this.floorsField.getText()),this);//transfers the rooms information to a static class which is used as a cache for all new hotel information during the whole process of creating[new hotel + new manager]
             log.info("New data for rooms added.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно добавени данни за стаи.");
             ViewManager.closeDialogBox();
@@ -207,7 +211,7 @@ public class OwnerHotelRoomsInformationController implements NewHotelInfoProvide
 
         if(answer.isPresent() && answer.get()==yesButton)
         {
-            NewHotelInformation.transferHotelInformation(null);
+            NewHotelInformation.transferNewRoomsInformation(null,this);
             log.info("Current data for rooms deleted.");
             ViewManager.closeDialogBox();
             ViewManager.changeView(Constants.View.OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Owner Add New Hotel And New Manager", 800, 500);
@@ -379,6 +383,10 @@ public class OwnerHotelRoomsInformationController implements NewHotelInfoProvide
             removeHotelRoomsInformationButton.setVisible(true);
 
             noTabPaneLabel.setVisible(false);
+            infoLabel1.setVisible(false);
+            infoLabel2.setVisible(false);
+            infoLabel3.setVisible(false);
+
             this.tabPane=NewHotelInformation.getHotelRoomsInformation().getTabPane();//vuv tekushtiq tabPane na prozoreca slagame dannite ot keshiraniq tabPane
             grayPane.getChildren().add(this.tabPane);
 
@@ -410,6 +418,10 @@ public class OwnerHotelRoomsInformationController implements NewHotelInfoProvide
             addHotelRoomsInformationButton.setVisible(true);
 
             noTabPaneLabel.setVisible(true);
+
+            infoLabel1.setVisible(true);
+            infoLabel2.setVisible(true);
+            infoLabel3.setVisible(true);
         }
 
     }

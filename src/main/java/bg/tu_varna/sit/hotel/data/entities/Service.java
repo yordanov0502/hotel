@@ -20,6 +20,9 @@ public class Service implements Serializable {
     @Column(name = "type", nullable = false)
     private String type;
 
+    @Column(name = "season", nullable = false)
+    private String season;
+
     @Column(name = "times_used", nullable = false)
     private Integer times_used;
 
@@ -27,6 +30,7 @@ public class Service implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)//allows "foreign key on cascade delete"(deletes all services when the hotel they were associated with is deleted)
     @JoinColumn(name = "hotel_id",referencedColumnName = "id", nullable = false)
     private Hotel hotel;
+
 
     public Hotel getHotel() {
         return hotel;
@@ -43,6 +47,10 @@ public class Service implements Serializable {
     public void setTimes_used(Integer times_used) {
         this.times_used = times_used;
     }
+
+    public String getSeason() {return season;}
+
+    public void setSeason(String season) {this.season = season;}
 
     public String getType() {
         return type;

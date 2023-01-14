@@ -67,8 +67,8 @@ public class OwnerAddNewHotelAndNewManagerController {
 
 
     public void addAdditionalServicesInformation() throws IOException {
-        //ViewManager.closeDialogBox();
-        //ViewManager.openDialogBox(Constants.View.OWNER_INFO_VIEW, null,this.getClass(),"Owner Info", 652, 352);
+        ViewManager.closeDialogBox();
+        ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_SERVICES_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Services Information", 652, 352);
     }
 
 

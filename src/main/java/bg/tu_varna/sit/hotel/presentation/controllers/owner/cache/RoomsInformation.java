@@ -24,8 +24,6 @@ public class RoomsInformation {
         this.floorsNumber=floorsNumber;
     }
 
-    public RoomsInformation(OwnerHotelRoomsInformationController ownerHotelRoomsInformationController){}
-
     public TabPane getTabPane() {
         return tabPane;
     }

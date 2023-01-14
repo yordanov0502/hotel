@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.hotel.application;
 
+import bg.tu_varna.sit.hotel.business.ServiceService;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.access.Connection;
@@ -16,6 +17,7 @@ public class Main extends Application {
     {
         Connection.createSessionFactory();
         ViewManager.changeView(Constants.View.WELCOME_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System",800,500);
+
 
 
 

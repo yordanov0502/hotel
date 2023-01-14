@@ -6,15 +6,17 @@ import bg.tu_varna.sit.hotel.data.entities.Service;
 public class ServiceModel implements EntityModel<Service>{
     private Long id;
     private String type;
+    private String season;
     private Integer times_used;
     private HotelModel hotel;
 
     public ServiceModel(){}
 
-    public ServiceModel(Long id,String type,Integer times_used,HotelModel hotel)
+    public ServiceModel(Long id,String type,String season,Integer times_used,HotelModel hotel)
     {
         this.id=id;
         this.type=type;
+        this.season=season;
         this.times_used=times_used;
         this.hotel=hotel;
     }
@@ -23,6 +25,7 @@ public class ServiceModel implements EntityModel<Service>{
     {
         this.id=service.getId();
         this.type=service.getType();
+        this.season=service.getSeason();
         this.times_used=service.getTimes_used();
         this.hotel=new HotelModel(service.getHotel());
     }
@@ -42,6 +45,10 @@ public class ServiceModel implements EntityModel<Service>{
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getSeason() {return season;}
+
+    public void setSeason(String season) {this.season = season;}
 
     public Integer getTimes_used() {
         return times_used;
@@ -65,6 +72,7 @@ public class ServiceModel implements EntityModel<Service>{
         Service serviceTemp = new Service();
         serviceTemp.setId(this.id);
         serviceTemp.setType(this.type);
+        serviceTemp.setSeason(this.season);
         serviceTemp.setTimes_used(this.times_used);
         serviceTemp.setHotel(this.hotel.toEntity());
         return serviceTemp;
