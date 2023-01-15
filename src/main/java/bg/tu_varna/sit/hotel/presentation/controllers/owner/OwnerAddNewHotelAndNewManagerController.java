@@ -1,6 +1,9 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.RoomService;
+import bg.tu_varna.sit.hotel.business.ServiceService;
+import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
@@ -15,7 +18,10 @@ import java.io.IOException;
 
 public class OwnerAddNewHotelAndNewManagerController {
     private static final Logger log = Logger.getLogger(OwnerAddNewHotelAndNewManagerController.class);
+    private final UserService userService = UserService.getInstance();
     private final HotelService hotelService = HotelService.getInstance();
+    private final RoomService roomService = RoomService.getInstance();
+    private final ServiceService serviceService = ServiceService.getInstance();
 
     @FXML
     private AnchorPane anchorPane;
@@ -72,8 +78,69 @@ public class OwnerAddNewHotelAndNewManagerController {
     }
 
 
-    public void addNewHotelAndNewManager(){
+    public void addNewHotelAndNewManager() throws IOException {
 
+        if(userService.addUser(NewHotelInformation.getHotelManagerInformation()))
+        {
+            log.info("New user(manager) has been added successfully.");
+            if(hotelService.addHotel(NewHotelInformation.getHotelMajorInformation()))
+            {
+                log.info("New hotel has been added successfully.");
+                if(userService.addHotel(UserSession.user,hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())) && userService.addHotel(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
+                {
+                    log.info("Successfully added owner and manager to hotel \""+NewHotelInformation.getHotelMajorInformation().getName()+"\".");
+                    if(roomService.addRooms(NewHotelInformation.getHotelRoomsInformation(),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
+                    {
+                        log.info("Successfully added rooms to the new hotel.");
+                        if(NewHotelInformation.getHotelServicesInformation()!=null)
+                        {
+                            if(serviceService.addServices(NewHotelInformation.getHotelServicesInformation(),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
+                            {
+                                log.info("Successfully added services to the new hotel.");
+                                log.info("SUCCESSFULLY CREATED NEW HOTEL + NEW MANAGER.");
+                                AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно създадохте нов хотел с мениджър.");
+                                ViewManager.closeDialogBox();
+                                ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
+                            }
+                            else
+                            {
+                                log.info("Error when adding services to the new hotel");
+                                userService.deleteUser(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()));
+                                hotelService.deleteHotel(hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName()));
+                            }
+                        }
+                        else
+                        {
+                            log.info("SUCCESSFULLY CREATED NEW HOTEL + NEW MANAGER");
+                            AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно създадохте нов хотел с мениджър.");
+                            ViewManager.closeDialogBox();
+                            ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
+                        }
+                    }
+                    else
+                    {
+                        log.info("Error when adding rooms to the new hotel");
+                        userService.deleteUser(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()));
+                        hotelService.deleteHotel(hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName()));
+                    }
+                }
+                else
+                {
+                    log.info("Error when adding owner and manager to the new hotel.");
+                    userService.deleteUser(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()));
+                    hotelService.deleteHotel(hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName()));
+                }
+            }
+            else
+            {
+                log.info("Error when adding new hotel.");
+                userService.deleteUser(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()));
+            }
+        }
+        else
+        {
+            log.info("Error when adding new user(manager)");
+        }
     }
 
 

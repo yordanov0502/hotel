@@ -3,12 +3,15 @@ package bg.tu_varna.sit.hotel.business;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.Service;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.ServiceRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import bg.tu_varna.sit.hotel.presentation.models.ServiceModel;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +27,14 @@ public class ServiceService {
     private static class ServiceServiceHolder {
         public static final ServiceService INSTANCE = new ServiceService();
     }
+
+    public boolean addService(ServiceModel serviceModel) {
+        return serviceRepository.save(serviceModel.toEntity());
+    }
+
+    public boolean updateService(ServiceModel serviceModel) {return serviceRepository.update(serviceModel.toEntity());}
+
+    public boolean deleteService(ServiceModel serviceModel){return serviceRepository.delete(serviceModel.toEntity());}
 
     public ServiceModel getServiceByType(String type,HotelModel hotelModel) {
         Service service = serviceRepository.getByType(type, hotelModel.toEntity());
@@ -60,5 +71,13 @@ public class ServiceService {
         else return true;
     }
 
+    public boolean addServices(List<ServiceModel> serviceList, HotelModel hotelModel) {
+        for(ServiceModel serviceModel:serviceList)
+        {
+            serviceModel.setHotel(hotelModel);
+            if(!addService(serviceModel)){return false;}
+        }
+        return true;
+    }
 
 }

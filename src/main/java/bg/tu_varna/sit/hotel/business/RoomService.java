@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.business;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.RoomRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import javafx.collections.FXCollections;
@@ -63,6 +64,61 @@ public class RoomService {
 
     public boolean deleteRoom(RoomModel roomModel){return roomRepository.delete(roomModel.toEntity());}
 
+    public boolean addRooms(RoomsInformation roomsInformation,HotelModel hotelModel){
+
+        for(int i=0;i<Integer.parseInt(roomsInformation.getFloorsNumber());i++)
+        {
+            List <CheckBox> checkBoxesOfTabList = new ArrayList<>();
+            for(int c=0;c<((Pane)(roomsInformation.getTabPane().getTabs().get(i).getContent())).getChildren().size()-2;c++)//size is minus 2 because we count only the number of each checkboxes per dynamically created Tab and we don't count the icon and the text field
+            {
+                //Here I am absolutely sure that every children of ((Pane)component) is CheckBox
+                checkBoxesOfTabList.add((CheckBox)((Pane)(roomsInformation.getTabPane().getTabs().get(i).getContent())).getChildren().get(c));
+            }
+            List <CheckBox> selectedCheckBoxes = getSelectedRoomTypesCheckBoxes(checkBoxesOfTabList);
+
+            int selectedCheckBoxesCounter=0;
+            for(int j=1;j<=Integer.parseInt(((TextField)(((Pane)(roomsInformation.getTabPane().getTabs().get(i).getContent())).getChildren().get(checkBoxesOfTabList.size()+1))).getText());j++)
+            {
+                if (selectedCheckBoxesCounter == selectedCheckBoxes.size())
+                {
+                    selectedCheckBoxesCounter = 0;
+                }
+
+                StringBuilder sb = new StringBuilder();
+                if (j < 10)
+                {
+                    sb.append(i+1).append(0).append(j);
+                    //String roomNumber = i+"0"+j;
+                } else
+                {
+                    sb.append(i+1).append(j);
+                    String roomNumber = String.valueOf((i+1) + j);
+                }
+                //florsNumber(i)+0j ako j e 1-9
+                //floorsNumber(i)+j ako j>9
+
+                String type = selectedCheckBoxes.get(selectedCheckBoxesCounter).getText();
+                int price = 0;//indicator for error in the database
+                int area = 0;//indicator for error in the database
+                for (int k = 0; k < roomsInformation.getRoomTypeCheckBoxes().size(); k++)
+                {
+                    if(type.equals(roomsInformation.getRoomTypeCheckBoxes().get(k).getText()))
+                    {
+                        price=Integer.parseInt(roomsInformation.getRoomTypePrices().get(k).getText());
+                        area=Integer.parseInt(roomsInformation.getRoomTypeAreas().get(k).getText());
+                        break;
+                    }
+                }
+
+                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,0D)))
+                {
+                    return false;
+                }
+                selectedCheckBoxesCounter++;
+            }
+        }
+        return true;//everything is OK
+    }
 
 
     //used when creating new hotel + new manager

@@ -180,8 +180,6 @@ public class OwnerHotelRoomsInformationController {
         }
     }
 
-    //method to load floor specifications (is cache exists)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! plus others from the right
-
     public void addHotelRoomsInformation() throws IOException {
 
           if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField))
@@ -259,8 +257,6 @@ public class OwnerHotelRoomsInformationController {
                     AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Броят стаи на етаж "+floor+" трябва да е по-голям от броя избрани типове на стаи за същия етаж.");
                     return false;
                 }
-                  //this will be useful when initializing the view cache information exists!!!!!!!!!!!!!!!!!!!!!!!!
-                   // for up ^ List<CheckBox> selectedCheckBoxesOfTabList = roomService.getSelectedRoomTypesCheckBoxes();
                 floor++;
             }
             return true;//everything is OK (All validations and checks in the loops went smooth)

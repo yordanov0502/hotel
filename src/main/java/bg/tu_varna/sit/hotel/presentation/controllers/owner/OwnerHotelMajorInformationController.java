@@ -42,7 +42,7 @@ public class OwnerHotelMajorInformationController {
         if(hotelService.validateMajorInfoFields(new String[] {hotelNameField.getText(), hotelAddressField.getText()})
                 && !hotelService.checkForExistingHotelData(new String[] {hotelNameField.getText(), hotelAddressField.getText()}))
         {
-            NewHotelInformation.transferNewHotelInformation(new HotelModel(1L,hotelNameField.getText(),hotelAddressField.getText(),new Timestamp(System.currentTimeMillis()), (int) hotelRating.getRating(),true,true,new ArrayList<>()/*owner and manager must be added!!!!*/),this);
+            NewHotelInformation.transferNewHotelInformation(new HotelModel(1L,hotelNameField.getText(),hotelAddressField.getText(),new Timestamp(System.currentTimeMillis()), (int) hotelRating.getRating(),false,false,new ArrayList<>()),this);
             log.info("New major data for hotel added.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте основна информация за хотел.");
             ViewManager.closeDialogBox();
