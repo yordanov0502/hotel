@@ -88,11 +88,10 @@ public class RoomService {
                 if (j < 10)
                 {
                     sb.append(i+1).append(0).append(j);
-                    //String roomNumber = i+"0"+j;
-                } else
+                }
+                else
                 {
                     sb.append(i+1).append(j);
-                    String roomNumber = String.valueOf((i+1) + j);
                 }
                 //florsNumber(i)+0j ako j e 1-9
                 //floorsNumber(i)+j ako j>9
