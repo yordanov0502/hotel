@@ -101,12 +101,12 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOTEL" layoutX="6.0" layoutY="127.0" size="20" />
-            <Button fx:id="ownersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Собственици" textAlignment="RIGHT">
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" onAction="#showHotelsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="181.0" size="20" />
+            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
             <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
@@ -119,7 +119,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="АА" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

@@ -1,12 +1,16 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Service;
+import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.ServiceRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import bg.tu_varna.sit.hotel.presentation.models.ServiceModel;
+import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
@@ -14,6 +18,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ServiceService {
     private static final Logger log = Logger.getLogger(ServiceService.class);
@@ -27,6 +32,28 @@ public class ServiceService {
     private static class ServiceServiceHolder {
         public static final ServiceService INSTANCE = new ServiceService();
     }
+
+
+
+    public ObservableList<ServiceModel> getAllServicesOfHotel(HotelModel hotelModel) {
+        List<Service> services = serviceRepository.getAllServicesOfHotel(hotelModel.toEntity());
+
+        if(services.isEmpty()){return null;}
+
+        else
+        {
+            return FXCollections.observableList(
+                    services.stream().map(s -> new ServiceModel(
+                            s.getId(),
+                            s.getType(),
+                            s.getSeason(),
+                            s.getTimes_used(),
+                            new HotelModel(s.getHotel())
+                    )).collect(Collectors.toList())
+            );
+        }
+    }
+
 
     public boolean addService(ServiceModel serviceModel) {
         return serviceRepository.save(serviceModel.toEntity());

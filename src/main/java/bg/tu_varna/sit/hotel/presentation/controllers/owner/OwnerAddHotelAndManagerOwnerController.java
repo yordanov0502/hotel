@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
@@ -17,6 +18,7 @@ import java.io.IOException;
 public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerAddHotelAndManagerOwnerController.class);
     private final HotelService hotelService = HotelService.getInstance();
+    private final UserService userService = UserService.getInstance();
 
     @FXML
     private Button addHotelAndManagerButton1;
@@ -30,18 +32,11 @@ public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerControl
         ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-
-    public void addNewManagerToVacantHotel() throws IOException {
-        if(hotelService.getAllHotelsWithoutManager()!=null)
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
-        }
-        else
-        {
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента нямате хотели без мениджър.");
-        }
+    public void showHotelsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
+
 
 
     public void addNewHotelAndNewManager() throws IOException {
@@ -49,36 +44,21 @@ public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerControl
         ViewManager.changeView(Constants.View.OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Hotel And New Manager",800,500);
     }
 
-/*
-    @FXML
-    public void showOwnersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+    public void addNewManagerToVacantHotel() throws IOException {
+        if(userService.getAllHotelsOfOwnerWithoutManager(userService.getUserById(UserSession.user.getId()))!=null)
+        {
+            ViewManager.closeDialogBox();
+            ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
+        }
+        else if(userService.getUserById(UserSession.user.getId()).getHotels().isEmpty())
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента нямате хотели.");
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ В момента нямате хотели без мениджър.");
+        }
     }
-
-    @FXML
-    public void showManagersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
-    }
-
-    @FXML
-    public void showReceptionistsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
-    }
-
-    @FXML
-    public void showHotelsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-    }
-
-    @FXML
-    public void showNewlyRegisteredAdmins() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
-    }*/
 
 
     public void logout() throws IOException {

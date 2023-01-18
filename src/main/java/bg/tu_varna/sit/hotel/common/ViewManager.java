@@ -106,7 +106,7 @@ public final class ViewManager {
             {
                 Parent root = FXMLLoader.load(path);
                 secondaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
-                secondaryStage.setTitle("Secondary Stage");
+                secondaryStage.setTitle(title);
                 secondaryStage.setScene(new Scene(root, width, height));
                 secondaryStage.setX(primaryStage.getX()+75);
                 secondaryStage.setY(primaryStage.getY()+75);

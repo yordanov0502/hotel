@@ -64,7 +64,7 @@ public class AdminHotelUsersInfoController {
 
             Label label = new Label("Няма информация за служители.");
             label.setStyle("-fx-text-fill: black;" + "-fx-background-color: white;" + "-fx-font-size: 20;");
-            hotelUsersTable.setPlaceholder(label); //shows text when there are no owners in the database
+            hotelUsersTable.setPlaceholder(label); //shows text when there are no employees in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
             roleColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("role"));
@@ -94,7 +94,7 @@ public class AdminHotelUsersInfoController {
 
             Label hotelName = new Label("\""+selectedHotel.getName()+"\"");
             hotelName.setText("\""+selectedHotel.getName()+"\"");
-            hotelName.setStyle("-fx-text-fill: white;" + "-fx-background-color: blue;" + "-fx-font-size: 20;" + "-fx-background-radius: 25;"+"-fx-alignment: center;"+"-fx-font-family: Arial;");
+            hotelName.setStyle("-fx-text-fill: white;" + "-fx-font-size: 20;" + "-fx-alignment: center;" + "-fx-font-family: Arial;");
             hotelName.setLayoutX(192);
             hotelName.setLayoutY(45);
             hotelName.setPrefWidth(364);
@@ -128,8 +128,8 @@ public class AdminHotelUsersInfoController {
                                 }
                                 else
                                 {
-                                    editIcon.setStyle("-glyph-size:15px;");
-                                    deleteIcon.setStyle("-glyph-size:15px;");
+                                    editIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
+                                    deleteIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
 
                                     editIcon.setOnMouseEntered((MouseEvent event) -> {
@@ -212,7 +212,7 @@ public class AdminHotelUsersInfoController {
         {
             for (HotelModel h : userService.getAllHotelsOfUser(userModel))
             {
-                userService.removeHotel(userModel, h, ViewManager.getPrimaryStage().getTitle());//removes user from certain hotel's list and vice versa, and updates hotel's hasOwner and hasManager attributes if the user is owner or manager of a hotel, but his account in the system remains
+                userService.removeHotel(userModel, h, ViewManager.getSecondaryStage().getTitle());//removes user from certain hotel's list and vice versa, and updates hotel's hasOwner and hasManager attributes if the user is owner or manager of a hotel, but his account in the system remains
             }
         }
         if(userService.deleteUser(userModel))
@@ -220,7 +220,7 @@ public class AdminHotelUsersInfoController {
             log.info("Information for "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
             ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info", 800, 500);
         }
         else
         {
@@ -250,9 +250,16 @@ public class AdminHotelUsersInfoController {
 
             if(answer.isPresent() && answer.get()==yesButton)
             {
-                userService.removeHotel(hotelOwner,selectedHotel,ViewManager.getPrimaryStage().getTitle());//removes user(owner) from certain hotel's list and vice versa, but his account in the system remains,just in case(if) he is owner of other hotels
-                ViewManager.closeDialogBox();
-                ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
+                if(userService.removeHotel(hotelOwner,selectedHotel,ViewManager.getSecondaryStage().getTitle()))//removes user(owner) from certain hotel's list and vice versa, but his account in the system remains,just in case(if) he is owner of other hotels
+                {
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+hotelOwner.getFirstName()+" "+hotelOwner.getLastName()+" вече не е "+hotelOwner.getRole()+" на хотел \""+selectedHotel.getName()+"\".");
+                    ViewManager.closeDialogBox();
+                    ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
+                }
+                else
+                {
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+hotelOwner.getFirstName()+" "+hotelOwner.getLastName()+"\" като "+hotelOwner.getRole()+" на хотел \""+selectedHotel.getName()+"\" е неуспешна.");
+                }
             }
         }
     }

@@ -1,7 +1,9 @@
-package bg.tu_varna.sit.hotel.presentation.controllers.admin;
+package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
+import bg.tu_varna.sit.hotel.presentation.controllers.admin.UserEditInfoController;
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -14,8 +16,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-public class UserEditInfoController {
-    private static final Logger log = Logger.getLogger(UserEditInfoController.class);
+public class OwnerUserEditInfoController {
+    private static final Logger log = Logger.getLogger(OwnerUserEditInfoController.class);
     private final UserService userService = UserService.getInstance();
     private UserModel selectedUser;
 
@@ -40,6 +42,7 @@ public class UserEditInfoController {
     @FXML
     private Button closeButton;
 
+    private static HotelModel selectedHotel;
 
     public void editUserInfo() throws IOException {
         if(userService.validateFields(new String[] {userNameField.getText(), userSurnameField.getText(), userEGNField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText()})
@@ -47,25 +50,28 @@ public class UserEditInfoController {
         {
             if(userService.updateUser(new UserModel(userEGNField.getText(),userNameField.getText(), userSurnameField.getText(), userPhoneField.getText(), userUsernameField.getText(), userEmailField.getText(), userPasswordField.getText(), Hasher.SHA512.hash(userPasswordField.getText()),selectedUser.getRole(), selectedUser.getCreatedAt(),selectedUser.getLastLogin(), "редактиран",selectedUser.getHotels())))
             {
+                if(selectedUser.getId().equals(UserSession.user.getId()))
+                {
+                    UserSession.user=null;
+                    UserSession.user=userService.getUserById(selectedUser.getId());
+                }
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно редактиране на данните за "+selectedUser.getRole()+" \""+selectedUser.getFirstName()+" "+selectedUser.getLastName()+"\" .");
-                closeEditInfoPage();
-                refreshView(selectedUser.getRole());//loads specific page again(refreshes), in order to show the new changes
-///////////////////////////////////////////////////////////////////////////////////////
-          //      if(UserSession.user.getId().equals(selectedUser.getId()))
-          //      {
-           //         UserSession.user=null;
-             //       UserSession.user=userService.getUserById(selectedUser.getId());
-            //    }
-////////////////////////////////////////////////////////////////////////////////////////
+                ViewManager.closeDialogBox();
+                ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
             }
             else
             {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Редактирането на данни е неуспешно.");}
         }
     }
 
+    public static void setSelectedHotel(HotelModel selectedHotel,OwnerHotelsInfoEmployeesInformationController ownerHotelsInfoEmployeesInformationController) {
+        OwnerUserEditInfoController.selectedHotel = selectedHotel;
+    }
 
-    public void closeEditInfoPage(){
+    public void backToEmployeesInfoPage() throws IOException {
+        UserSession.selectedHotel=selectedHotel;
         ViewManager.closeDialogBox();
+        ViewManager.openDialogBox(Constants.View.OWNER_HOTELS_INFO_EMPLOYEES_INFORMATION_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Owner Hotels Info Employees Information",750,450);
     }
 
     public void showCustomerInfo(){
@@ -80,9 +86,9 @@ public class UserEditInfoController {
 
     public void initialize()
     {
-            selectedUser=UserSession.selectedUser;
-            UserSession.selectedUser=null;
-            showCustomerInfo();
+        selectedUser=UserSession.selectedUser;
+        UserSession.selectedUser=null;
+        showCustomerInfo();
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
@@ -91,23 +97,4 @@ public class UserEditInfoController {
             }
         });
     }
-
-    private void refreshView(String role) throws IOException {
-        //Determines and refreshes the page, in which an update has been recently made
-        if(ViewManager.getPrimaryStage().getTitle().equals("Admin Hotels Info"))
-        {
-            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-        }
-        else if(ViewManager.getPrimaryStage().getTitle().equals("Admin Owners Info")||ViewManager.getPrimaryStage().getTitle().equals("Admin Managers Info")||ViewManager.getPrimaryStage().getTitle().equals("Admin Receptionists Info"))
-        {
-            switch (role)
-            {
-                case "собственик": ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);break;
-                case "мениджър": ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);break;
-                case "рецепционист": ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);break;
-                default:break;
-            }
-        }
-    }
-
 }

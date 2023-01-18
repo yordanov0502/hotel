@@ -1,11 +1,14 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
+import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.data.entities.Room;
+import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.RoomRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
+import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -16,6 +19,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -170,6 +174,19 @@ public class RoomService {
         }
     }
 
+
+    public boolean validateRoomType(String type) {
+        String regex = "^([\\u0430-\\u044F OR a-z]{3,50})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(type == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(type);
+            return m.matches();
+        }
+    }
+
     //used when creating new hotel + new manager
     public boolean validateRoomsNumberPerFloor(int floor, String roomsNumberPerFloor)
     {
@@ -252,6 +269,113 @@ public class RoomService {
         }
     }
 
+    public RoomModel getRoomByNumber(String number,HotelModel hotelModel) {
+        Room room = roomRepository.getByNumber(number,hotelModel.toEntity());
+        return (room == null) ? null : new RoomModel(room);
+    }
+
+    public boolean isRoomExists(String number,HotelModel hotelModel) {
+        return getRoomByNumber(number,hotelModel) != null;
+    }
+
+
+    //method used when editing room information
+    public boolean validateRoomInfoFields(String number, String type, String area, String price, String hotelName, RoomModel selectedRoom){
+
+        if(number.equals("")||type.equals("")||area.equals("")||price.equals(""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете данни във всички полета.");
+            return false;
+        }
+        else if(!validateRoomNumber(number) || Integer.parseInt(number)<101 || Integer.parseInt(number)>10098)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Номерът на стая може да съдържа от 3 до 5 цифри[101-10098].");
+            return false;
+        }
+        else if(!Objects.equals(selectedRoom.getNumber(), Integer.parseInt(number)) && isRoomExists(number,HotelService.getInstance().getHotelByName(hotelName)))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Стая с номер: \""+number+"\" вече съществува във вашия хотел.");
+            return false;
+        }
+        else if(!validateRoomType(type))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Типът на една стая трябва да съдържа между 4 и 50 символа като те могат да бъдат само малки букви на кирилица или на латиница.");
+            return false;
+        }
+        else if(!validateRoomAreaField(area) || Integer.parseInt(area)<10 || Integer.parseInt(area)>10000)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Размерът на една стая може да бъде между 10 и 10000 кв.м.");
+            return false;
+        }
+        else if(!validateRoomPriceField(price) || Integer.parseInt(price)<1 || Integer.parseInt(area)>100000)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Цената на една стая може да бъде между 1 и 100000 лв.");
+            return false;
+        }
+        else if(Objects.equals(selectedRoom.getNumber(), Integer.parseInt(number)) && Objects.equals(selectedRoom.getType(), type) && Objects.equals(selectedRoom.getSize(), Integer.parseInt(area)) && Objects.equals(selectedRoom.getPrice(), Integer.parseInt(price)))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    //method used when creating a new room
+    public boolean validateRoomInfoFields(String number, String type, String area, String price, String hotelName){
+
+        if(number.equals("")||type.equals("")||area.equals("")||price.equals(""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете данни във всички полета.");
+            return false;
+        }
+        else if(!validateRoomNumber(number) || Integer.parseInt(number)<101 || Integer.parseInt(number)>10098)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Номерът на стая може да съдържа от 3 до 5 цифри[101-10098].");
+            return false;
+        }
+        else if(isRoomExists(number,HotelService.getInstance().getHotelByName(hotelName)))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Стая с номер: \""+number+"\" вече съществува във вашия хотел.");
+            return false;
+        }
+        else if(!validateRoomType(type))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Типът на една стая трябва да съдържа между 4 и 50 символа като те могат да бъдат само малки букви на кирилица или на латиница.");
+            return false;
+        }
+        else if(!validateRoomAreaField(area) || Integer.parseInt(area)<10 || Integer.parseInt(area)>10000)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Размерът на една стая може да бъде между 10 и 10000 кв.м.");
+            return false;
+        }
+        else if(!validateRoomPriceField(price) || Integer.parseInt(price)<1 || Integer.parseInt(area)>100000)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Цената на една стая може да бъде между 1 и 100000 лв.");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+
+
+    //[101-198]-[10001-10098]
+    public boolean validateRoomNumber(String roomNumber)
+    {
+        String regex = "^[^0]([0-9]{2,5})$";
+
+        Pattern p = Pattern.compile(regex);
+        if(roomNumber == null) {return false;}
+        else
+        {
+            Matcher m = p.matcher(roomNumber);
+            return m.matches();
+        }
+    }
 
     //used when creating new hotel + new manager
     //Room area[10-10000]

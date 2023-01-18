@@ -27,36 +27,11 @@ public class OwnerMainController implements MajorOwnerController {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
-/*
-    @FXML
-    public void showOwnersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
-    }
 
-    @FXML
-    public void showManagersInfo() throws IOException {
+    public void showHotelsInfo() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
-
-    @FXML
-    public void showReceptionistsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
-    }
-
-    @FXML
-    public void showHotelsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-    }
-
-    @FXML
-    public void showNewlyRegisteredAdmins() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
-    }*/
 
 
     public void logout() throws IOException {

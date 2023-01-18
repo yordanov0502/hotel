@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="352.0" prefWidth="652.0" styleClass="anchor" stylesheets="@../../admin/css/AccountInfoView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerUserEditInfoController">
+   <children>
+      <Pane layoutX="34.0" layoutY="44.0" prefHeight="262.0" prefWidth="583.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="221.0" layoutY="1.0" text="Лични данни" textFill="#1a1251">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="40.0" text="Име:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userNameField" alignment="CENTER_RIGHT" layoutX="65.0" layoutY="36.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="14.0" layoutY="80.0" text="Фамилия:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userSurnameField" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="76.0" prefHeight="33.0" prefWidth="135.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="15.0" layoutY="120.0" text="ЕГН:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userEGNField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="61.0" layoutY="116.0" prefHeight="33.0" prefWidth="174.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="14.0" layoutY="160.0" text="Моб.номер:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userPhoneField" alignment="CENTER_RIGHT" layoutX="113.0" layoutY="156.0" prefHeight="33.0" prefWidth="123.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="237.0" layoutY="40.0" text="Потребителско име:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userUsernameField" alignment="CENTER_RIGHT" layoutX="409.0" layoutY="36.0" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="237.0" layoutY="80.0" text="Имейл адрес:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userEmailField" alignment="CENTER_RIGHT" layoutX="355.0" layoutY="76.0" prefHeight="31.0" prefWidth="220.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="237.0" layoutY="120.0" text="Парола:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="userPasswordField" alignment="CENTER_RIGHT" layoutX="308.0" layoutY="116.0" prefHeight="33.0" prefWidth="267.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Button fx:id="userEditInfoButton" layoutX="156.0" layoutY="203.0" mnemonicParsing="false" onAction="#editUserInfo" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Редактирай" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="backButton" layoutX="339.0" layoutY="203.0" mnemonicParsing="false" onAction="#backToEmployeesInfoPage" prefHeight="38.0" prefWidth="109.0" styleClass="adminBackButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children></Pane>
+   </children>
+</AnchorPane>

@@ -57,7 +57,7 @@ public class AdminDeleteAccountConfirmationController {
                     {
                         if(userService.getAllConfirmedAdmins().size()>1)
                         {
-                            if(userService.deleteUser(UserSession.user))
+                            if(userService.deleteUser(userService.getUserById(UserSession.user.getId())))
                             {
                                 AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Вие изтрихте акаунтът си успешно от системата.");
                                 UserSession.user=null;

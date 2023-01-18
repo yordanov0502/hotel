@@ -161,9 +161,9 @@ public class AdminsNewRegistrationsInfoController {
                                 }
                                 else
                                 {
-                                    infoIcon.setStyle("-glyph-size:17px;");
-                                    approveIcon.setStyle("-glyph-size:17px;");
-                                    deleteIcon.setStyle("-glyph-size:17px;");
+                                    infoIcon.setStyle("-glyph-size:17px; -fx-font-family: FontAwesome;");
+                                    approveIcon.setStyle("-glyph-size:17px; -fx-font-family: FontAwesome;");
+                                    deleteIcon.setStyle("-glyph-size:17px; -fx-font-family: FontAwesome;");
 
 
                                     infoIcon.setOnMouseEntered((MouseEvent event) -> {

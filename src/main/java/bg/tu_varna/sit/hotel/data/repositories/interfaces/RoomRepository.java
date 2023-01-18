@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RoomRepository<T> extends Repository<T> {
     List<T> getAllRoomsOfHotel(Hotel hotel);
+    Room getByNumber(String number,Hotel hotel);
 }

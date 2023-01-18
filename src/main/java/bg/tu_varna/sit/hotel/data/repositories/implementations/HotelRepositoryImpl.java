@@ -165,6 +165,7 @@ public class HotelRepositoryImpl implements HotelRepository<Hotel> {
         return hotelsNames;
     }
 
+
     @Override
     public Hotel getById(Long id) {
         Session session = Connection.openSession();

@@ -48,11 +48,17 @@ public class OwnerAddNewManagerToVacantHotelController {
         ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-
     public void addHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
+
+    public void showHotelsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+    }
+
+
 
 
     public void addNewManagerToVacantHotel() throws IOException {
@@ -68,7 +74,7 @@ public class OwnerAddNewManagerToVacantHotelController {
                     log.info("New manager has been added successfully.");
                     if(userService.addHotel(userModel,hotelService.getHotelByName(comboBox.getValue())))
                     {
-                        if(hotelService.getAllHotelsWithoutManager()!=null)
+                        if(userService.getAllHotelsOfOwnerWithoutManager(userService.getUserById(UserSession.user.getId()))!=null)
                         {
                             ViewManager.closeDialogBox();
                             ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
@@ -134,7 +140,7 @@ public class OwnerAddNewManagerToVacantHotelController {
 
     public void initialize()
     {
-        comboBox.setItems(hotelService.getAllHotelNamesWithoutManager());
+        comboBox.setItems(userService.getAllHotelNamesOfOwnerWithoutManager(userService.getUserById(UserSession.user.getId())));
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){

@@ -47,17 +47,7 @@ public class Hotel implements Serializable {
     @ManyToMany(mappedBy = "hotels")
     private List<User> users = new ArrayList<>();
 
-    //@OneToMany(mappedBy = "hotels", cascade = CascadeType.ALL)
-    //private List<Room> rooms = new ArrayList<>();
-
-   // public List<Room> getRooms() {
-   //     return rooms;
-   // }
-
-   // public void setRooms(List<Room> rooms) {
-   //     this.rooms = rooms;
-   // }
-
+    
     public List<User> getUsers(){
         return users;
     }

@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="750.0" styleClass="anchor" stylesheets="@../css/HotelUsersInfoView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminHotelUsersInfoController">
+<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="750.0" styleClass="anchor" stylesheets="@../../admin/css/HotelUsersInfoView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerHotelsInfoEmployeesInformationController">
    <children>
-      <TableView fx:id="hotelUsersTable" layoutX="6.0" layoutY="80.0" prefHeight="313.0" prefWidth="738.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
+      <TableView fx:id="hotelUsersTable" layoutX="6.0" layoutY="80.0" prefHeight="313.0" prefWidth="738.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
         <columns>
             <TableColumn fx:id="roleColumn" prefWidth="91.0" text="Позиция" />
           <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
@@ -23,7 +23,7 @@
             <TableColumn fx:id="actionColumn" prefWidth="114.0" style="-fx-font-family: Arial;" text="Действия" />
         </columns>
       </TableView>
-      <Button fx:id="closeWindowButton" layoutX="706.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
+      <Button fx:id="closeWindowButton" layoutX="706.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
@@ -36,13 +36,5 @@
             <Font name="Arial" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="removeOwnerButton" layoutX="541.0" layoutY="405.0" mnemonicParsing="false" onAction="#removeOwner" prefHeight="31.0" prefWidth="180.0" styleClass="removeOwnerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Премахни собственик">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-         <effect>
-            <DropShadow />
-         </effect>
-      </Button>
    </children>
 </AnchorPane>

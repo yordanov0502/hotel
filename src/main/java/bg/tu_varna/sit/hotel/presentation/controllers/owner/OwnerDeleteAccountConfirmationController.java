@@ -62,12 +62,12 @@ public class OwnerDeleteAccountConfirmationController {
                     {
                         List<HotelModel> hotelsOfOwner = new ArrayList<>();
 
-                        if(!UserSession.user.getHotels().isEmpty())
+                        if(!userService.getUserById(UserSession.user.getId()).getHotels().isEmpty())
                         {
-                            hotelsOfOwner = userService.getAllHotelsOfUser(UserSession.user);
+                            hotelsOfOwner = userService.getAllHotelsOfUser(userService.getUserById(UserSession.user.getId()));
                         }
 
-                        if(userService.deleteUser(UserSession.user))
+                        if(userService.deleteUser(userService.getUserById(UserSession.user.getId())))
                         {
                             if(!hotelsOfOwner.isEmpty())
                             {

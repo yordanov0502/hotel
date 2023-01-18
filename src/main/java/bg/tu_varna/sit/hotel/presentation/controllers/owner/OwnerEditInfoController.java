@@ -1,10 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.UserService;
-import bg.tu_varna.sit.hotel.common.AlertManager;
-import bg.tu_varna.sit.hotel.common.Hasher;
-import bg.tu_varna.sit.hotel.common.UserSession;
-import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -51,13 +48,10 @@ public class OwnerEditInfoController {
                 UserSession.user=null;
                 UserSession.user=userService.getUserById(ownerEGNField.getText());//zadavame sushtiq user za tekusht user session, no s update-nati danni
                 ViewManager.closeDialogBox();
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //      if(ViewManager.getPrimaryStage().getTitle().equals("Admin Hotels Info"))
-                //      {
-                //         ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-
-                //       }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                if(ViewManager.getPrimaryStage().getTitle().equals("Owner Hotels Info"))
+                {
+                    ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+                }
             }
             else {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Актуализирането на данни е неуспешно.");}
         }

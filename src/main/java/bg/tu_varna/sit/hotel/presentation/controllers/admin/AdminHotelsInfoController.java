@@ -91,7 +91,7 @@ public class AdminHotelsInfoController {
 
             Label label = new Label("Няма информация за хотели.");
             label.setStyle("-fx-text-fill: black;" + "-fx-background-color: white;" + "-fx-font-size: 20;");
-            hotelsTable.setPlaceholder(label); //shows text when there are no owners in the database
+            hotelsTable.setPlaceholder(label); //shows text when there are no hotels in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
             nameColumn.setCellValueFactory(new PropertyValueFactory<HotelModel, String>("name"));
@@ -148,7 +148,7 @@ public class AdminHotelsInfoController {
                                 }
                                 else
                                 {
-                                    usersInfoIcon.setStyle("-glyph-size:15px;");
+                                    usersInfoIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
 
                                     usersInfoIcon.setOnMouseEntered((MouseEvent event) -> {

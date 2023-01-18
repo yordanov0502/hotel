@@ -2,9 +2,11 @@ package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
+import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,7 +42,7 @@ public class HotelService {
         {
             return FXCollections.observableList(
                     hotels.stream().map(h -> new HotelModel(
-                            /**/h.getId(),
+                            h.getId(),
                             h.getName(),
                             h.getAddress(),
                             h.getEstablished_at(),
@@ -48,7 +50,6 @@ public class HotelService {
                             h.getHasOwner(),
                             h.getHasManager(),
                             h.getUsers()
-                            //h.getRooms()
                     )).collect(Collectors.toList())
             );
         }
@@ -116,7 +117,7 @@ public class HotelService {
         }
     }
 
-    public ObservableList<HotelModel> getAllHotelsWithoutManager() {
+    /*public ObservableList<HotelModel> getAllHotelsWithoutManager() {
         List<Hotel> hotels = hotelRepository.getAllHotelsWithoutManager();
 
         if(hotels.isEmpty()){return null;}
@@ -136,9 +137,9 @@ public class HotelService {
                     )).collect(Collectors.toList())
             );
         }
-    }
+    }*/
 
-    public ObservableList<String> getAllHotelNamesWithoutManager() {
+    /*public ObservableList<String> getAllHotelNamesWithoutManager() {
         List<String> hotelsNames = hotelRepository.getAllHotelNamesWithoutManager();
 
         if(hotelsNames.isEmpty()){return null;}
@@ -149,7 +150,9 @@ public class HotelService {
                     new ArrayList<>(hotelsNames)
             );
         }
-    }
+    }*/
+
+
 
     public HotelModel getHotelById(Long id) {
         Hotel hotel = hotelRepository.getById(id);
@@ -337,6 +340,8 @@ public class HotelService {
         }
         else {return true;}
     }
+
+    //this method is used when creating a new hotel
     public boolean checkForExistingHotelData(String [] fields) //checks for already existing hotel data in the database
     {
         if(fields.length==2) //proverka pri suzdavane na hotel
@@ -356,12 +361,29 @@ public class HotelService {
         else return true;
     }
 
-   // public void printAllUsersInformation(HotelModel hotelModel)
-   // {
-   //     for(User user : hotelModel.getUsers())
-    //    {
-    //        System.out.println(user.toString());
-   //     }
-   // }
+    //this method is used when editing already existing hotel in the database
+    public boolean checkForExistingHotelData(String [] fields,int stars,HotelModel selectedHotel) //checks for already existing hotel data in the database
+    {
+        if(fields.length==2) //proverka pri redaktirane na hotel
+        {
+            if(Objects.equals(selectedHotel.getName(), fields[0]) && Objects.equals(selectedHotel.getAddress(), fields[1]) && selectedHotel.getStars()==stars)
+            {
+                return true;
+            }
+            else if(!Objects.equals(selectedHotel.getName(), fields[0]) && isNameExists(fields[0]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Хотел с име: \""+fields[0]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else if(!Objects.equals(selectedHotel.getAddress(), fields[1]) && isAddressExists(fields[1]))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Хотел с адрес: \""+fields[1]+"\" вече съществува в базата данни.");
+                return true;
+            }
+            else {return false;}
+        }
+        else return true;
+    }
+
 
 }

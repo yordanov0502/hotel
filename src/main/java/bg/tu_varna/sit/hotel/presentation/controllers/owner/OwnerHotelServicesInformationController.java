@@ -123,7 +123,7 @@ public class OwnerHotelServicesInformationController {
                                 }
                                 else
                                 {
-                                    deleteIcon.setStyle("-glyph-size:15px;");
+                                    deleteIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
                                     deleteIcon.setOnMouseEntered((MouseEvent event) -> {
                                         Tooltip tooltip = new Tooltip("изтрий");

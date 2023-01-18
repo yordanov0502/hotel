@@ -157,8 +157,8 @@ public class AdminOwnersInfoController {
                                 }
                                 else
                                 {
-                                    editIcon.setStyle("-glyph-size:15px;");
-                                    deleteIcon.setStyle("-glyph-size:15px;");
+                                    editIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
+                                    deleteIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
 
                                     editIcon.setOnMouseEntered((MouseEvent event) -> {

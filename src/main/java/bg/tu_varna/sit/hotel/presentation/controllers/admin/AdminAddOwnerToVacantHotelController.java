@@ -153,7 +153,7 @@ public class AdminAddOwnerToVacantHotelController {
                                 }
                                 else
                                 {
-                                    infoIcon.setStyle("-glyph-size:15px;");
+                                    infoIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
 
                                     infoIcon.setOnMouseEntered((MouseEvent event) -> {

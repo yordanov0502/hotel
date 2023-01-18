@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -130,6 +131,64 @@ public class UserService {
             );
     }
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public ObservableList<HotelModel> getAllHotelsOfOwnerWithoutManager(UserModel owner) {
+
+        if(owner.getHotels().isEmpty()){return null;}
+
+        else
+        {
+            List<Hotel> hotelsWithoutManager = new ArrayList<>();
+            for(Hotel hotel:owner.getHotels())
+            {
+                if(hotel.getHasManager().equals(false))
+                {
+                    hotelsWithoutManager.add(hotel);
+                }
+            }
+
+            if(hotelsWithoutManager.isEmpty()) {return null;}
+            else
+            {
+                return FXCollections.observableList(
+                        hotelsWithoutManager.stream().map(h -> new HotelModel(
+                                h.getId(),
+                                h.getName(),
+                                h.getAddress(),
+                                h.getEstablished_at(),
+                                h.getStars(),
+                                h.getHasOwner(),
+                                h.getHasManager(),
+                                h.getUsers()
+                        )).collect(Collectors.toList())
+                );
+            }
+        }
+    }
+
+    public ObservableList<String> getAllHotelNamesOfOwnerWithoutManager(UserModel owner) {
+
+        if(owner.getHotels().isEmpty()){return null;}
+
+        else
+        {
+            List<String> hotelNamesWithoutManager = new ArrayList<>();
+            for(Hotel hotel:owner.getHotels())
+            {
+                if(hotel.getHasManager().equals(false))
+                {
+                    hotelNamesWithoutManager.add(hotel.getName());
+                }
+            }
+
+            if(hotelNamesWithoutManager.isEmpty()) {return null;}
+            else {return FXCollections.observableList(new ArrayList<>(hotelNamesWithoutManager));}
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     public UserModel getUserById(String id) {
         User user = userRepository.getById(id);
         return (user == null) ? null : new UserModel(user);
@@ -231,7 +290,7 @@ public class UserService {
         }
     }
 
-    public void removeHotel(UserModel userModel,HotelModel hotelModel,String stageTitle)
+    public boolean removeHotel(UserModel userModel,HotelModel hotelModel,String stageTitle)
     {
         //removes hotel from user's list of hotels                                        ////removes user from hotel's list of users
         if(userModel.toEntity().getHotels().removeIf(h -> h.getName().equals(hotelModel.getName())) && hotelModel.toEntity().getUsers().removeIf(u -> u.getId().equals(userModel.getId())))
@@ -248,27 +307,30 @@ public class UserService {
             if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
             {
                 log.info("Successfully removed hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
-                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")...*/)
-                {
-                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+userModel.getFirstName()+" "+userModel.getLastName()+" вече не е "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\".");
-                }
+                return true;
+                // if(stageTitle.equals("Hotel Users Info") || stageTitle.equals("Owner Hotels Info"))
+               // {
+               //     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ "+userModel.getFirstName()+" "+userModel.getLastName()+" вече не е "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\".");
+               // }
             }
             else
             {
                 log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
-                if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")...*/)
-                {
-                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
-                }
+                return false;
+                // if(stageTitle.equals("Hotel Users Info") || stageTitle.equals("Owner Hotels Info"))
+                //{
+                //    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+                //}
             }
         }
         else
         {
             log.info("Failed to remove hotel \""+hotelModel.getName()+"\" from user's \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" list of hotels and vice versa.");
-            if(stageTitle.equals("Hotel Users Info") /*|| stageTitle.equals("Owner Hotel Users Info")*/)
-            {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
-            }
+            return false;
+            // if(stageTitle.equals("Hotel Users Info") || stageTitle.equals("Owner Hotels Info"))
+            //{
+           //     AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Операцията по премахване на \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" като "+userModel.getRole()+" на хотел \""+hotelModel.getName()+"\" е неуспешна.");
+           // }
         }
     }
 
@@ -477,12 +539,12 @@ public class UserService {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[2]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(UserSession.user.getUsername(), fields[3]) &&isUsernameExists(fields[3]))
+            else if(!Objects.equals(UserSession.user.getUsername(), fields[3]) && isUsernameExists(fields[3]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[3]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(UserSession.user.getEmail(), fields[4]) &&isEmailExists(fields[4]))
+            else if(!Objects.equals(UserSession.user.getEmail(), fields[4]) && isEmailExists(fields[4]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[4]+"\" вече съществува в базата данни.");
                 return false;
@@ -505,12 +567,12 @@ public class UserService {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[2]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(selectedUser.getUsername(), fields[3]) &&isUsernameExists(fields[3]))
+            else if(!Objects.equals(selectedUser.getUsername(), fields[3]) && isUsernameExists(fields[3]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Потребителско име: \""+fields[3]+"\" вече съществува в базата данни.");
                 return false;
             }
-            else if(!Objects.equals(selectedUser.getEmail(), fields[4]) &&isEmailExists(fields[4]))
+            else if(!Objects.equals(selectedUser.getEmail(), fields[4]) && isEmailExists(fields[4]))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Имейл адрес: \""+fields[4]+"\" вече съществува в базата данни.");
                 return false;
@@ -520,12 +582,4 @@ public class UserService {
         else {return false;}
     }
 
-   // public void clearFields(TextField [] textFields, PasswordField passwordField)
-   // {
-    //    for(TextField currTextField:textFields)
-    //    {
-    //        currTextField.clear();
-     //   }
-    //    passwordField.clear();
-   // }
 }

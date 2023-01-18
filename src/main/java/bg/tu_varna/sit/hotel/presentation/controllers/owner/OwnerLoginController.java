@@ -50,7 +50,7 @@ public class OwnerLoginController{
             UserSession.user=userService.getUserByUsername(ownerUsernameField.getText());//Got user by username successfully
 
             //updates last login column of user every time he logs in
-            if(userService.updateUser(new UserModel(UserSession.user.getId(),UserSession.user.getFirstName(),UserSession.user.getLastName(),UserSession.user.getPhone(), UserSession.user.getUsername(),UserSession.user.getEmail(),UserSession.user.getPassword(),UserSession.user.getHash(),UserSession.user.getRole(),UserSession.user.getCreatedAt(),new Timestamp(System.currentTimeMillis()), "редактиран",UserSession.user.getHotels())))
+            if(userService.updateUser(new UserModel(UserSession.user.getId(),UserSession.user.getFirstName(),UserSession.user.getLastName(),UserSession.user.getPhone(), UserSession.user.getUsername(),UserSession.user.getEmail(),UserSession.user.getPassword(),UserSession.user.getHash(),UserSession.user.getRole(),UserSession.user.getCreatedAt(),new Timestamp(System.currentTimeMillis()), UserSession.user.getStatus(),UserSession.user.getHotels())))
             {
                 UserSession.user=null;
                 UserSession.user=userService.getUserByUsername(ownerUsernameField.getText());//Got user by username successfully

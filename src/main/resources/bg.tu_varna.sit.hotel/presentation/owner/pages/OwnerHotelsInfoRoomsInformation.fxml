@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="750.0" styleClass="anchor" stylesheets="@../css/RoomsInformationView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerHotelsInfoRoomsInformationController">
+   <children>
+      <Label layoutX="243.0" layoutY="6.0" text="Списък със стаи на хотел:" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="roomsTable" layoutX="42.0" layoutY="72.0" prefHeight="313.0" prefWidth="663.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
+         <columns>
+            <TableColumn fx:id="numberColumn" prefWidth="110.0" text="Номер" />
+            <TableColumn fx:id="typeColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Тип" />
+            <TableColumn fx:id="areaColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Размер" />
+            <TableColumn fx:id="priceColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Цена" />
+            <TableColumn fx:id="ratingColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Рейтинг" />
+            <TableColumn fx:id="actionColumn" prefWidth="108.0" style="-fx-font-family: Arial;" text="Действия" />
+         </columns>
+      </TableView>
+      <Button fx:id="addNewRoomButton" layoutX="321.0" layoutY="399.0" mnemonicParsing="false" onAction="#addNewRoom" prefHeight="38.0" prefWidth="109.0" styleClass="addHotelRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави стая" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="closeWindowButton" layoutX="706.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>

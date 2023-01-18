@@ -107,4 +107,18 @@ public class HotelModel implements EntityModel<Hotel>{
         hotelTemp.setUsers(this.users);
         return hotelTemp;
     }
+
+    @Override
+    public String toString() {
+        return "HotelModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", established_at=" + established_at +
+                ", stars=" + stars +
+                ", hasOwner=" + hasOwner +
+                ", hasManager=" + hasManager +
+                ", users=" + users +
+                '}';
+    }
 }

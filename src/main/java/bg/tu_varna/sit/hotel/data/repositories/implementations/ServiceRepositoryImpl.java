@@ -2,11 +2,15 @@ package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
+import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.entities.Service;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.ServiceRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class ServiceRepositoryImpl implements ServiceRepository<Service> {
 
@@ -88,4 +92,23 @@ public class ServiceRepositoryImpl implements ServiceRepository<Service> {
         }
         return service;
     }
+
+    @Override
+    public List<Service> getAllServicesOfHotel(Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Service> services = new LinkedList<>();
+        try{
+            String jpql = "SELECT s FROM Service s WHERE hotel = '"+ hotel.getId() +"'";
+            services.addAll(session.createQuery(jpql, Service.class).getResultList());
+            transaction.commit();
+            log.info("Got all services successfully.");
+        } catch (Exception e) {
+            log.error("Get all services error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return services;
+    }
+
 }

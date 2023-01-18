@@ -79,7 +79,7 @@ public class RoomRepositoryImpl implements RoomRepository<Room> {
         Transaction transaction = session.beginTransaction();
         List<Room> rooms = new LinkedList<>();
         try{
-            String jpql = "SELECT r FROM Room r WHERE hotel = '"+ hotel.getId() +"'";
+            String jpql = "SELECT r FROM Room r WHERE hotel = '"+ hotel.getId() +"' ORDER BY number";
             rooms.addAll(session.createQuery(jpql, Room.class).getResultList());
             transaction.commit();
             log.info("Got all rooms successfully.");
@@ -89,6 +89,24 @@ public class RoomRepositoryImpl implements RoomRepository<Room> {
             session.close();
         }
         return rooms;
+    }
+
+    @Override
+    public Room getByNumber(String number, Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Room room = null;
+        try{
+            String jpql = "SELECT r FROM Room r WHERE number = '"+Integer.parseInt(number)+"' AND hotel = '"+ hotel.getId() +"'";
+            room = (Room) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got a room successfully by number.");
+        } catch (Exception e) {
+            log.error("Get a room by number error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return room;
     }
 
 

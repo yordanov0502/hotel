@@ -43,13 +43,15 @@ public class OwnerAddNewHotelAndNewManagerController {
         ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-
     public void addHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
 
-
+    public void showHotelsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+    }
 
 
 
@@ -86,7 +88,7 @@ public class OwnerAddNewHotelAndNewManagerController {
             if(hotelService.addHotel(NewHotelInformation.getHotelMajorInformation()))
             {
                 log.info("New hotel has been added successfully.");
-                if(userService.addHotel(UserSession.user,hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())) && userService.addHotel(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
+                if(userService.addHotel(userService.getUserById(UserSession.user.getId()),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())) && userService.addHotel(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
                 {
                     log.info("Successfully added owner and manager to hotel \""+NewHotelInformation.getHotelMajorInformation().getName()+"\".");
                     if(roomService.addRooms(NewHotelInformation.getHotelRoomsInformation(),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))

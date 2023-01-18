@@ -97,7 +97,7 @@ public class AdminReceptionistsInfoController {
 
             Label label = new Label("Няма информация за рецепционисти.");
             label.setStyle("-fx-text-fill: black;" + "-fx-background-color: white;" + "-fx-font-size: 20;");
-            receptionistsTable.setPlaceholder(label); //shows text when there are no owners in the database
+            receptionistsTable.setPlaceholder(label); //shows text when there are no receptionists in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
             egnColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("id"));
@@ -161,8 +161,8 @@ public class AdminReceptionistsInfoController {
                                 else
                                 {
 
-                                    editIcon.setStyle("-glyph-size:15px;");
-                                    deleteIcon.setStyle("-glyph-size:15px;");
+                                    editIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
+                                    deleteIcon.setStyle("-glyph-size:15px; -fx-font-family: FontAwesome;");
 
 
                                     editIcon.setOnMouseEntered((MouseEvent event) -> {

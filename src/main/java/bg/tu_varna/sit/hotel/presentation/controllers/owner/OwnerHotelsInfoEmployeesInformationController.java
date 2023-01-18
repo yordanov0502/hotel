@@ -1,10 +1,12 @@
-package bg.tu_varna.sit.hotel.presentation.controllers.admin;
+package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
+import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminHotelUsersInfoController;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -13,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.stage.StageStyle;
@@ -22,19 +25,18 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Optional;
 
-public class AdminManagersInfoController {
-
-    private static final Logger log = Logger.getLogger(AdminMainController.class);
+public class OwnerHotelsInfoEmployeesInformationController {
+    private static final Logger log = Logger.getLogger(OwnerHotelsInfoEmployeesInformationController.class);
+    private final HotelService hotelService = HotelService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private HotelModel selectedHotel;
 
     @FXML
-    private TextField searchField;
+    private AnchorPane anchorPane;
     @FXML
-    private Button searchButton;
+    private TableView<UserModel> hotelUsersTable;
     @FXML
-    private Button clearSearchButton;
-    @FXML
-    private TableView<UserModel> managersTable;
+    private TableColumn<UserModel,String> roleColumn;
     @FXML
     private TableColumn<UserModel,String> egnColumn;
     @FXML
@@ -52,54 +54,17 @@ public class AdminManagersInfoController {
     @FXML
     private TableColumn actionColumn;
 
-
-    public void showAdminMainView() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Main", 800, 500);
-    }
-
-
-    public void addOwner() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_ADD_OWNER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Add Owner", 800, 500);
-    }
-
-
-    public void showOwnersInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
-    }
-
-
-    public void showReceptionistsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
-    }
-
-
-    public void showHotelsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
-    }
-
-
-    public void showNewlyRegisteredAdmins() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
-    }
-
     public void initialize() {
 
-        if(UserSession.user!=null)
-        {
-            managersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
-            managersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
+            hotelUsersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
+            hotelUsersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
 
-            Label label = new Label("Няма информация за мениджъри.");
+            Label label = new Label("Няма информация за служители.");
             label.setStyle("-fx-text-fill: black;" + "-fx-background-color: white;" + "-fx-font-size: 20;");
-            managersTable.setPlaceholder(label); //shows text when there are no managers in the database
+            hotelUsersTable.setPlaceholder(label); //shows text when there are no employees in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
+            roleColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("role"));
             egnColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("id"));
             nameColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("firstName"));
             surnameColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("lastName"));
@@ -108,6 +73,7 @@ public class AdminManagersInfoController {
             emailColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("email"));
             statusColumn.setCellValueFactory(new PropertyValueFactory<UserModel, String>("status"));
 
+            roleColumn.setStyle("-fx-alignment:center");
             egnColumn.setStyle("-fx-alignment:center");
             nameColumn.setStyle("-fx-alignment:center");
             surnameColumn.setStyle("-fx-alignment:center");
@@ -117,24 +83,21 @@ public class AdminManagersInfoController {
             statusColumn.setStyle("-fx-alignment:center");
             actionColumn.setStyle("-fx-alignment:center");
 
-            if(userService.getAllByRole("мениджър")!=null)
-            {
-                managersTable.setItems(userService.getAllByRole("мениджър"));// Inserts all managers in TableView
-                createActionButtons();//insert dynamically created action buttons in every row of TableView
-            }
-            else
-            {
-                searchField.setDisable(true);
-                searchButton.setDisable(true);
-                clearSearchButton.setDisable(true);
-            }
-        }
-        else
-        {
-            searchField.setDisable(true);
-            searchButton.setDisable(true);
-            clearSearchButton.setDisable(true);
-        }
+
+            selectedHotel=UserSession.selectedHotel;
+            UserSession.selectedHotel=null;
+            OwnerUserEditInfoController.setSelectedHotel(selectedHotel,this);//set hotel in case I decide to edit employee's data using the OwnerUserEditInfoController (I will use the hotel as an attribute and in case I go back to previous page(this page)(I will set the selectedHotel of UserSession with it)
+            hotelUsersTable.setItems(hotelService.getAllHotelUsers(selectedHotel));// Inserts all users of hotel in TableView
+            createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+            Label hotelName = new Label("\""+selectedHotel.getName()+"\"");
+            hotelName.setText("\""+selectedHotel.getName()+"\"");
+            hotelName.setStyle("-fx-text-fill: white;" + "-fx-font-size: 20;" + "-fx-alignment: center;" + "-fx-font-family: Arial;");
+            hotelName.setLayoutX(192);
+            hotelName.setLayoutY(45);
+            hotelName.setPrefWidth(364);
+            hotelName.setPrefHeight(28);
+            anchorPane.getChildren().add(hotelName);
     }
 
     private void createActionButtons() {
@@ -181,6 +144,7 @@ public class AdminManagersInfoController {
                                             e.printStackTrace();
                                         }
                                     });
+
 
 
                                     deleteIcon.setOnMouseEntered((MouseEvent event) -> {
@@ -233,93 +197,44 @@ public class AdminManagersInfoController {
     private void editRow(UserModel userModel) throws IOException {
 
         UserSession.selectedUser=userModel;
-        ViewManager.openDialogBox(Constants.View.USER_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"User Edit Info",652,352);
+        ViewManager.openDialogBox(Constants.View.OWNER_USER_EDIT_INFO_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Owner User Edit Info",652,352);
     }
 
     private void deleteRow(UserModel userModel) throws IOException {
 
-        //this loop will have only 1 iteration because the user is manager (one manager can manage only one hotel and vice versa)
+        //this loop may have more than 1 iteration because the user can be owner, manager or receptionist
         if(!userModel.getHotels().isEmpty())
         {
             for (HotelModel h : userService.getAllHotelsOfUser(userModel))
             {
-                userService.removeHotel(userModel, h, ViewManager.getPrimaryStage().getTitle());//removes user from certain hotel's list and vice versa, and updates hotel's hasOwner and hasManager attributes if the user is owner or manager of a hotel, but his account in the system remains
+                userService.removeHotel(userModel, h, ViewManager.getSecondaryStage().getTitle());//removes user from certain hotel's list and vice versa, and updates hotel's hasOwner and hasManager attributes if the user is owner or manager of a hotel, but his account in the system remains
             }
         }
         if(userService.deleteUser(userModel))
         {
-            log.info("Information for manager \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
+            log.info("Information for "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has been successfully deleted.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\".");
-            ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
+            ViewManager.closeDialogBox();
+            if(userModel.getId().equals(UserSession.user.getId()))//if the employee I want to delete is actually me(I am owner)
+            {
+                log.info("Owner \""+UserSession.user.getUsername()+"\" successfully logged out.");
+                UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
+                ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
+            }
+            else
+            {
+                ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+            }
         }
         else
         {
-            log.info("Information for manager \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been deleted.");
+            log.info("Information for "+userModel.getRole()+" \""+userModel.getFirstName()+" "+userModel.getLastName()+"\" has NOT been deleted.");
             AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни е неуспешно.");
         }
     }
 
 
-    public void searchManagerById(){
-
-        if(userService.getAllByRole("мениджър").size()>1 && managersTable.getItems().size()!=1)
-        {
-            if(searchField.getText().equals(""))
-            {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля въведете ЕГН в полето за търсене.");
-            }
-            else if(!userService.validateId(searchField.getText()))
-            {
-                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН-то трябва да съдържа 10 цифри [0-9] и да бъде валидно.");
-                searchField.setText("");
-            }
-            else
-            {
-                if(userService.isIdExists(searchField.getText()) && userService.getUserById(searchField.getText()).getRole().equals("мениджър"))
-                {
-                    managersTable.getItems().clear();
-                    managersTable.getItems().add(userService.getUserById(searchField.getText()));
-                }
-                else
-                {
-                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мениджър с ЕГН: "+searchField.getText()+" не съществува в системата.");
-                    searchField.setText("");
-                }
-            }
-        }
-    }
-
-
-    public void clearSearch() throws IOException {
-        searchField.setText("");
-        if(userService.getAllByRole("мениджър").size()>1 && managersTable.getItems().size()==1)
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
-        }
-    }
-
-
-    public void logout() throws IOException {
+    public void closeWindow(){
         ViewManager.closeDialogBox();
-        if(UserSession.user!=null)
-        {
-            log.info("Admin \""+UserSession.user.getUsername()+"\" successfully logged out.");
-            UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
-        }
-        ViewManager.changeView(Constants.View.ADMIN_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Login", 800, 500);
-    }
-
-
-    public void showAccountInformation() throws IOException {
-        if(UserSession.user==null)
-        {
-            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Няма заредени данни за администратор.");
-        }
-        else
-        {
-            ViewManager.closeDialogBox();
-            ViewManager.openDialogBox(Constants.View.ADMIN_INFO_VIEW, null,this.getClass(),"Admin Info", 652, 352);
-        }
     }
 }
