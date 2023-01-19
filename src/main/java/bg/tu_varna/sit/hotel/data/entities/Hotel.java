@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.data.entities;
 import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.HotelRepositoryImpl;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -107,18 +108,17 @@ public class Hotel implements Serializable {
 
     public void setId(Long id) {this.id = id;}
 
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", established_at=" + established_at +
-                ", stars=" + stars +
-                ", hasOwner=" + hasOwner +
-                ", hasManager=" + hasManager +
-               // ", users=" + users +
-                '}';
+    public HotelModel toModel(){
+        HotelModel hotelModel = new HotelModel();
+        hotelModel.setId(this.id);
+        hotelModel.setName(this.name);
+        hotelModel.setAddress(this.address);
+        hotelModel.setEstablished_at(this.established_at);
+        hotelModel.setStars(this.stars);
+        hotelModel.setHasOwner(this.hasOwner);
+        hotelModel.setHasManager(this.hasManager);
+        hotelModel.setUsers(this.users);
+        return hotelModel;
     }
 
     @Override

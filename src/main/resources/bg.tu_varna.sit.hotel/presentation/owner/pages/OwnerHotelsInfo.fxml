@@ -22,7 +22,7 @@
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
-            <CustomMenuItem fx:id="aboutAdminButton" mnemonicParsing="false" onAction="#showAccountInformation">
+            <CustomMenuItem fx:id="aboutOwnerButton" mnemonicParsing="false" onAction="#showAccountInformation">
                <content>
                   <GridPane prefHeight="31.0" prefWidth="115.0">
                     <columnConstraints>
@@ -51,7 +51,7 @@
                </content>
             </CustomMenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <CustomMenuItem fx:id="logoutAdminButton" mnemonicParsing="false" onAction="#logout">
+            <CustomMenuItem fx:id="logoutOwnerButton" mnemonicParsing="false" onAction="#logout">
                <content>
                   <GridPane prefHeight="31.0" prefWidth="115.0">
                      <columnConstraints>

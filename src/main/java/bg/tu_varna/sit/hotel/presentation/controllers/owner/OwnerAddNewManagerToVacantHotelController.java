@@ -90,7 +90,7 @@ public class OwnerAddNewManagerToVacantHotelController {
                         userService.deleteUser(userModel);
                         ViewManager.closeDialogBox();
                         ViewManager.changeView(Constants.View.OWNER_ADD_NEW_MANAGER_TO_VACANT_HOTEL_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Owner Add New Manager To Vacant Hotel",800,500);
-                        AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов мениджър към хотел \""+hotelService.getHotelByName(comboBox.getValue()).getName()+"\".");
+                        //AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Неуспешно добавяне на нов мениджър към хотел \""+hotelService.getHotelByName(comboBox.getValue()).getName()+"\".");
                     }
                 }
                 else
