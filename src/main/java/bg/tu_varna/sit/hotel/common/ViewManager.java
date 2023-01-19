@@ -166,7 +166,7 @@ public final class ViewManager {
         if(ViewManager.getSecondaryStage()!=null)
         {
             ViewManager.getSecondaryStage().close();
-            ViewManager.setSecondaryStage(null);
+            ViewManager.secondaryStage=null;//setSecondaryStage(null);
         }
     }
 
@@ -196,7 +196,7 @@ public final class ViewManager {
         return secondaryStage;
     }
 
-    public static void setSecondaryStage(Stage secondaryStage) {ViewManager.secondaryStage = secondaryStage;}
+    //public static void setSecondaryStage(Stage secondaryStage) {ViewManager.secondaryStage = secondaryStage;}
 
     public static double getSx() {
         return sx;

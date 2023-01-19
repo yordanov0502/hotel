@@ -7,6 +7,7 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
@@ -524,7 +525,9 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
 
     public void searchHotelByName(){
 
-        if(hotelService.getAllHotels().size()>1 && hotelsTable.getItems().size()!=1)
+        UserModel owner = userService.getUserById(UserSession.user.getId());
+
+        if(owner.getHotels().size()>1 && hotelsTable.getItems().size()!=1)
         {
             if(searchField.getText().equals(""))
             {
@@ -537,7 +540,7 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
             }
             else
             {
-                if(hotelService.isNameExists(searchField.getText()))
+                if(doesOwnerHaveHotelWithName(owner,searchField.getText()))
                 {
                     hotelsTable.getItems().clear();
                     hotelsTable.getItems().add(hotelService.getHotelByName(searchField.getText()));
@@ -554,11 +557,23 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
 
     public void clearSearch() throws IOException {
         searchField.setText("");
-        if(hotelService.getAllHotels().size()>1 && hotelsTable.getItems().size()==1)
+        if(userService.getUserById(UserSession.user.getId()).getHotels().size()>1 && hotelsTable.getItems().size()==1)
         {
             ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
+            ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
         }
+    }
+
+    private boolean doesOwnerHaveHotelWithName(UserModel owner,String hotelName)
+    {
+        for(Hotel hotel : userService.getUserById(owner.getId()).getHotels())
+        {
+            if(hotel.getName().equals(hotelName))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void logout() throws IOException {
