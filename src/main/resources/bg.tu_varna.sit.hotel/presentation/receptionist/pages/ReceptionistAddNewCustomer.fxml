@@ -102,18 +102,18 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USER_PLUS" layoutX="5.0" layoutY="124.0" size="20" />
-            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Резервация" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
+            <FontAwesomeIconView glyphName="CALENDAR" layoutX="7.0" layoutY="181.0" size="20" />
+            <Button fx:id="addNewServiceButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#addNewService" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Услуга" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
+            <FontAwesomeIconView glyphName="FILE_TEXT" layoutX="7.0" layoutY="235.0" size="20" />
             <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />

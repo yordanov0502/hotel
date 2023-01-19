@@ -45,6 +45,11 @@ public class ReceptionistAddNewCustomerController {
         ViewManager.changeView(Constants.View.RECEPTIONIST_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Main", 800, 500);
     }
 
+    public void addNewService() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
 
     public void addNewCustomer() throws IOException {
         if (customerService.validateFields(new String[]{customerNameField.getText(), customerSurnameField.getText(), customerEGNField.getText(), customerPhoneField.getText()})

@@ -315,7 +315,7 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
 
                         TableCell<HotelModel, String> cell = new TableCell<HotelModel, String>() {
 
-                            FontAwesomeIconView hotelRoomsInfoIcon = new FontAwesomeIconView(FontAwesomeIcon.UNIVERSAL_ACCESS);
+                            FontAwesomeIconView hotelRoomsInfoIcon = new FontAwesomeIconView(FontAwesomeIcon.FILE_TEXT);
 
                             public HBox hBox = new HBox(25,hotelRoomsInfoIcon);
 

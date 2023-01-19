@@ -28,6 +28,11 @@ public class ReceptionistMainController {
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_CUSTOMER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Customer", 800, 500);
     }
 
+    public void addNewService() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
 
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
