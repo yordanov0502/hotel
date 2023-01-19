@@ -23,10 +23,10 @@ public class ReceptionistMainController {
 
 
 
-    /*public void addNewCustomer() throws IOException {
+    public void addNewCustomer() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_ADD_NEW_RECEPTIONIST_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Add New Receptionist", 800, 500);
-    }*/
+        ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_CUSTOMER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Customer", 800, 500);
+    }
 
 
     public void logout() throws IOException {

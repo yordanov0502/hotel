@@ -56,6 +56,7 @@ public final class Constants {
         public static final String RECEPTIONIST_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistInfo.fxml";
         public static final String RECEPTIONIST_EDIT_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistEditInfo.fxml";
         public static final String RECEPTIONIST_DELETE_ACCOUNT_CONFIRMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistDeleteAccountConfirmation.fxml";
+        public static final String RECEPTIONIST_ADD_NEW_CUSTOMER_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistAddNewCustomer.fxml";
     }
 
     public static class Configurations{

@@ -132,7 +132,6 @@ public class UserService {
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public ObservableList<HotelModel> getAllHotelsOfOwnerWithoutManager(UserModel owner) {
 
         if(owner.getHotels().isEmpty()){return null;}
@@ -186,7 +185,6 @@ public class UserService {
             else {return FXCollections.observableList(new ArrayList<>(hotelNamesWithoutManager));}
         }
     }
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     public UserModel getUserById(String id) {

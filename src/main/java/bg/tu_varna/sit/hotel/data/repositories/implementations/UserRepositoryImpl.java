@@ -40,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository<User> {
         } finally {
             session.close();
         }
-         }
+    }
 
     @Override
     public boolean update(User obj) {
