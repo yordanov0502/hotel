@@ -36,12 +36,12 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="338.0" layoutY="50.0" text="Размер:" textFill="#1a1251">
+            <Label layoutX="320.0" layoutY="50.0" text="Размер:" textFill="#1a1251">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="areaField" alignment="CENTER_RIGHT" layoutX="409.0" layoutY="46.0" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="areaField" alignment="CENTER_RIGHT" layoutX="394.0" layoutY="46.0" prefHeight="33.0" prefWidth="181.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -56,12 +56,12 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="146.0" layoutY="151.0" text="Рейтинг:" textFill="#1a1251">
+            <Label layoutX="10.0" layoutY="150.0" text="Рейтинг:" textFill="#1a1251">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="ratingField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="224.0" layoutY="147.0" prefHeight="33.0" prefWidth="174.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="ratingField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="91.0" layoutY="144.0" prefHeight="33.0" prefWidth="140.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -76,6 +76,16 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
+            <Label layoutX="247.0" layoutY="150.0" text="Брой ползвания:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="daysOccupiedField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="391.0" layoutY="144.0" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
          </children></Pane>
    </children>
 </AnchorPane>

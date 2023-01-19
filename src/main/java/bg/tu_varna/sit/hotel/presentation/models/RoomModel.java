@@ -11,10 +11,11 @@ public class RoomModel implements EntityModel<Room> {
     private String type;
     private Integer size;
     private Double rating;
+    private Integer daysOccupied;
 
     public RoomModel(){}
 
-    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating)
+    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating,Integer daysOccupied)
     {
       this.id=id;
       this.number=number;
@@ -23,6 +24,7 @@ public class RoomModel implements EntityModel<Room> {
       this.type=type;
       this.size=size;
       this.rating=rating;
+      this.daysOccupied=daysOccupied;
     }
 
     public RoomModel(Room room)
@@ -30,10 +32,11 @@ public class RoomModel implements EntityModel<Room> {
         this.id=room.getId();
         this.number=room.getNumber();
         this.hotel=new HotelModel(room.getHotel());
-        this.price= room.getPrice();
-        this.type= room.getType();
-        this.size= room.getSize();
-        this.rating= room.getRating();
+        this.price=room.getPrice();
+        this.type=room.getType();
+        this.size=room.getSize();
+        this.rating=room.getRating();
+        this.daysOccupied=room.getDaysOccupied();
     }
 
     public Long getId() {
@@ -88,6 +91,10 @@ public class RoomModel implements EntityModel<Room> {
 
     public void setRating(Double rating) {this.rating = rating;}
 
+    public Integer getDaysOccupied() {return daysOccupied;}
+
+    public void setDaysOccupied(Integer daysOccupied) {this.daysOccupied = daysOccupied;}
+
     @Override
     public Room toEntity() {
         Room roomTemp = new Room();
@@ -98,6 +105,7 @@ public class RoomModel implements EntityModel<Room> {
         roomTemp.setType(this.type);
         roomTemp.setSize(this.size);
         roomTemp.setRating(this.rating);
+        roomTemp.setDaysOccupied(this.daysOccupied);
         return roomTemp;
     }
 

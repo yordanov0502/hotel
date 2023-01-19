@@ -36,6 +36,13 @@ public class Room implements Serializable {
     @Column(name = "rating", nullable = false)
     private Double rating;
 
+    @Column(name = "days_occupied", nullable = false)
+    private Integer daysOccupied;
+
+    public Integer getDaysOccupied() {return daysOccupied;}
+
+    public void setDaysOccupied(Integer daysOccupied) {this.daysOccupied = daysOccupied;}
+
     public Double getRating() {return rating;}
 
     public void setRating(Double rating) {this.rating = rating;}
