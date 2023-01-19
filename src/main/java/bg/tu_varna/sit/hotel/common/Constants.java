@@ -23,6 +23,7 @@ public final class Constants {
         public static final String ADMIN_RECEPTIONISTS_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminReceptionistsInfo.fxml";
         public static final String ADMIN_HOTELS_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminHotelsInfo.fxml";
         public static final String ADMIN_HOTEL_USERS_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminHotelUsersInfo.fxml";
+        public static final String ADMINS_NEW_REGISTRATIONS_INFO = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminsNewRegistrationsInfo.fxml";
         public static final String OWNER_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerLogin.fxml";
         public static final String OWNER_MAIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerMain.fxml";
         public static final String OWNER_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerInfo.fxml";
@@ -51,7 +52,10 @@ public final class Constants {
         public static final String MANAGER_DELETE_ACCOUNT_CONFIRMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerDeleteAccountConfirmation.fxml";
         public static final String MANAGER_ADD_NEW_RECEPTIONIST_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerAddNewReceptionist.fxml";
         public static final String RECEPTIONIST_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistLogin.fxml";
-        public static final String ADMINS_NEW_REGISTRATIONS_INFO = "/bg.tu_varna.sit.hotel/presentation/admin/pages/AdminsNewRegistrationsInfo.fxml";
+        public static final String RECEPTIONIST_MAIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistMain.fxml";
+        public static final String RECEPTIONIST_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistInfo.fxml";
+        public static final String RECEPTIONIST_EDIT_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistEditInfo.fxml";
+        public static final String RECEPTIONIST_DELETE_ACCOUNT_CONFIRMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistDeleteAccountConfirmation.fxml";
     }
 
     public static class Configurations{

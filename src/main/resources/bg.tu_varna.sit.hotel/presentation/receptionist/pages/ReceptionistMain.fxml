@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistMainController">
+   <children>
+      <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
+        <items>
+            <CustomMenuItem fx:id="aboutReceptionistButton" mnemonicParsing="false" onAction="#showAccountInformation">
+               <content>
+                  <GridPane prefHeight="31.0" prefWidth="115.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="54.0" minWidth="10.0" prefWidth="31.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="84.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <children>
+                        <FontAwesomeIconView glyphName="USER" size="30">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </FontAwesomeIconView>
+                        <Label prefHeight="17.0" prefWidth="73.0" text="Профил" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </content>
+            </CustomMenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <CustomMenuItem fx:id="logoutReceptionistButton" mnemonicParsing="false" onAction="#logout">
+               <content>
+                  <GridPane prefHeight="31.0" prefWidth="115.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="54.0" minWidth="10.0" prefWidth="31.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="84.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <children>
+                        <FontAwesomeIconView glyphName="SIGN_OUT" size="30">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </FontAwesomeIconView>
+                        <Label prefHeight="17.0" prefWidth="73.0" text="Изход" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </content>
+            </CustomMenuItem>
+        </items>
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+         <graphic>
+            <FontAwesomeIconView glyphName="BARS" size="20" />
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </MenuButton>
+      <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
+         <children>
+            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../../owner/css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
+            <Button fx:id="addNewCustomerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addNewReceptionistButton" stylesheets="@../../manager/css/ButtonFeaturesOnClick.css" text="Клиент" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="USER_PLUS" layoutX="5.0" layoutY="124.0" size="20" />
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
+            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
+            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
+            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="АА" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="343.0" size="20" />
+            <Button fx:id="newAdminsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="  За потвърждение" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="CHECK_CIRCLE" size="20" text="" x="5.0" y="397.0" />
+            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
+            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добре дошли в Хотелска Информационна Система">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
