@@ -53,7 +53,8 @@ public class RoomService {
                             r.getType(),
                             r.getSize(),
                             r.getRating(),
-                            r.getDaysOccupied()
+                            r.getDaysOccupied(),
+                            r.getIsOccupied()
                     )).collect(Collectors.toList())
             );
         }
@@ -114,7 +115,7 @@ public class RoomService {
                     }
                 }
 
-                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,0D,0)))
+                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,0D,0,false)))
                 {
                     return false;
                 }

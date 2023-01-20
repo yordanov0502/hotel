@@ -12,10 +12,11 @@ public class RoomModel implements EntityModel<Room> {
     private Integer size;
     private Double rating;
     private Integer daysOccupied;
+    private Boolean isOccupied;
 
     public RoomModel(){}
 
-    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating,Integer daysOccupied)
+    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating,Integer daysOccupied,Boolean isOccupied)
     {
       this.id=id;
       this.number=number;
@@ -25,6 +26,7 @@ public class RoomModel implements EntityModel<Room> {
       this.size=size;
       this.rating=rating;
       this.daysOccupied=daysOccupied;
+      this.isOccupied=isOccupied;
     }
 
     public RoomModel(Room room)
@@ -37,6 +39,7 @@ public class RoomModel implements EntityModel<Room> {
         this.size=room.getSize();
         this.rating=room.getRating();
         this.daysOccupied=room.getDaysOccupied();
+        this.isOccupied=room.getIsOccupied();
     }
 
     public Long getId() {
@@ -95,6 +98,10 @@ public class RoomModel implements EntityModel<Room> {
 
     public void setDaysOccupied(Integer daysOccupied) {this.daysOccupied = daysOccupied;}
 
+    public Boolean getIsOccupied() {return isOccupied;}
+
+    public void setIsOccupied(Boolean occupied) {isOccupied = occupied;}
+
     @Override
     public Room toEntity() {
         Room roomTemp = new Room();
@@ -106,6 +113,7 @@ public class RoomModel implements EntityModel<Room> {
         roomTemp.setSize(this.size);
         roomTemp.setRating(this.rating);
         roomTemp.setDaysOccupied(this.daysOccupied);
+        roomTemp.setIsOccupied(this.isOccupied);
         return roomTemp;
     }
 

@@ -39,6 +39,13 @@ public class Room implements Serializable {
     @Column(name = "days_occupied", nullable = false)
     private Integer daysOccupied;
 
+    @Column(name = "is_occupied", nullable = false)
+    private Boolean isOccupied = false;
+
+    public Boolean getIsOccupied() {return isOccupied;}
+
+    public void setIsOccupied(Boolean isOccupied) {this.isOccupied = isOccupied;}
+
     public Integer getDaysOccupied() {return daysOccupied;}
 
     public void setDaysOccupied(Integer daysOccupied) {this.daysOccupied = daysOccupied;}
