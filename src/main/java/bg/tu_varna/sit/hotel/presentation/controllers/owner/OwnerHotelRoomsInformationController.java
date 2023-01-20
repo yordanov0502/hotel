@@ -94,14 +94,29 @@ public class OwnerHotelRoomsInformationController {
     @FXML
     private TextField apartmentPriceField;
 
+    @FXML
+    private TextField singleBedsField;
+    @FXML
+    private TextField doubleBedsField;
+    @FXML
+    private TextField tripleBedsField;
+    @FXML
+    private TextField quadBedsField;
+    @FXML
+    private TextField studioBedsField;
+    @FXML
+    private TextField mezonetBedsField;
+    @FXML
+    private TextField apartmentBedsField;
+
     private TabPane tabPane = new TabPane();
 
     public void generateFloorsSpecifications(){
 
-        if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField)))
+        if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField)))
         {
             //changes the color of the selected room type checkBoxes which are present in the dynamic tabs
-            roomService.changeColorOfSelectedRoomTypesCheckBoxes(roomService.getSelectedRoomTypesCheckBoxes(Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox)));
+            roomService.changePropertiesOfRightCheckBoxesAndFields(Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField));
 
             grayPane.getChildren().remove(this.tabPane);//removes the previous tabPane from the grayPane(if there was a tabPane) so new tabPane can take its place.
             this.tabPane = new TabPane();
@@ -182,10 +197,10 @@ public class OwnerHotelRoomsInformationController {
 
     public void addHotelRoomsInformation() throws IOException {
 
-          if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField))
+          if(roomService.validateRoomsInformationFields(floorsField.getText(),Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField))
            && validateDynmaicTabsInformation())
         {
-            NewHotelInformation.transferNewRoomsInformation(new RoomsInformation(this,this.tabPane,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),this.floorsField.getText()),this);//transfers the rooms information to a static class which is used as a cache for all new hotel information during the whole process of creating[new hotel + new manager]
+            NewHotelInformation.transferNewRoomsInformation(new RoomsInformation(this,this.tabPane,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField),this.floorsField.getText()),this);//transfers the rooms information to a static class which is used as a cache for all new hotel information during the whole process of creating[new hotel + new manager]
             log.info("New data for rooms added.");
             AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно добавени данни за стаи.");
             ViewManager.closeDialogBox();
@@ -213,7 +228,7 @@ public class OwnerHotelRoomsInformationController {
             log.info("Current data for rooms deleted.");
             ViewManager.closeDialogBox();
             ViewManager.changeView(Constants.View.OWNER_ADD_NEW_HOTEL_AND_NEW_MANAGER_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Owner Add New Hotel And New Manager", 800, 500);
-            ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_ROOMS_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Rooms Information", 750, 450);
+            ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_ROOMS_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Rooms Information", 800, 450);
         }
     }
 
@@ -302,7 +317,18 @@ public class OwnerHotelRoomsInformationController {
         }
     }
 
-    private void disableAll(TextField floorsField,List<CheckBox> roomTypesCheckBoxes,List<TextField> roomTypesAreaFields,List<TextField> roomTypesPriceFields,TabPane dynamicTabPane){
+    private void changeFeaturesOfdRoomTypesBedsFieldsOnTheRightSide(List<TextField> roomTypesBedsFields,List<TextField> cacheRoomTypesBedsFields){
+
+        for(int i=0;i<roomTypesBedsFields.size();i++)
+        {
+            if(!Objects.equals(cacheRoomTypesBedsFields.get(i).getText(), ""))
+            {
+                roomTypesBedsFields.get(i).setText(cacheRoomTypesBedsFields.get(i).getText());
+            }
+        }
+    }
+
+    private void disableAll(TextField floorsField,List<CheckBox> roomTypesCheckBoxes,List<TextField> roomTypesAreaFields,List<TextField> roomTypesPriceFields,List<TextField> roomTypesBedsFields,TabPane dynamicTabPane){
 
         floorsField.setDisable(true);
         this.enterHotelFloorsButton.setDisable(true);
@@ -318,6 +344,10 @@ public class OwnerHotelRoomsInformationController {
        for(TextField priceField: roomTypesPriceFields)
        {
            priceField.setDisable(true);
+       }
+       for(TextField bedField: roomTypesBedsFields)
+       {
+           bedField.setDisable(true);
        }
 
        //disable all elements of dynamic tabs
@@ -356,16 +386,19 @@ public class OwnerHotelRoomsInformationController {
     {
         studioAreaField.setDisable(!studioCheckBox.isSelected());
         studioPriceField.setDisable(!studioCheckBox.isSelected());
+        studioBedsField.setDisable(!studioCheckBox.isSelected());
     }
     public void checkMezonetCheckBoxState()
     {
         mezonetAreaField.setDisable(!mezonetCheckBox.isSelected());
         mezonetPriceField.setDisable(!mezonetCheckBox.isSelected());
+        mezonetBedsField.setDisable(!mezonetCheckBox.isSelected());
     }
     public void checkApartmentCheckBoxState()
     {
         apartmentAreaField.setDisable(!apartmentCheckBox.isSelected());
         apartmentPriceField.setDisable(!apartmentCheckBox.isSelected());
+        apartmentBedsField.setDisable(!apartmentCheckBox.isSelected());
     }
 
     public void initialize(){
@@ -389,13 +422,16 @@ public class OwnerHotelRoomsInformationController {
             //change features of the room type checkBoxes on the right side which are present in the dynamic tabs
             changeFeaturesOfdRoomTypesCheckBoxesOnTheRightSide(Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),NewHotelInformation.getHotelRoomsInformation().getRoomTypeCheckBoxes());
 
+
             changeFeaturesOfdRoomTypesAreaFieldsOnTheRightSide(Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),NewHotelInformation.getHotelRoomsInformation().getRoomTypeAreas());
 
             changeFeaturesOfdRoomTypesPriceFieldsOnTheRightSide(Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),NewHotelInformation.getHotelRoomsInformation().getRoomTypePrices());
 
+            changeFeaturesOfdRoomTypesBedsFieldsOnTheRightSide(Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField),NewHotelInformation.getHotelRoomsInformation().getRoomTypeBeds());
+
             this.floorsField.setText(NewHotelInformation.getHotelRoomsInformation().getFloorsNumber());
 
-            disableAll(this.floorsField,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),NewHotelInformation.getHotelRoomsInformation().getTabPane());
+            disableAll(this.floorsField,Arrays.asList(singleCheckBox,doubleCheckBox,tripleCheckBox,quadCheckBox,studioCheckBox,mezonetCheckBox,apartmentCheckBox),Arrays.asList(singleAreaField,doubleAreaField,tripleAreaField,quadAreaField,studioAreaField,mezonetAreaField,apartmentAreaField),Arrays.asList(singlePriceField,doublePriceField,triplePriceField,quadPriceField,studioPriceField,mezonetPriceField,apartmentPriceField),Arrays.asList(singleBedsField,doubleBedsField,tripleBedsField,quadBedsField,studioBedsField,mezonetBedsField,apartmentBedsField),NewHotelInformation.getHotelRoomsInformation().getTabPane());
         }
         else//ako nqma cache na staite
         {

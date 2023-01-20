@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="anchorPane" prefHeight="352.0" prefWidth="652.0" styleClass="anchor" stylesheets="@../css/EditRoomView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerAddRoomController">
    <children>
-      <Pane layoutX="34.0" layoutY="44.0" prefHeight="262.0" prefWidth="583.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="22.0" layoutY="29.0" prefHeight="295.0" prefWidth="608.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="271.0" layoutY="1.0" text="Стая" textFill="#1a1251">
                <font>
@@ -21,7 +21,7 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="numberField" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="46.0" prefHeight="33.0" prefWidth="158.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="numberField" alignment="CENTER_RIGHT" layoutX="73.0" layoutY="46.0" prefHeight="33.0" prefWidth="159.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
@@ -36,56 +36,66 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="320.0" layoutY="50.0" text="Размер:" textFill="#1a1251">
+            <Label layoutX="10.0" layoutY="150.0" text="Размер:" textFill="#1a1251">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="areaField" alignment="CENTER_RIGHT" layoutX="409.0" layoutY="46.0" prefHeight="31.0" prefWidth="166.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="areaField" alignment="CENTER_RIGHT" layoutX="80.0" layoutY="146.0" prefHeight="33.0" prefWidth="153.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="338.0" layoutY="100.0" text="Цена:" textFill="#1a1251">
+            <Label layoutX="10.0" layoutY="200.0" text="Цена:" textFill="#1a1251">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="priceField" alignment="CENTER_RIGHT" layoutX="394.0" layoutY="96.0" prefHeight="33.0" prefWidth="181.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="priceField" alignment="CENTER_RIGHT" layoutX="62.0" layoutY="196.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Label layoutX="10.0" layoutY="150.0" text="Рейтинг:" textFill="#1a1251">
+            <Label layoutX="327.0" layoutY="50.0" text="Брой легла:" textFill="#1a1251">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="ratingField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="91.0" layoutY="144.0" prefHeight="33.0" prefWidth="140.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+            <TextField fx:id="bedsField" alignment="CENTER_RIGHT" layoutX="431.0" layoutY="46.0" prefHeight="33.0" prefWidth="165.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="18.0" />
                </font>
             </TextField>
-            <Button fx:id="addRoomButton" layoutX="156.0" layoutY="203.0" mnemonicParsing="false" onAction="#addRoom" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
+            <Label layoutX="352.0" layoutY="100.0" text="Рейтинг:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ratingField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="431.0" layoutY="96.0" prefHeight="33.0" prefWidth="165.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="280.0" layoutY="150.0" text="Брой ползвания:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nightsOccupiedField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="429.0" layoutY="146.0" prefHeight="33.0" prefWidth="165.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Button fx:id="addRoomButton" layoutX="156.0" layoutY="244.0" mnemonicParsing="false" onAction="#addRoom" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="backButton" layoutX="339.0" layoutY="203.0" mnemonicParsing="false" onAction="#backToRoomsInfoPage" prefHeight="38.0" prefWidth="109.0" styleClass="adminBackButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
+            <Button fx:id="backButton" layoutX="339.0" layoutY="244.0" mnemonicParsing="false" onAction="#backToRoomsInfoPage" prefHeight="38.0" prefWidth="109.0" styleClass="adminBackButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="247.0" layoutY="150.0" text="Брой ползвания:" textFill="#1a1251">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Label>
-            <TextField fx:id="daysOccupiedField" alignment="CENTER_RIGHT" disable="true" editable="false" layoutX="391.0" layoutY="144.0" prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </TextField>
          </children></Pane>
    </children>
 </AnchorPane>

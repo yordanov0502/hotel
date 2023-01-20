@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="750.0" styleClass="anchor" stylesheets="@../css/RoomsInformationView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerHotelRoomsInformationController">
+<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../css/RoomsInformationView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerHotelRoomsInformationController">
    <children>
-      <Pane fx:id="grayPane" layoutX="7.0" layoutY="11.0" prefHeight="431.0" prefWidth="733.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane fx:id="grayPane" layoutX="7.0" layoutY="11.0" prefHeight="431.0" prefWidth="785.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="184.0" layoutY="2.0" text="Информация за брой / видове стаи" textFill="WHITE">
                <font>
@@ -52,129 +52,129 @@
                   <Font name="Arial" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="441.0" layoutY="110.0" text="тип" textFill="WHITE">
+            <Label layoutX="438.0" layoutY="110.0" text="тип" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <CheckBox fx:id="singleCheckBox" layoutX="406.0" layoutY="149.0" mnemonicParsing="false" onAction="#checkSingleCheckBoxState" text="единична" textFill="WHITE">
+            <CheckBox fx:id="singleCheckBox" layoutX="403.0" layoutY="149.0" mnemonicParsing="false" onAction="#checkSingleCheckBoxState" text="единична" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="doubleCheckBox" layoutX="406.0" layoutY="179.0" mnemonicParsing="false" onAction="#checkDoubleCheckBoxState" text="двойна" textFill="WHITE">
+            <CheckBox fx:id="doubleCheckBox" layoutX="403.0" layoutY="179.0" mnemonicParsing="false" onAction="#checkDoubleCheckBoxState" text="двойна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="tripleCheckBox" layoutX="406.0" layoutY="209.0" mnemonicParsing="false" onAction="#checkTripleCheckBoxState" text="тройна" textFill="WHITE">
+            <CheckBox fx:id="tripleCheckBox" layoutX="403.0" layoutY="209.0" mnemonicParsing="false" onAction="#checkTripleCheckBoxState" text="тройна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="quadCheckBox" layoutX="406.0" layoutY="239.0" mnemonicParsing="false" onAction="#checkQuadCheckBoxState" text="четворна" textFill="WHITE">
+            <CheckBox fx:id="quadCheckBox" layoutX="403.0" layoutY="239.0" mnemonicParsing="false" onAction="#checkQuadCheckBoxState" text="четворна" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="studioCheckBox" layoutX="406.0" layoutY="269.0" mnemonicParsing="false" onAction="#checkStudioCheckBoxState" text="студио" textFill="WHITE">
+            <CheckBox fx:id="studioCheckBox" layoutX="403.0" layoutY="269.0" mnemonicParsing="false" onAction="#checkStudioCheckBoxState" text="студио" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="mezonetCheckBox" layoutX="406.0" layoutY="299.0" mnemonicParsing="false" onAction="#checkMezonetCheckBoxState" text="мезонет" textFill="WHITE">
+            <CheckBox fx:id="mezonetCheckBox" layoutX="403.0" layoutY="299.0" mnemonicParsing="false" onAction="#checkMezonetCheckBoxState" text="мезонет" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="apartmentCheckBox" layoutX="406.0" layoutY="329.0" mnemonicParsing="false" onAction="#checkApartmentCheckBoxState" text="апартамент" textFill="WHITE">
+            <CheckBox fx:id="apartmentCheckBox" layoutX="403.0" layoutY="329.0" mnemonicParsing="false" onAction="#checkApartmentCheckBoxState" text="апартамент" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </CheckBox>
-            <Separator layoutX="517.0" layoutY="101.0" orientation="VERTICAL" prefHeight="259.0" />
-            <Label layoutX="565.0" layoutY="110.0" text="m" textFill="WHITE">
+            <Separator layoutX="515.0" layoutY="101.0" orientation="VERTICAL" prefHeight="259.0" />
+            <Label layoutX="561.0" layoutY="110.0" text="m" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="581.0" layoutY="105.0" text="2" textFill="WHITE">
+            <Label layoutX="577.0" layoutY="105.0" text="2" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="singleAreaField" alignment="CENTER" layoutX="527.0" layoutY="146.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 10" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="singleAreaField" alignment="CENTER" layoutX="523.0" layoutY="146.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 10" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="doubleAreaField" alignment="CENTER" layoutX="527.0" layoutY="176.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 15" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="doubleAreaField" alignment="CENTER" layoutX="523.0" layoutY="176.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 15" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="tripleAreaField" alignment="CENTER" layoutX="527.0" layoutY="206.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 20" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="tripleAreaField" alignment="CENTER" layoutX="523.0" layoutY="206.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 20" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="quadAreaField" alignment="CENTER" layoutX="527.0" layoutY="236.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 25" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="quadAreaField" alignment="CENTER" layoutX="523.0" layoutY="236.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 25" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="studioAreaField" alignment="CENTER" layoutX="527.0" layoutY="266.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 30" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="studioAreaField" alignment="CENTER" layoutX="523.0" layoutY="266.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 30" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="mezonetAreaField" alignment="CENTER" layoutX="527.0" layoutY="296.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 40" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="mezonetAreaField" alignment="CENTER" layoutX="523.0" layoutY="296.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 40" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="apartmentAreaField" alignment="CENTER" layoutX="527.0" layoutY="326.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 40" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="apartmentAreaField" alignment="CENTER" layoutX="523.0" layoutY="326.0" prefHeight="0.0" prefWidth="92.0" promptText="min. 40" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <Separator layoutX="627.0" layoutY="101.0" orientation="VERTICAL" prefHeight="259.0" />
-            <Label layoutX="661.0" layoutY="111.0" text="цена" textFill="WHITE">
+            <Separator layoutX="620.0" layoutY="101.0" orientation="VERTICAL" prefHeight="259.0" />
+            <Label layoutX="653.0" layoutY="111.0" text="цена" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="singlePriceField" alignment="CENTER" layoutX="636.0" layoutY="146.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="singlePriceField" alignment="CENTER" layoutX="628.0" layoutY="146.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="doublePriceField" alignment="CENTER" layoutX="636.0" layoutY="176.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="doublePriceField" alignment="CENTER" layoutX="628.0" layoutY="176.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="triplePriceField" alignment="CENTER" layoutX="636.0" layoutY="206.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="triplePriceField" alignment="CENTER" layoutX="628.0" layoutY="206.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="quadPriceField" alignment="CENTER" layoutX="636.0" layoutY="236.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="quadPriceField" alignment="CENTER" layoutX="628.0" layoutY="236.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="studioPriceField" alignment="CENTER" layoutX="636.0" layoutY="266.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="studioPriceField" alignment="CENTER" layoutX="628.0" layoutY="266.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="mezonetPriceField" alignment="CENTER" layoutX="636.0" layoutY="296.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="mezonetPriceField" alignment="CENTER" layoutX="628.0" layoutY="296.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </TextField>
-            <TextField fx:id="apartmentPriceField" alignment="CENTER" layoutX="636.0" layoutY="326.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+            <TextField fx:id="apartmentPriceField" alignment="CENTER" layoutX="628.0" layoutY="326.0" prefHeight="0.0" prefWidth="92.0" promptText="лв." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -203,6 +203,47 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
+            <Separator layoutX="724.0" layoutY="101.0" orientation="VERTICAL" prefHeight="259.0" />
+            <Label layoutX="731.0" layoutY="111.0" text="легла" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="singleBedsField" alignment="CENTER" disable="true" layoutX="731.0" layoutY="146.0" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" text="1">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="doubleBedsField" alignment="CENTER" disable="true" layoutX="731.0" layoutY="176.0" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" text="2">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tripleBedsField" alignment="CENTER" disable="true" layoutX="731.0" layoutY="206.0" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" text="3">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="quadBedsField" alignment="CENTER" disable="true" layoutX="731.0" layoutY="236.0" prefHeight="27.0" prefWidth="50.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" text="4">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="studioBedsField" alignment="CENTER" layoutX="731.0" layoutY="266.0" prefHeight="27.0" prefWidth="50.0" promptText="бр." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="mezonetBedsField" alignment="CENTER" layoutX="731.0" layoutY="296.0" prefHeight="27.0" prefWidth="50.0" promptText="бр." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="apartmentBedsField" alignment="CENTER" layoutX="731.0" layoutY="326.0" prefHeight="27.0" prefWidth="50.0" promptText="бр." style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </TextField>
          </children>
       </Pane>
    </children>

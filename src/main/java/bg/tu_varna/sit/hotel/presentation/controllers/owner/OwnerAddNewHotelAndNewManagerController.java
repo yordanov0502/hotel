@@ -70,7 +70,7 @@ public class OwnerAddNewHotelAndNewManagerController {
 
     public void addRoomsInformation() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_ROOMS_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Rooms Information", 750, 450);
+        ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_ROOMS_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Rooms Information", 800, 450);
     }
 
 

@@ -34,16 +34,16 @@ public class OwnerAddRoomController {
     @FXML
     private TextField priceField;
     @FXML
-    private TextField ratingField;
+    private TextField bedsField;
     @FXML
     private Button addRoomButton;
 
     private static HotelModel selectedHotel;
 
     public void addRoom() throws IOException {
-        if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),selectedHotel.getName()))
+        if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),bedsField.getText(),selectedHotel.getName()))
         {
-            if(roomService.addRoom(new RoomModel(1L,Integer.parseInt(numberField.getText()), HotelService.getInstance().getHotelByName(selectedHotel.getName()), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),0D,0,false)))
+            if(roomService.addRoom(new RoomModel(1L,Integer.parseInt(numberField.getText()), HotelService.getInstance().getHotelByName(selectedHotel.getName()), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),0D,0,false,Integer.parseInt(bedsField.getText()))))
             {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно добавяне на стая.");
                 ViewManager.closeDialogBox();

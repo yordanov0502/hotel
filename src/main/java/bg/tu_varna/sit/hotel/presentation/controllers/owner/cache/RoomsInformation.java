@@ -13,14 +13,16 @@ public class RoomsInformation {
     private List<CheckBox> roomTypeCheckBoxes;
     private List<TextField> roomTypeAreas;
     private List<TextField> roomTypePrices;
+    private List<TextField> roomTypeBeds;
     private String floorsNumber;
 
-    public RoomsInformation(OwnerHotelRoomsInformationController ownerHotelRoomsInformationController,TabPane tabPane,List<CheckBox> roomTypeCheckBoxes,List<TextField> roomTypeAreas,List<TextField> roomTypePrices,String floorsNumber)
+    public RoomsInformation(OwnerHotelRoomsInformationController ownerHotelRoomsInformationController,TabPane tabPane,List<CheckBox> roomTypeCheckBoxes,List<TextField> roomTypeAreas,List<TextField> roomTypePrices,List<TextField> roomTypeBeds,String floorsNumber)
     {
         this.tabPane = tabPane;
         this.roomTypeCheckBoxes = roomTypeCheckBoxes;
         this.roomTypeAreas = roomTypeAreas;
         this.roomTypePrices = roomTypePrices;
+        this.roomTypeBeds = roomTypeBeds;
         this.floorsNumber=floorsNumber;
     }
 
@@ -39,6 +41,8 @@ public class RoomsInformation {
     public List<TextField> getRoomTypePrices() {
         return roomTypePrices;
     }
+
+    public List<TextField> getRoomTypeBeds() {return roomTypeBeds;}
 
     public String getFloorsNumber() {
         return floorsNumber;
