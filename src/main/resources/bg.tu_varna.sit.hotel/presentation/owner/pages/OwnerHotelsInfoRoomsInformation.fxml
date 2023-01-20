@@ -19,8 +19,8 @@
          <columns>
             <TableColumn fx:id="numberColumn" prefWidth="110.0" text="Номер" />
             <TableColumn fx:id="typeColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Тип" />
-            <TableColumn fx:id="areaColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Размер" />
-            <TableColumn fx:id="priceColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Цена" />
+            <TableColumn fx:id="areaColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Размер(кв.м.)" />
+            <TableColumn fx:id="priceColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Цена(.лв)" />
             <TableColumn fx:id="ratingColumn" prefWidth="110.0" style="-fx-font-family: Arial;" text="Рейтинг" />
             <TableColumn fx:id="actionColumn" prefWidth="108.0" style="-fx-font-family: Arial;" text="Действия" />
          </columns>
