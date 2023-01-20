@@ -55,7 +55,7 @@ public class ReceptionistAddNewCustomerController {
         if (customerService.validateFields(new String[]{customerNameField.getText(), customerSurnameField.getText(), customerEGNField.getText(), customerPhoneField.getText()})
                 && !customerService.checkForExistingUserData(new String[]{customerEGNField.getText(), customerPhoneField.getText()},userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel())) //receptionist works only for 1 hotel so from his hotel list I get the hotel at index 0
         {
-            if (customerService.addCustomer(new CustomerModel(1L, customerEGNField.getText(), customerNameField.getText(), customerSurnameField.getText(), customerPhoneField.getText(),new Timestamp(System.currentTimeMillis()),"неопределен",userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel())))
+            if (customerService.addCustomer(new CustomerModel(1L, customerEGNField.getText(), customerNameField.getText(), customerSurnameField.getText(), customerPhoneField.getText(),new Timestamp(System.currentTimeMillis()),"неопределен",userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel(),0)))
             {
                 log.info("New customer has been added successfully.");
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно добавяне на клиент "+customerNameField.getText()+" "+customerSurnameField.getText()+" към хотел \""+userService.getUserById(UserSession.user.getId()).getHotels().get(0).getName()+"\".");

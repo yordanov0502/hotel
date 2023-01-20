@@ -1,23 +1,18 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
-import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.data.entities.Room;
-import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.RoomRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -53,7 +48,7 @@ public class RoomService {
                             r.getType(),
                             r.getSize(),
                             r.getRating(),
-                            r.getDaysOccupied(),
+                            r.getNightsOccupied(),
                             r.getIsOccupied()
                     )).collect(Collectors.toList())
             );

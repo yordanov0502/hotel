@@ -42,7 +42,7 @@ public class OwnerRoomEditInfoController {
     public void editRoomInfo() throws IOException {
         if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),selectedHotel.getName(),selectedRoom))
         {
-            if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getDaysOccupied(),selectedRoom.getIsOccupied())))
+            if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getNightsOccupied(),selectedRoom.getIsOccupied())))
             {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно редактиране на данни за стая.");
                 ViewManager.closeDialogBox();
@@ -69,7 +69,7 @@ public class OwnerRoomEditInfoController {
         areaField.setText(selectedRoom.getSize().toString());
         priceField.setText(selectedRoom.getPrice().toString());
         ratingField.setText(selectedRoom.getRating().toString());
-        daysOccupiedField.setText(selectedRoom.getDaysOccupied().toString());
+        daysOccupiedField.setText(selectedRoom.getNightsOccupied().toString());
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){

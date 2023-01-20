@@ -41,7 +41,12 @@ public class Customer implements Serializable{
     @JoinColumn(name = "hotel_id",referencedColumnName = "id", nullable = false)
     private Hotel hotel;
 
+    @Column(name = "nights_stayed", nullable = false)
+    private Integer nightsStayed;//number of nights the customer stayed (calculated from all reserved rooms)
 
+    public Integer getNightsStayed() {return nightsStayed;}
+
+    public void setNightsStayed(Integer nightsStayed) {this.nightsStayed = nightsStayed;}
 
     public Hotel getHotel() {
         return hotel;

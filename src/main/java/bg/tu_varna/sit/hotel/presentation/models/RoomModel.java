@@ -1,7 +1,6 @@
 package bg.tu_varna.sit.hotel.presentation.models;
 
 import bg.tu_varna.sit.hotel.data.entities.Room;
-import bg.tu_varna.sit.hotel.data.entities.User;
 
 public class RoomModel implements EntityModel<Room> {
     private Long id;
@@ -11,12 +10,12 @@ public class RoomModel implements EntityModel<Room> {
     private String type;
     private Integer size;
     private Double rating;
-    private Integer daysOccupied;
+    private Integer nightsOccupied;
     private Boolean isOccupied;
 
     public RoomModel(){}
 
-    public RoomModel(Long id,Integer number,HotelModel hotel,Integer price,String type,Integer size,Double rating,Integer daysOccupied,Boolean isOccupied)
+    public RoomModel(Long id, Integer number, HotelModel hotel, Integer price, String type, Integer size, Double rating, Integer nightsOccupied, Boolean isOccupied)
     {
       this.id=id;
       this.number=number;
@@ -25,7 +24,7 @@ public class RoomModel implements EntityModel<Room> {
       this.type=type;
       this.size=size;
       this.rating=rating;
-      this.daysOccupied=daysOccupied;
+      this.nightsOccupied = nightsOccupied;
       this.isOccupied=isOccupied;
     }
 
@@ -38,7 +37,7 @@ public class RoomModel implements EntityModel<Room> {
         this.type=room.getType();
         this.size=room.getSize();
         this.rating=room.getRating();
-        this.daysOccupied=room.getDaysOccupied();
+        this.nightsOccupied =room.getNightsOccupied();
         this.isOccupied=room.getIsOccupied();
     }
 
@@ -94,9 +93,9 @@ public class RoomModel implements EntityModel<Room> {
 
     public void setRating(Double rating) {this.rating = rating;}
 
-    public Integer getDaysOccupied() {return daysOccupied;}
+    public Integer getNightsOccupied() {return nightsOccupied;}
 
-    public void setDaysOccupied(Integer daysOccupied) {this.daysOccupied = daysOccupied;}
+    public void setNightsOccupied(Integer nightsOccupied) {this.nightsOccupied = nightsOccupied;}
 
     public Boolean getIsOccupied() {return isOccupied;}
 
@@ -112,7 +111,7 @@ public class RoomModel implements EntityModel<Room> {
         roomTemp.setType(this.type);
         roomTemp.setSize(this.size);
         roomTemp.setRating(this.rating);
-        roomTemp.setDaysOccupied(this.daysOccupied);
+        roomTemp.setNightsOccupied(this.nightsOccupied);
         roomTemp.setIsOccupied(this.isOccupied);
         return roomTemp;
     }

@@ -17,10 +17,11 @@ public class CustomerModel implements EntityModel<Customer>{
     private Timestamp createdAt;
     private String rating;
     private HotelModel hotel;
+    private Integer nightsStayed;
 
     public CustomerModel(){}
 
-    public CustomerModel(Long id,String egn,String firstName,String lastName,String phone, Timestamp createdAt,String rating,HotelModel hotel)
+    public CustomerModel(Long id,String egn,String firstName,String lastName,String phone, Timestamp createdAt,String rating,HotelModel hotel,Integer nightsStayed)
     {
         this.id=id;
         this.egn=egn;
@@ -30,6 +31,7 @@ public class CustomerModel implements EntityModel<Customer>{
         this.createdAt=createdAt;
         this.rating=rating;
         this.hotel=hotel;
+        this.nightsStayed=nightsStayed;
     }
 
     public CustomerModel(Customer customer)
@@ -42,6 +44,7 @@ public class CustomerModel implements EntityModel<Customer>{
         this.createdAt=customer.getCreatedAt();
         this.rating=customer.getRating();
         this.hotel=new HotelModel(customer.getHotel());
+        this.nightsStayed=customer.getNightsStayed();
     }
 
     public Long getId() {return id;}
@@ -76,6 +79,9 @@ public class CustomerModel implements EntityModel<Customer>{
 
     public void setHotel(HotelModel hotel) {this.hotel = hotel;}
 
+    public Integer getNightsStayed() {return nightsStayed;}
+
+    public void setNightsStayed(Integer nightsStayed) {this.nightsStayed = nightsStayed;}
 
     @Override
     public Customer toEntity() {
@@ -88,6 +94,7 @@ public class CustomerModel implements EntityModel<Customer>{
         customerTemp.setCreatedAt(this.createdAt);
         customerTemp.setRating(this.rating);
         customerTemp.setHotel(this.hotel.toEntity());
+        customerTemp.setNightsStayed(this.nightsStayed);
         return customerTemp;
     }
 }

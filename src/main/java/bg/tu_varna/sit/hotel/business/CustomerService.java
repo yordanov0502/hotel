@@ -50,7 +50,8 @@ public class CustomerService {
                             c.getPhone(),
                             c.getCreatedAt(),
                             c.getRating(),
-                            new HotelModel(c.getHotel())
+                            new HotelModel(c.getHotel()),
+                            c.getNightsStayed()
                     )).collect(Collectors.toList())
             );
         }
