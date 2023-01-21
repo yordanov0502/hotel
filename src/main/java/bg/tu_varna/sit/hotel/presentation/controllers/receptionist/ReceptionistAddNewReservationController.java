@@ -4,7 +4,6 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerMainController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -13,8 +12,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
-public class ReceptionistMainController {
-    private static final Logger log = Logger.getLogger(ReceptionistMainController.class);
+public class ReceptionistAddNewReservationController {
+    private static final Logger log = Logger.getLogger(ReceptionistAddNewReservationController.class);
 
     @FXML
     private Circle notificationCircle;
@@ -22,15 +21,14 @@ public class ReceptionistMainController {
     private Label notificationLabel;
 
 
+    public void showReceptionistMainView() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Main", 800, 500);
+    }
 
     public void addNewCustomer() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_CUSTOMER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Customer", 800, 500);
-    }
-
-    public void addNewReservation() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
     }
 
     public void addNewService() throws IOException {
