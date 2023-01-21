@@ -126,6 +126,13 @@ public class ReceptionistAddNewServiceController {
     public void initialize()
     {
         seasonsComboBox.setItems(FXCollections.observableArrayList("пролет", "лято", "есен", "зима" , "цяла година"));
+
+        if(UserSession.user==null)
+        {
+            serviceTextField.setDisable(true);
+            seasonsComboBox.setDisable(true);
+            addNewServiceButton.setDisable(true);
+        }
     }
 
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="352.0" prefWidth="652.0" styleClass="anchor" stylesheets="@../../admin/css/AccountInfoView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.CustomerEditInfoController">
+   <children>
+      <Pane layoutX="34.0" layoutY="25.0" prefHeight="301.0" prefWidth="583.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="221.0" layoutY="6.0" text="Лични данни" textFill="#1a1251">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="176.0" layoutY="45.0" text="Име:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerNameField" alignment="CENTER_RIGHT" layoutX="225.0" layoutY="39.0" prefHeight="33.0" prefWidth="209.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="176.0" layoutY="85.0" text="Фамилия:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerSurnameField" alignment="CENTER_RIGHT" layoutX="264.0" layoutY="79.0" prefHeight="33.0" prefWidth="170.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="177.0" layoutY="125.0" text="ЕГН:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerEGNField" alignment="CENTER_RIGHT" layoutX="225.0" layoutY="119.0" prefHeight="33.0" prefWidth="209.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="176.0" layoutY="165.0" text="Моб.номер:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerPhoneField" alignment="CENTER_RIGHT" layoutX="280.0" layoutY="159.0" prefHeight="33.0" prefWidth="154.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Label layoutX="176.0" layoutY="205.0" text="Рейтинг:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="customerRatingField" alignment="CENTER_RIGHT" disable="true" layoutX="257.0" layoutY="199.0" prefHeight="33.0" prefWidth="177.0" style="-fx-background-color: #333333; -fx-background-radius: 15; -fx-text-fill: white;">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </TextField>
+            <Button fx:id="customerEditInfoButton" layoutX="176.0" layoutY="246.0" mnemonicParsing="false" onAction="#editCustomerInfo" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Редактирай" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="closeButton" layoutX="321.0" layoutY="246.0" mnemonicParsing="false" onAction="#closeEditInfoPage" prefHeight="38.0" prefWidth="109.0" styleClass="adminBackButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Затвори" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+         </children></Pane>
+   </children>
+</AnchorPane>

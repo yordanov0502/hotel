@@ -102,6 +102,15 @@ public class ReceptionistAddNewCustomerController {
 
     public void initialize()
     {
+        if(UserSession.user==null)
+        {
+            customerNameField.setDisable(true);
+            customerSurnameField.setDisable(true);
+            customerEGNField.setDisable(true);
+            customerPhoneField.setDisable(true);
+            addCustomerButton.setDisable(true);
+        }
+
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
                 addCustomerButton.fire();

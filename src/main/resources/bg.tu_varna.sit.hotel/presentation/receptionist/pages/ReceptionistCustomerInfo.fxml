@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="352.0" prefWidth="652.0" styleClass="anchor" stylesheets="@../../admin/css/AccountInfoView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistCustomerInfoController">
+   <children>
+      <Pane layoutX="34.0" layoutY="44.0" prefHeight="262.0" prefWidth="583.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="221.0" layoutY="14.0" text="Лични данни" textFill="#1a1251">
+               <font>
+                  <Font name="Arial Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="176.0" layoutY="53.0" text="Име:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="nameLabel" layoutX="222.0" layoutY="51.0" prefHeight="25.0" prefWidth="161.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="176.0" layoutY="93.0" text="Фамилия:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="surnameLabel" layoutX="264.0" layoutY="91.0" prefHeight="25.0" prefWidth="154.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="177.0" layoutY="133.0" text="ЕГН:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="egnLabel" layoutX="220.0" layoutY="131.0" prefHeight="25.0" prefWidth="109.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="176.0" layoutY="173.0" text="Моб.номер:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="phoneLabel" layoutX="277.0" layoutY="171.0" prefHeight="25.0" prefWidth="109.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="176.0" layoutY="213.0" text="Рейтинг:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="ratingLabel" layoutX="257.0" layoutY="211.0" prefHeight="25.0" prefWidth="161.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Button fx:id="closeWindowButton" layoutX="614.0" layoutY="9.0" mnemonicParsing="false" onAction="#closeInfoPage" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>

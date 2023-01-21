@@ -171,6 +171,7 @@ public class CustomerService {
         else {return true;}
     }
 
+    //This method is used when creating a new customer to a hotel
     public boolean checkForExistingUserData(String [] fields,HotelModel hotelModel) //checks for already existing user data in the database
     {
         if(fields.length==2) //proverka pri registraciq na user
@@ -189,5 +190,30 @@ public class CustomerService {
         }
         else return true;
     }
+
+    //This method is used when editting information of a customer
+    public boolean checkForCorrectCustomerDataUpdate(String [] fields, CustomerModel selectedCustomer) //proverka pri redaktirane danni na customer
+    {
+        if(fields.length==4)
+        {
+            if(Objects.equals(selectedCustomer.getFirstName(), fields[0]) && Objects.equals(selectedCustomer.getLastName(), fields[1]) && Objects.equals(selectedCustomer.getEgn(), fields[2]) && Objects.equals(selectedCustomer.getPhone(), fields[3]))
+            {
+                return false;
+            }
+            else if(!Objects.equals(selectedCustomer.getEgn(), fields[2]) && isEgnExists(fields[2], selectedCustomer.getHotel()))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","ЕГН: \""+fields[2]+"\" вече съществува в базата данни на хотел \""+selectedCustomer.getHotel().getName()+"\".");
+                return false;
+            }
+            else if(!Objects.equals(selectedCustomer.getPhone(), fields[3]) && isPhoneExists(fields[3],selectedCustomer.getHotel()))
+            {
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Мобилен номер: \""+fields[3]+"\" вече съществува в базата данни на хотел \""+selectedCustomer.getHotel().getName()+"\".");
+                return false;
+            }
+            else return true;//everything is OK
+        }
+        else {return false;}
+    }
+
 
 }

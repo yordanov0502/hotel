@@ -103,6 +103,18 @@ public class ManagerAddNewReceptionistController {
 
     public void initialize()
     {
+        if(UserSession.user==null)
+        {
+            receptionistNameField.setDisable(true);
+            receptionistSurnameField.setDisable(true);
+            receptionistEGNField.setDisable(true);
+            receptionistPhoneField.setDisable(true);
+            receptionistPasswordField.setDisable(true);
+            receptionistUsernameField.setDisable(true);
+            receptionistEmailField.setDisable(true);
+            addNewReceptionistButton.setDisable(true);
+        }
+
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
                 addNewReceptionistButton.fire();
