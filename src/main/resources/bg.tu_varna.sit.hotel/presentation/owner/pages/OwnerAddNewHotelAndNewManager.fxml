@@ -140,32 +140,27 @@
       </Label>
       <Pane layoutX="183.0" layoutY="61.0" prefHeight="419.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8);">
          <children>
-            <Label layoutX="38.0" layoutY="7.0" text="Въведете данни за мениджър" textFill="WHITE">
+            <Label layoutX="38.0" layoutY="19.0" text="Въведете данни за мениджър" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="addHotelManagerInformationButton" layoutX="28.0" layoutY="36.0" mnemonicParsing="false" onAction="#addHotelManagerInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addHotelManagerInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър" textFill="WHITE">
+            <Button fx:id="addHotelManagerInformationButton" layoutX="28.0" layoutY="48.0" mnemonicParsing="false" onAction="#addHotelManagerInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addHotelManagerInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="54.0" layoutY="97.0" text="Въведете данни за хотел" textFill="WHITE">
+            <Label layoutX="54.0" layoutY="123.0" text="Въведете данни за хотел" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <Button fx:id="addMajorInformationButton" layoutX="28.0" layoutY="122.0" mnemonicParsing="false" onAction="#addMajorInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addMajorInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Основна информация" textFill="WHITE">
+            <Button fx:id="addMajorInformationButton" layoutX="28.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMajorInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addMajorInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Основна информация" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="addRoomsInformationButton" layoutX="28.0" layoutY="171.0" mnemonicParsing="false" onAction="#addRoomsInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Брой / видове стаи" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="addAdditionalServicesInformationButton" layoutX="28.0" layoutY="220.0" mnemonicParsing="false" onAction="#addAdditionalServicesInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addAdditionalServicesInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Допълнителни услуги" textFill="WHITE">
+            <Button fx:id="addRoomsInformationButton" layoutX="28.0" layoutY="197.0" mnemonicParsing="false" onAction="#addRoomsInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Брой / видове стаи" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -197,11 +192,6 @@
                </font>
             </Label>
             <CheckBox fx:id="roomsCheckBox" disable="true" layoutX="28.0" layoutY="361.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="189.0" style="-fx-text-fill: White;" text="Брой / видове стаи" underline="true">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="servicesCheckBox" disable="true" layoutX="28.0" layoutY="389.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="189.0" style="-fx-text-fill: White;" text="Допълнителни услуги" underline="true">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

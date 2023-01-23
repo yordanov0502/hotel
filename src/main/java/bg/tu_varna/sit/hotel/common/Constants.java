@@ -35,7 +35,6 @@ public final class Constants {
         public static final String OWNER_HOTEL_MANAGER_ADD_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelManagerAdd.fxml";
         public static final String OWNER_HOTEL_MAJOR_INFORMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelMajorInformation.fxml";
         public static final String OWNER_HOTEL_ROOMS_INFORMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelRoomsInformation.fxml";
-        public static final String OWNER_HOTEL_SERVICES_INFORMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelServicesInformation.fxml";
         public static final String OWNER_HOTELS_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelsInfo.fxml";
         public static final String OWNER_HOTELS_INFO_MAJOR_INFORMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelsInfoMajorInformation.fxml";
         public static final String OWNER_HOTELS_INFO_EMPLOYEES_INFORMATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelsInfoEmployeesInformation.fxml";
@@ -44,7 +43,6 @@ public final class Constants {
         public static final String OWNER_ROOM_EDIT_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerRoomEditInfo.fxml";
         public static final String OWNER_HOTELS_INFO_SERVICES_INFORMATION_VIEW="/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelsInfoServicesInformation.fxml";
         public static final String OWNER_ADD_ROOM_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddRoom.fxml";
-        public static final String OWNER_ADD_SERVICE_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddService.fxml";
         public static final String MANAGER_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerLogin.fxml";
         public static final String MANAGER_MAIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerMain.fxml";
         public static final String MANAGER_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerInfo.fxml";

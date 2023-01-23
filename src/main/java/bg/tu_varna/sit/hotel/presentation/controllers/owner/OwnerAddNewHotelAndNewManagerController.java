@@ -21,7 +21,6 @@ public class OwnerAddNewHotelAndNewManagerController {
     private final UserService userService = UserService.getInstance();
     private final HotelService hotelService = HotelService.getInstance();
     private final RoomService roomService = RoomService.getInstance();
-    private final ServiceService serviceService = ServiceService.getInstance();
 
     @FXML
     private AnchorPane anchorPane;
@@ -33,8 +32,6 @@ public class OwnerAddNewHotelAndNewManagerController {
     private CheckBox hotelCheckBox;
     @FXML
     private CheckBox roomsCheckBox;
-    @FXML
-    private CheckBox servicesCheckBox;
 
 
 
@@ -74,11 +71,6 @@ public class OwnerAddNewHotelAndNewManagerController {
     }
 
 
-    public void addAdditionalServicesInformation() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.openDialogBox(Constants.View.OWNER_HOTEL_SERVICES_INFORMATION_VIEW, null,this.getClass(),"Owner Hotel Services Information", 652, 352);
-    }
-
 
     public void addNewHotelAndNewManager() throws IOException {
 
@@ -94,30 +86,10 @@ public class OwnerAddNewHotelAndNewManagerController {
                     if(roomService.addRooms(NewHotelInformation.getHotelRoomsInformation(),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
                     {
                         log.info("Successfully added rooms to the new hotel.");
-                        if(NewHotelInformation.getHotelServicesInformation()!=null)
-                        {
-                            if(serviceService.addServices(NewHotelInformation.getHotelServicesInformation(),hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName())))
-                            {
-                                log.info("Successfully added services to the new hotel.");
-                                log.info("SUCCESSFULLY CREATED NEW HOTEL + NEW MANAGER.");
-                                AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно създадохте нов хотел с мениджър.");
-                                ViewManager.closeDialogBox();
-                                ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
-                            }
-                            else
-                            {
-                                log.info("Error when adding services to the new hotel");
-                                userService.deleteUser(userService.getUserById(NewHotelInformation.getHotelManagerInformation().getId()));
-                                hotelService.deleteHotel(hotelService.getHotelByName(NewHotelInformation.getHotelMajorInformation().getName()));
-                            }
-                        }
-                        else
-                        {
-                            log.info("SUCCESSFULLY CREATED NEW HOTEL + NEW MANAGER");
-                            AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно създадохте нов хотел с мениджър.");
-                            ViewManager.closeDialogBox();
-                            ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
-                        }
+                        log.info("SUCCESSFULLY CREATED NEW HOTEL + NEW MANAGER");
+                        AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно създадохте нов хотел с мениджър.");
+                        ViewManager.closeDialogBox();
+                        ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
                     }
                     else
                     {
@@ -182,14 +154,13 @@ public class OwnerAddNewHotelAndNewManagerController {
             managerCheckBox.setSelected(NewHotelInformation.getHotelManagerInformation() != null);
             hotelCheckBox.setSelected(NewHotelInformation.getHotelMajorInformation() != null);
             roomsCheckBox.setSelected(NewHotelInformation.getHotelRoomsInformation() != null);
-            servicesCheckBox.setSelected(NewHotelInformation.getHotelServicesInformation() != null);
         }
         else
         {
             NewHotelInformation.deletePreviousCachedInformation(this);
         }
 
-        //if all 3 mandatory of total 4 vital informations for hotel(and manager) are provided
+        //if all 3 mandatory informations for hotel(and manager) are provided
         //then data for a new hotel with manager can be inserted in the database.(the button to do this is enabled)
         if(managerCheckBox.isSelected() && hotelCheckBox.isSelected() && roomsCheckBox.isSelected())
         {

@@ -65,7 +65,6 @@ public class OwnerHotelsInfoServicesInformationController {
 
         selectedHotel=UserSession.selectedHotel;
         UserSession.selectedHotel=null;
-        OwnerAddServiceController.setSelectedHotel(selectedHotel,this);//set hotel name to an attribute(String) in case I decide to add new service using the OwnerAddServiceController (I will use the attribute(String) in the controller as hotel name in a query and eventually creating the new service)
         serviceTable.setItems(serviceService.getAllServicesOfHotel(selectedHotel));// Inserts all services of hotel in TableView
         createActionButtons();//insert dynamically created action buttons in every row of TableView
 
@@ -165,10 +164,6 @@ public class OwnerHotelsInfoServicesInformationController {
             log.info("Information for service has NOT been deleted.");
             AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни за услуга е неуспешно.");
         }
-    }
-
-    public void addNewService() throws IOException {
-        ViewManager.openDialogBox(Constants.View.OWNER_ADD_SERVICE_VIEW,ViewManager.getSecondaryStage(),this.getClass(),"Owner Add Service",652,352);
     }
 
     public void closeWindow(){

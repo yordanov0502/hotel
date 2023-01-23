@@ -14,7 +14,6 @@ public final class NewHotelInformation {
    private static UserModel hotelManagerInformation;
    private static HotelModel hotelMajorInformation;
    private static RoomsInformation hotelRoomsInformation;
-   private static List<ServiceModel> hotelServicesInformation;
    private static boolean refreshed = false;
 
    private NewHotelInformation(){}
@@ -29,10 +28,6 @@ public final class NewHotelInformation {
       return hotelRoomsInformation;
    }
 
-   public static List<ServiceModel> getHotelServicesInformation() {
-      return hotelServicesInformation;
-   }
-
    public static boolean isRefreshed() {return refreshed;}
 
    public static void makeRefreshedFalse(MajorOwnerController majorOwnerController) {
@@ -44,7 +39,6 @@ public final class NewHotelInformation {
       NewHotelInformation.hotelManagerInformation = null;
       NewHotelInformation.hotelMajorInformation = null;
       NewHotelInformation.hotelRoomsInformation = null;
-      NewHotelInformation.hotelServicesInformation = null;
    }
 
    public static void transferNewManagerInformation(UserModel userModel,OwnerHotelManagerAddController ownerHotelManagerAddController)
@@ -63,9 +57,5 @@ public final class NewHotelInformation {
       NewHotelInformation.refreshed =true;
    }
 
-   public static void transferNewServicesInformation(List<ServiceModel> hotelServicesInformation,OwnerHotelServicesInformationController ownerHotelServicesInformationController) {
-      NewHotelInformation.hotelServicesInformation = hotelServicesInformation;
-      NewHotelInformation.refreshed =true;
-   }
 
 }

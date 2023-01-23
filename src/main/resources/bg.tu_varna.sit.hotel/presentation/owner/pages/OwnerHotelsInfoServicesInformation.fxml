@@ -23,11 +23,6 @@
             <TableColumn fx:id="deleteColumn" prefWidth="150.0" style="-fx-font-family: Arial;" text="Изтрий" />
          </columns>
       </TableView>
-      <Button fx:id="addNewServiceButton" layoutX="318.0" layoutY="399.0" mnemonicParsing="false" onAction="#addNewService" prefHeight="38.0" prefWidth="124.0" styleClass="addHotelRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави услуга" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </Button>
       <Button fx:id="closeWindowButton" layoutX="706.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
          <font>
             <Font name="Arial" size="14.0" />
