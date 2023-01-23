@@ -121,18 +121,12 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="АА" textAlignment="RIGHT">
+            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showHotelInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотел" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="343.0" size="20" />
-            <Button fx:id="newAdminsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="  За потвърждение" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="CHECK_CIRCLE" size="20" text="" x="5.0" y="397.0" />
+            <FontAwesomeIconView glyphName="INFO_CIRCLE" layoutX="7.0" layoutY="345.0" size="24" />
             <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
             <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
                <font>

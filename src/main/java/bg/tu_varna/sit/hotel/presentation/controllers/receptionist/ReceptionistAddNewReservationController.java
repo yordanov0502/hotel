@@ -23,9 +23,7 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 
 public class ReceptionistAddNewReservationController {
@@ -111,6 +109,10 @@ public class ReceptionistAddNewReservationController {
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
     }
 
+    public void showHotelInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_HOTEL_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Hotel Info", 800, 500);
+    }
 
 
 
@@ -210,27 +212,26 @@ public class ReceptionistAddNewReservationController {
             startTimeSpinner.setValueFactory(startHoursFactory);
             endTimeSpinner.setValueFactory(endHoursFactory);
 
-            if(serviceService.getAllServicesNamesOfHotel(this.hotelModel)!=null)
+            //In this list I get all service names of hotel for current season(or for all year if specified)
+            //It is possible that no service names are found so value could be null
+            //That's why I check it in the following if statement
+            List<String> allServicesNamesOfHotelForCurrentSeason = serviceService.getAllServicesNamesOfHotelForCurrentSeason(this.hotelModel,getCurrentSeason());
+            if(allServicesNamesOfHotelForCurrentSeason!=null)
             {
-                if(serviceService.getAllServicesNamesOfHotelForCurrentSeason(this.hotelModel,getCurrentSeason())!=null)
-                {
                     //checkComboBox is filled with all names of services provided by the hotel for current season
-                    checkComboBox.getItems().addAll(serviceService.getAllServicesNamesOfHotelForCurrentSeason(this.hotelModel,getCurrentSeason()));
-                }
-                else
-                {
-                    checkComboBox.setDisable(true);
-                }
+                    checkComboBox.getItems().addAll(allServicesNamesOfHotelForCurrentSeason);
             }
             else
             {
                 checkComboBox.setDisable(true);
             }
 
-            //Proverqva dali hotela ima registrirani klienti v svoqta baza danni
-            if(customerService.getAllCustomersOfHotel(this.hotelModel)!=null)
+            //In this observable list I get all customers of hotel and if there are no customers NULL value is assigned to the collection
+            //This is why I check the collection if it is NULL in order to avoid NullPointerException when filling the table view
+            ObservableList<CustomerModel> customersOfHotel = customerService.getAllCustomersOfHotel(this.hotelModel);
+            if(customersOfHotel!=null)
             {
-                customersTable.setItems(customerService.getAllCustomersOfHotel(this.hotelModel));// Inserts all customers of hotel in TableView
+                customersTable.setItems(customersOfHotel);// Inserts all customers of hotel in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
 
                 if(customersTable.getItems().size()==1)

@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -15,8 +15,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.Rating?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistAddNewCustomerController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistHotelInfoController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
@@ -96,7 +97,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addNewCustomerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addNewReceptionistButton" stylesheets="@../../manager/css/ButtonFeaturesOnClick.css" text="Клиент" textAlignment="RIGHT">
+            <Button fx:id="addNewCustomerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="40.0" prefWidth="133.0" styleClass="addNewReceptionistButton" stylesheets="@../../manager/css/ButtonFeaturesOnClick.css" text="Клиент" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -120,7 +121,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showHotelInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотел" textAlignment="RIGHT">
+            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотел" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -134,47 +135,48 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="283.0" layoutY="14.0" prefHeight="32.0" prefWidth="300.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на нов клиент">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="312.0" layoutY="14.0" prefHeight="32.0" prefWidth="250.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Информация за хотел">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="259.0" layoutY="130.0" prefHeight="270.0" prefWidth="355.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="206.0" layoutY="126.0" prefHeight="248.0" prefWidth="463.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <Label layoutX="88.0" layoutY="14.0" text="Въведете данни за клиент" textFill="WHITE">
+            <Label layoutX="21.0" layoutY="35.0" text="Име:" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="hotelNameLabel" alignment="CENTER" layoutX="88.0" layoutY="32.0" prefHeight="31.0" prefWidth="344.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="customerNameField" alignment="CENTER" layoutX="90.0" layoutY="45.0" prefHeight="31.0" prefWidth="189.0" promptText="Име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <Label layoutX="21.0" layoutY="86.0" text="Адрес:" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="addressLabel" alignment="CENTER" layoutX="96.0" layoutY="82.0" prefHeight="31.0" prefWidth="335.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
-            </TextField>
-            <TextField fx:id="customerSurnameField" alignment="CENTER" layoutX="90.0" layoutY="85.0" prefHeight="31.0" prefWidth="189.0" promptText="Фамилия" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label layoutX="21.0" layoutY="134.0" text="Създаден през:" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="establishedAtLabel" alignment="CENTER" layoutX="183.0" layoutY="130.0" prefHeight="31.0" prefWidth="248.0" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-text-fill: white;" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
-            </TextField>
-            <TextField fx:id="customerEGNField" alignment="CENTER" layoutX="90.0" layoutY="125.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="customerPhoneField" alignment="CENTER" layoutX="90.0" layoutY="165.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </TextField>
-            <Button fx:id="addCustomerButton" layoutX="129.0" layoutY="211.0" mnemonicParsing="false" onAction="#addNewCustomer" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="65.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="105.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="INFO" layoutX="73.0" layoutY="147.0" size="20" text="" />
-            <FontAwesomeIconView fill="WHITE" glyphName="PHONE" layoutX="68.0" layoutY="187.0" size="20" />
+            </Label>
+            <Rating fx:id="hotelRating" disable="true" layoutX="126.0" layoutY="184.0" max="6" prefWidth="256.0" rating="0.0">
+               <effect>
+                  <DropShadow blurType="ONE_PASS_BOX" />
+               </effect>
+            </Rating>
          </children>
       </Pane>
    </children>

@@ -53,6 +53,11 @@ public class ReceptionistAddNewServiceController {
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
     }
 
+    public void showHotelInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_HOTEL_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Hotel Info", 800, 500);
+    }
+
 
     public void addNewService() throws IOException {
         if(serviceService.validateServiceField(serviceTextField.getText()) && checkForSelectedSeason() && checkForExistingHotelService(serviceTextField.getText()))

@@ -1,27 +1,46 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
+import bg.tu_varna.sit.hotel.business.CustomerService;
+import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerMainController;
+import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.shape.Circle;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
+import org.controlsfx.control.Rating;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
-public class ReceptionistMainController {
-    private static final Logger log = Logger.getLogger(ReceptionistMainController.class);
-
+public class ReceptionistHotelInfoController {
+    private static final Logger log = Logger.getLogger(ReceptionistHotelInfoController.class);
     @FXML
-    private Circle notificationCircle;
+    private Label hotelNameLabel;
     @FXML
-    private Label notificationLabel;
+    private Label addressLabel;
+    @FXML
+    private Label establishedAtLabel;
+    @FXML
+    private Rating hotelRating;
 
 
+
+
+    public void showReceptionistMainView() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Main", 800, 500);
+    }
 
     public void addNewCustomer() throws IOException {
         ViewManager.closeDialogBox();
@@ -36,11 +55,6 @@ public class ReceptionistMainController {
     public void addNewService() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
-    }
-
-    public void showHotelInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.RECEPTIONIST_HOTEL_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Hotel Info", 800, 500);
     }
 
 
@@ -67,10 +81,26 @@ public class ReceptionistMainController {
         }
     }
 
+
     public void initialize()
     {
-        //notificationCircle.setVisible(true);
-        //notificationLabel.setText("7");
-        //notificationLabel.setVisible(true);
+        if(UserSession.user!=null)
+        {
+            UserModel receptionist = UserService.getInstance().getUserById(UserSession.user.getId());
+            HotelModel hotelModel = receptionist.getHotels().get(0).toModel();//Receptionist works only for 1 hotel
+
+            hotelNameLabel.setText(hotelModel.getName());
+            addressLabel.setText(hotelModel.getAddress());
+            establishedAtLabel.setText(hotelModel.getEstablished_at().toString());
+            hotelRating.setRating(hotelModel.getStars());
+        }
+       else
+        {
+            hotelNameLabel.setDisable(true);
+            addressLabel.setDisable(true);
+            establishedAtLabel.setDisable(true);
+        }
+
+
     }
 }
