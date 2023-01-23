@@ -84,18 +84,15 @@ public class ReceptionistAddNewServiceController {
 
     private boolean checkForExistingHotelService(String serviceName){
         HotelModel hotelModel = hotelService.getHotelByName(userService.getUserById(UserSession.user.getId()).getHotels().get(0).getName());
-        if(ServiceService.getInstance().getAllServicesOfHotel(hotelModel)!=null)
+        if(serviceService.isServiceExists(serviceName,hotelModel))
         {
-            for(ServiceModel service : serviceService.getAllServicesOfHotel(hotelModel))
-            {
-                if(service.getType().equals(serviceName))
-                {
-                    AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Хотелска услуга \""+serviceName+"\" вече съществува.");
-                    return false;
-                }
-            }
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Хотелска услуга \""+serviceName+"\" вече съществува.");
+            return false;
         }
-        return true;
+        else
+        {
+            return true;
+        }
     }
 
 
@@ -125,13 +122,22 @@ public class ReceptionistAddNewServiceController {
 
     public void initialize()
     {
-        seasonsComboBox.setItems(FXCollections.observableArrayList("пролет", "лято", "есен", "зима" , "цяла година"));
-
         if(UserSession.user==null)
         {
             serviceTextField.setDisable(true);
             seasonsComboBox.setDisable(true);
             addNewServiceButton.setDisable(true);
+        }
+        else
+        {
+            seasonsComboBox.setItems(FXCollections.observableArrayList("пролет", "лято", "есен", "зима" , "цяла година"));
+
+            anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
+                if(keyEvent.getCode() == KeyCode.ENTER){
+                    addNewServiceButton.fire();
+                    keyEvent.consume();
+                }
+            });
         }
     }
 

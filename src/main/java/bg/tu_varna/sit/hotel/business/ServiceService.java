@@ -65,6 +65,18 @@ public class ServiceService {
         }
     }
 
+    public List<String> getAllServicesNamesOfHotelForCurrentSeason(HotelModel hotelModel,String currentSeason) {
+        List<String> servicesNamesOfHotelForCurrentSeason = serviceRepository.getAllServicesNamesOfHotelForCurrentSeason(hotelModel.toEntity(),currentSeason);
+
+        if(servicesNamesOfHotelForCurrentSeason.isEmpty()){return null;}
+
+        else
+        {
+            return servicesNamesOfHotelForCurrentSeason;
+        }
+    }
+
+
 
     public boolean addService(ServiceModel serviceModel) {
         return serviceRepository.save(serviceModel.toEntity());

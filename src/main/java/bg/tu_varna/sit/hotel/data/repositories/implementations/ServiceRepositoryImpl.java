@@ -82,7 +82,7 @@ public class ServiceRepositoryImpl implements ServiceRepository<Service> {
 
         try {
             String jpql = "SELECT s FROM Service s WHERE type = '" + type + "' AND hotel = '"+ hotel.getId() +"'";
-            hotel = (Hotel) session.createQuery(jpql).getSingleResult();
+            service = (Service) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got service by type and by hotel successfully.");
         } catch(Exception e) {
@@ -102,9 +102,9 @@ public class ServiceRepositoryImpl implements ServiceRepository<Service> {
             String jpql = "SELECT s FROM Service s WHERE hotel = '"+ hotel.getId() +"'";
             services.addAll(session.createQuery(jpql, Service.class).getResultList());
             transaction.commit();
-            log.info("Got all services successfully.");
+            log.info("Got all services of hotel successfully.");
         } catch (Exception e) {
-            log.error("Get all services error: " + e.getMessage());
+            log.error("Get all services of hotel error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -120,9 +120,27 @@ public class ServiceRepositoryImpl implements ServiceRepository<Service> {
             String jpql = "SELECT s.type FROM Service s WHERE hotel = '"+ hotel.getId() +"'";
             servicesNames.addAll(session.createQuery(jpql, String.class).getResultList());
             transaction.commit();
-            log.info("Got all services names successfully.");
+            log.info("Got all services names of hotel successfully.");
         } catch (Exception e) {
-            log.error("Get all services names error: " + e.getMessage());
+            log.error("Get all services names of hotel error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return servicesNames;
+    }
+
+    @Override
+    public List<String> getAllServicesNamesOfHotelForCurrentSeason(Hotel hotel,String currentSeason) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<String> servicesNames = new LinkedList<>();
+        try{
+            String jpql = "SELECT s.type FROM Service s WHERE hotel = '"+ hotel.getId() +"' AND (season = '"+currentSeason+"' OR season = 'цяла година')";
+            servicesNames.addAll(session.createQuery(jpql, String.class).getResultList());
+            transaction.commit();
+            log.info("Got all services names of hotel for current season successfully.");
+        } catch (Exception e) {
+            log.error("Get all services names of hotel for current season error: " + e.getMessage());
         } finally {
             session.close();
         }

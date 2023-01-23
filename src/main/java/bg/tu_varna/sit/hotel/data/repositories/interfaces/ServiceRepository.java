@@ -10,4 +10,5 @@ public interface ServiceRepository<T> extends Repository<T> {
     Service getByType(String type, Hotel hotel);
     List<T> getAllServicesOfHotel(Hotel hotel);
     List<String> getAllServicesNamesOfHotel(Hotel hotel);
+    List<String> getAllServicesNamesOfHotelForCurrentSeason(Hotel hotel,String currentSeason);
 }

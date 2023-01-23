@@ -23,6 +23,9 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 
 public class ReceptionistAddNewReservationController {
@@ -32,7 +35,7 @@ public class ReceptionistAddNewReservationController {
     private final ServiceService serviceService = ServiceService.getInstance();
     private final RoomService roomService = RoomService.getInstance();
     private final ReservationService reservationService = ReservationService.getInstance();
-    private HotelModel hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
+    private HotelModel hotelModel;
     private boolean isRoomSearchConducted=false;
 
 
@@ -89,6 +92,9 @@ public class ReceptionistAddNewReservationController {
     @FXML
     private TableColumn<RoomModel,String> priceColumn;
 
+    @FXML
+    private Button reserveButton;
+
 
     public void showReceptionistMainView() throws IOException {
         ViewManager.closeDialogBox();
@@ -139,6 +145,8 @@ public class ReceptionistAddNewReservationController {
 
         if(UserSession.user!=null)
         {
+            hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
+
             customersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
             customersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
             freeRoomsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
@@ -175,7 +183,7 @@ public class ReceptionistAddNewReservationController {
             areaColumn.setStyle("-fx-alignment:center");
             priceColumn.setStyle("-fx-alignment:center");
 
-            /////////////////////////////modification for multiple row selection/////////////////////////////////
+            //////////////////modification for multiple row selection on free rooms table///////////////////////
             freeRoomsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
             freeRoomsTable.setRowFactory(tableView2 -> {
@@ -204,8 +212,15 @@ public class ReceptionistAddNewReservationController {
 
             if(serviceService.getAllServicesNamesOfHotel(this.hotelModel)!=null)
             {
-                //checkComboBox is filled with all names of services provided by the hotel
-                checkComboBox.getItems().addAll(serviceService.getAllServicesNamesOfHotel(this.hotelModel));
+                if(serviceService.getAllServicesNamesOfHotelForCurrentSeason(this.hotelModel,getCurrentSeason())!=null)
+                {
+                    //checkComboBox is filled with all names of services provided by the hotel for current season
+                    checkComboBox.getItems().addAll(serviceService.getAllServicesNamesOfHotelForCurrentSeason(this.hotelModel,getCurrentSeason()));
+                }
+                else
+                {
+                    checkComboBox.setDisable(true);
+                }
             }
             else
             {
@@ -230,7 +245,6 @@ public class ReceptionistAddNewReservationController {
                 searchField.setDisable(true);
                 searchButton.setDisable(true);
                 clearSearchButton.setDisable(true);
-                ///////////////////////////////////////
             }
         }
         else
@@ -243,7 +257,27 @@ public class ReceptionistAddNewReservationController {
             endDatePicker.setDisable(true);
             endTimeSpinner.setDisable(true);
             searchRoomsButton.setDisable(true);
-            ///////////////////////////////////////////
+            checkComboBox.setDisable(true);
+            reserveButton.setDisable(true);
+        }
+    }
+
+    private String getCurrentSeason(){
+        switch (LocalDateTime.now().getMonth())
+        {
+            case JANUARY:return Constants.seasons[0];
+            case FEBRUARY:return Constants.seasons[1];
+            case MARCH:return Constants.seasons[2];
+            case APRIL:return Constants.seasons[3];
+            case MAY:return Constants.seasons[4];
+            case JUNE:return Constants.seasons[5];
+            case JULY:return Constants.seasons[6];
+            case AUGUST:return Constants.seasons[7];
+            case SEPTEMBER:return Constants.seasons[8];
+            case OCTOBER:return Constants.seasons[9];
+            case NOVEMBER:return Constants.seasons[10];
+            case DECEMBER:return Constants.seasons[11];
+            default: return Constants.seasons[12];
         }
     }
 
@@ -459,7 +493,7 @@ public class ReceptionistAddNewReservationController {
                         Timestamp reservationEnd = Timestamp.valueOf(endDateHour);
 
                         String serviceList="";
-                        if(selectedServices.size()>0)
+                        if(selectedServices!=null && selectedServices.size()>0)
                         {
                             for(int i=0;i<selectedServices.size();i++)
                             {

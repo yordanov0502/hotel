@@ -69,4 +69,20 @@ public final class Constants {
         public static final String HIBERNATE_PROPERTIES = "/hibernate.cfg.xml";
     }
 
+    public static final String[] seasons = {
+            "зима",//януари
+            "зима",//февруари
+            "пролет",//март
+            "пролет",//април
+            "пролет",//май
+            "лято",//юни
+            "лято",//юли
+            "лято",//август
+            "есен",//септември
+            "есен",//октомври
+            "есен",//ноември
+            "зима",//декември
+            "цяла година"
+    };
+
 }
