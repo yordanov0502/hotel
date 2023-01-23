@@ -6,6 +6,7 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,6 +18,7 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminOwnersInfoController {
@@ -117,6 +119,13 @@ public class AdminOwnersInfoController {
             {
                 ownersTable.setItems(userService.getAllByRole("собственик"));// Inserts all owners in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(ownersTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -278,6 +287,9 @@ public class AdminOwnersInfoController {
                 {
                     ownersTable.getItems().clear();
                     ownersTable.getItems().add(userService.getUserById(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -289,12 +301,16 @@ public class AdminOwnersInfoController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(userService.getAllByRole("собственик").size()>1 && ownersTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<UserModel> ownerList = userService.getAllByRole("собственик");
+        if(ownerList.size()>1 && ownersTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_OWNERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Owners Info", 800, 500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            ownersTable.getItems().clear();
+            ownersTable.setItems(FXCollections.observableList(ownerList));
         }
     }
 

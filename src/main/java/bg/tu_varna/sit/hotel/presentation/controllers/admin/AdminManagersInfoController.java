@@ -5,10 +5,12 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +22,7 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminManagersInfoController {
@@ -121,6 +124,13 @@ public class AdminManagersInfoController {
             {
                 managersTable.setItems(userService.getAllByRole("мениджър"));// Inserts all managers in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(managersTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -279,6 +289,9 @@ public class AdminManagersInfoController {
                 {
                     managersTable.getItems().clear();
                     managersTable.getItems().add(userService.getUserById(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -290,12 +303,16 @@ public class AdminManagersInfoController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(userService.getAllByRole("мениджър").size()>1 && managersTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<UserModel> managerList = userService.getAllByRole("мениджър");
+        if(managerList.size()>1 && managersTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_MANAGERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Managers Info", 800, 500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            managersTable.getItems().clear();
+            managersTable.setItems(FXCollections.observableList(managerList));
         }
     }
 

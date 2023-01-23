@@ -8,6 +8,7 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +20,7 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminsNewRegistrationsInfoController {
@@ -119,6 +121,13 @@ public class AdminsNewRegistrationsInfoController {
             {
                 adminsTable.setItems(userService.getAllNewlyRegisteredAdmins());// Inserts all newly registered admins in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(adminsTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -327,6 +336,9 @@ public class AdminsNewRegistrationsInfoController {
                 {
                     adminsTable.getItems().clear();
                     adminsTable.getItems().add(userService.getNewlyRegisteredAdminById(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -338,12 +350,16 @@ public class AdminsNewRegistrationsInfoController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(userService.getAllNewlyRegisteredAdmins().size()>1 && adminsTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<UserModel> unapprovedAdminList =  userService.getAllNewlyRegisteredAdmins();
+        if(unapprovedAdminList.size()>1 && adminsTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMINS_NEW_REGISTRATIONS_INFO, ViewManager.getPrimaryStage(),this.getClass(),"Admins New Registrations Info", 800, 500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            adminsTable.getItems().clear();
+            adminsTable.setItems(FXCollections.observableList(unapprovedAdminList));
         }
     }
 

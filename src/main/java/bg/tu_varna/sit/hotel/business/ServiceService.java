@@ -54,6 +54,17 @@ public class ServiceService {
         }
     }
 
+    public List<String> getAllServicesNamesOfHotel(HotelModel hotelModel) {
+        List<String> servicesNamesOfHotel = serviceRepository.getAllServicesNamesOfHotel(hotelModel.toEntity());
+
+        if(servicesNamesOfHotel.isEmpty()){return null;}
+
+        else
+        {
+            return servicesNamesOfHotel;
+        }
+    }
+
 
     public boolean addService(ServiceModel serviceModel) {
         return serviceRepository.save(serviceModel.toEntity());

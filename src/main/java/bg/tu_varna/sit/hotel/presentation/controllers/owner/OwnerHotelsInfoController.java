@@ -10,10 +10,12 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
+import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -97,6 +99,13 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
             {
                 hotelsTable.setItems(userService.getAllHotelsOfUser(userService.getUserById(UserSession.user.getId())));// Inserts all hotels of owner in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(hotelsTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -544,6 +553,9 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
                 {
                     hotelsTable.getItems().clear();
                     hotelsTable.getItems().add(hotelService.getHotelByName(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -555,12 +567,17 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
+
         searchField.setText("");
-        if(userService.getUserById(UserSession.user.getId()).getHotels().size()>1 && hotelsTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<HotelModel> hotelListOfOwner = userService.getAllHotelsOfUser(userService.getUserById(UserSession.user.getId()));
+        if(hotelListOfOwner.size()>1 && hotelsTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            hotelsTable.getItems().clear();
+            hotelsTable.setItems(FXCollections.observableList(hotelListOfOwner));
         }
     }
 

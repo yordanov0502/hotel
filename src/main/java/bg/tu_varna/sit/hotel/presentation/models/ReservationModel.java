@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 public class ReservationModel implements EntityModel<Reservation>{
     private Long id;
-    private Integer number;//number of reservation per hotel
+    private Long number;//number of reservation per hotel
     private String type;//reservation type (direct/indirect)
     private String finishType;//(unfinished/normal/earlier/forced)
     private Timestamp createdAt;//date and time when reservation was created
@@ -25,7 +25,7 @@ public class ReservationModel implements EntityModel<Reservation>{
 
     public ReservationModel(){}
 
-    public ReservationModel(Long id, Integer number, String type, String finishType, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Double roomRating, String serviceList, Boolean requestSent)
+    public ReservationModel(Long id, Long number, String type, String finishType, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Double roomRating, String serviceList, Boolean requestSent)
     {
         this.id = id;
         this.number = number;
@@ -73,11 +73,11 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.id = id;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 

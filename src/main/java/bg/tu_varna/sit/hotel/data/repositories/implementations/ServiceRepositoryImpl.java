@@ -111,4 +111,22 @@ public class ServiceRepositoryImpl implements ServiceRepository<Service> {
         return services;
     }
 
+    @Override
+    public List<String> getAllServicesNamesOfHotel(Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<String> servicesNames = new LinkedList<>();
+        try{
+            String jpql = "SELECT s.type FROM Service s WHERE hotel = '"+ hotel.getId() +"'";
+            servicesNames.addAll(session.createQuery(jpql, String.class).getResultList());
+            transaction.commit();
+            log.info("Got all services names successfully.");
+        } catch (Exception e) {
+            log.error("Get all services names error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return servicesNames;
+    }
+
 }

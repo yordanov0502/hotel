@@ -1,36 +1,40 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
-import bg.tu_varna.sit.hotel.business.CustomerService;
-import bg.tu_varna.sit.hotel.business.HotelService;
-import bg.tu_varna.sit.hotel.business.UserService;
+import bg.tu_varna.sit.hotel.business.*;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.data.entities.Customer;
-import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
-import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import bg.tu_varna.sit.hotel.presentation.models.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
+import org.controlsfx.control.CheckComboBox;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class ReceptionistAddNewReservationController {
     private static final Logger log = Logger.getLogger(ReceptionistAddNewReservationController.class);
     private final CustomerService customerService = CustomerService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private final ServiceService serviceService = ServiceService.getInstance();
+    private final RoomService roomService = RoomService.getInstance();
+    private final ReservationService reservationService = ReservationService.getInstance();
+    private HotelModel hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
+    private boolean isRoomSearchConducted=false;
+
 
     @FXML
     private Circle notificationCircle;
@@ -56,6 +60,35 @@ public class ReceptionistAddNewReservationController {
     private TableColumn<CustomerModel,String> surnameColumn;
     @FXML
     private TableColumn actionColumn;
+
+
+    @FXML
+    private DatePicker startDatePicker;
+    @FXML
+    private Spinner<Integer> startTimeSpinner;
+    @FXML
+    private DatePicker endDatePicker;
+    @FXML
+    private Spinner<Integer> endTimeSpinner;
+    @FXML
+    private Button searchRoomsButton;
+
+    @FXML
+    private CheckComboBox<String> checkComboBox;
+
+    @FXML
+    private TableView<RoomModel> freeRoomsTable;
+    @FXML
+    private TableColumn<RoomModel,String> numberColumn;
+    @FXML
+    private TableColumn<RoomModel, String> typeColumn;
+    @FXML
+    private TableColumn<RoomModel,String> bedsColumn;
+    @FXML
+    private TableColumn<RoomModel,String> areaColumn;
+    @FXML
+    private TableColumn<RoomModel,String> priceColumn;
+
 
     public void showReceptionistMainView() throws IOException {
         ViewManager.closeDialogBox();
@@ -108,10 +141,17 @@ public class ReceptionistAddNewReservationController {
         {
             customersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
             customersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
+            freeRoomsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
+            freeRoomsTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
+
 
             Label label = new Label("Няма информация за клиенти.");
             label.setStyle("-fx-text-fill: black;"+"-fx-background-color: white;"+"-fx-font-size: 20;");
-            customersTable.setPlaceholder(label); //shows text when there are no owners in the database
+            customersTable.setPlaceholder(label); //shows text when there are no customer in the database
+
+            Label label1 = new Label("Няма информация за свободни стаи.");
+            label1.setStyle("-fx-text-fill: black;"+"-fx-background-color: white;"+"-fx-font-size: 20;");
+            freeRoomsTable.setPlaceholder(label1); //shows text when there are no free rooms in the database
 
             //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
             egnColumn.setCellValueFactory(new PropertyValueFactory<CustomerModel,String>("egn"));
@@ -123,17 +163,74 @@ public class ReceptionistAddNewReservationController {
             surnameColumn.setStyle("-fx-alignment:center");
             actionColumn.setStyle("-fx-alignment:center");
 
-            HotelModel hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();//here I am sure that the user(receptionist) has only 1 hotel
-            if(customerService.getAllCustomersOfHotel(hotelModel)!=null)
+            numberColumn.setCellValueFactory(new PropertyValueFactory<RoomModel,String>("number"));
+            typeColumn.setCellValueFactory(new PropertyValueFactory<RoomModel,String>("type"));
+            bedsColumn.setCellValueFactory(new PropertyValueFactory<RoomModel,String>("beds"));
+            areaColumn.setCellValueFactory(new PropertyValueFactory<RoomModel,String>("size"));
+            priceColumn.setCellValueFactory(new PropertyValueFactory<RoomModel,String>("price"));
+
+            numberColumn.setStyle("-fx-alignment:center");
+            typeColumn.setStyle("-fx-alignment:center");
+            bedsColumn.setStyle("-fx-alignment:center");
+            areaColumn.setStyle("-fx-alignment:center");
+            priceColumn.setStyle("-fx-alignment:center");
+
+            /////////////////////////////modification for multiple row selection/////////////////////////////////
+            freeRoomsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+            freeRoomsTable.setRowFactory(tableView2 -> {
+                final TableRow<RoomModel> row = new TableRow<>();
+
+                row.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+                    final int index = row.getIndex();
+
+                    if (index >= 0 && index < freeRoomsTable.getItems().size()) {
+                        if (freeRoomsTable.getSelectionModel().isSelected(index))
+                            freeRoomsTable.getSelectionModel().clearSelection(index);
+                        else
+                            freeRoomsTable.getSelectionModel().select(index);
+
+                        event.consume();
+                    }
+                });
+                return row;
+            });
+            ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            SpinnerValueFactory<Integer> startHoursFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,23);
+            SpinnerValueFactory<Integer> endHoursFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,23);
+            startTimeSpinner.setValueFactory(startHoursFactory);
+            endTimeSpinner.setValueFactory(endHoursFactory);
+
+            if(serviceService.getAllServicesNamesOfHotel(this.hotelModel)!=null)
             {
-                customersTable.setItems(customerService.getAllCustomersOfHotel(hotelModel));// Inserts all customers of hotel in TableView
+                //checkComboBox is filled with all names of services provided by the hotel
+                checkComboBox.getItems().addAll(serviceService.getAllServicesNamesOfHotel(this.hotelModel));
+            }
+            else
+            {
+                checkComboBox.setDisable(true);
+            }
+
+            //Proverqva dali hotela ima registrirani klienti v svoqta baza danni
+            if(customerService.getAllCustomersOfHotel(this.hotelModel)!=null)
+            {
+                customersTable.setItems(customerService.getAllCustomersOfHotel(this.hotelModel));// Inserts all customers of hotel in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(customersTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
                 searchField.setDisable(true);
                 searchButton.setDisable(true);
                 clearSearchButton.setDisable(true);
+                ///////////////////////////////////////
             }
         }
         else
@@ -141,6 +238,11 @@ public class ReceptionistAddNewReservationController {
             searchField.setDisable(true);
             searchButton.setDisable(true);
             clearSearchButton.setDisable(true);
+            startDatePicker.setDisable(true);
+            startTimeSpinner.setDisable(true);
+            endDatePicker.setDisable(true);
+            endTimeSpinner.setDisable(true);
+            searchRoomsButton.setDisable(true);
             ///////////////////////////////////////////
         }
     }
@@ -224,6 +326,7 @@ public class ReceptionistAddNewReservationController {
         actionColumn.setCellFactory(cellCallback);
     }
 
+
     private void showInformation(CustomerModel customerModel) throws IOException {
 
         UserSession.selectedCustomer=customerModel;
@@ -238,7 +341,7 @@ public class ReceptionistAddNewReservationController {
 
     public void searchCustomerByEgn() {
 
-        if(customerService.getAllCustomersOfHotel(userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel()).size()>1 && customersTable.getItems().size()!=1)
+        if(customerService.getAllCustomersOfHotel(this.hotelModel).size()>1 && customersTable.getItems().size()!=1)
         {
             if(searchField.getText().equals(""))
             {
@@ -251,16 +354,17 @@ public class ReceptionistAddNewReservationController {
             }
             else
             {
-                HotelModel hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
-
-                if(customerService.isEgnExists(searchField.getText(),hotelModel))
+                if(customerService.isEgnExists(searchField.getText(),this.hotelModel))
                 {
                     customersTable.getItems().clear();
-                    customersTable.getItems().add(customerService.getCustomerByEgn(searchField.getText(),hotelModel));
+                    customersTable.getItems().add(customerService.getCustomerByEgn(searchField.getText(),this.hotelModel));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
-                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Клиент с ЕГН: "+searchField.getText()+" не съществува в базата данни на хотел \""+hotelModel.getName()+"\".");
+                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Клиент с ЕГН: "+searchField.getText()+" не съществува в базата данни на хотел \""+this.hotelModel.getName()+"\".");
                     searchField.setText("");
                 }
             }
@@ -268,13 +372,186 @@ public class ReceptionistAddNewReservationController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(customerService.getAllCustomersOfHotel(userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel()).size()>1 && customersTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<CustomerModel> customersList = customerService.getAllCustomersOfHotel(this.hotelModel);
+        if(customersList.size()>1 && customersTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            customersTable.getItems().clear();
+            customersTable.setItems(FXCollections.observableList(customersList));
         }
     }
+
+    private boolean validateDates(){
+        if(startDatePicker.getValue()==null && endDatePicker.getValue()==null)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете начална и крайна дата на резервация.");
+            return false;
+        }
+        else if(startDatePicker.getValue()==null)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете начална дата на резервация.");
+            return false;
+        }
+        else if(endDatePicker.getValue()==null)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете крайна дата на резервация.");
+            return false;
+        }
+        else if(startDatePicker.getValue().equals(endDatePicker.getValue()))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Началната и крайната дата на резервация не могат да съвпадат.");
+            return false;
+        }
+        else if(startDatePicker.getValue().compareTo(endDatePicker.getValue()) > 0)
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Началната дата на резервация не може да е след крайната дата.");
+            return false;
+        }
+        else {return true;}//everything is OK with the dates
+    }
+
+    public void searchFreeRooms(){
+        if(validateDates())
+        {
+            isRoomSearchConducted=true;
+
+            String startDateHour = startDatePicker.getValue()+" "+startTimeSpinner.getValue()+":00:00.000";
+            Timestamp reservationStart = Timestamp.valueOf(startDateHour);
+
+            String endDateHour = endDatePicker.getValue()+" "+endTimeSpinner.getValue()+":00:00.000";
+            Timestamp reservationEnd = Timestamp.valueOf(endDateHour);
+
+            ObservableList<RoomModel> freeRooms = reservationService.getAllFreeRooms(this.hotelModel,reservationStart,reservationEnd);
+            if(freeRooms!=null && freeRoomsTable.getItems()!=null)
+            {
+                freeRoomsTable.getItems().clear();
+                freeRoomsTable.setItems(freeRooms);
+            }
+            else if(freeRooms!=null)
+            {
+                freeRoomsTable.setItems(freeRooms);
+            }
+        }
+    }
+
+    public void createReservation() throws IOException {
+
+        ObservableList<RoomModel> selectedRooms = freeRoomsTable.getSelectionModel().getSelectedItems();
+        ObservableList<String> selectedServices = checkComboBox.getCheckModel().getCheckedItems();
+        CustomerModel customerModel = customersTable.getSelectionModel().getSelectedItem();
+
+        if(customerModel!=null)//proverka dali ima izbran klient
+        {
+            if(isRoomSearchConducted)
+            {
+                if(freeRoomsTable.getItems()!=null && freeRoomsTable.getItems().size()>0)//ako ima svobodni stai
+                {
+                    if(selectedRooms!=null && selectedRooms.size()>0)//proverka za izbrani stai (1 ili pove4e)
+                    {
+                        String startDateHour = startDatePicker.getValue()+" "+startTimeSpinner.getValue()+":00:00.000";
+                        Timestamp reservationStart = Timestamp.valueOf(startDateHour);
+
+                        String endDateHour = endDatePicker.getValue()+" "+endTimeSpinner.getValue()+":00:00.000";
+                        Timestamp reservationEnd = Timestamp.valueOf(endDateHour);
+
+                        String serviceList="";
+                        if(selectedServices.size()>0)
+                        {
+                            for(int i=0;i<selectedServices.size();i++)
+                            {
+                                if(i==0){serviceList=selectedServices.get(i);}
+                                else if(i<selectedServices.size()-1){serviceList=serviceList+","+selectedServices.get(i);}
+                                else {serviceList=serviceList+","+selectedServices.get(i);}
+                            }
+                        }
+                        else
+                        {
+                            serviceList=".";
+                        }
+
+                        String reservationType;
+                        if(selectedRooms.size()==1) {reservationType="малка";}
+                        else if(selectedRooms.size()>1 && selectedRooms.size()<6) {reservationType="средна";}
+                        else {reservationType="голяма";}
+
+                        Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel)+1;
+                        boolean flag = false;
+
+                            for(int i=0;i<selectedRooms.size();i++)
+                            {
+                                flag = reservationService.addReservation(new ReservationModel(1L, reservationNumber, reservationType, "незавършена", new Timestamp(System.currentTimeMillis()), reservationStart, reservationEnd, this.hotelModel, userService.getUserById(UserSession.user.getId()), customerModel, customerModel.getRating(),selectedRooms.get(i), selectedRooms.get(i).getNightsOccupied(), selectedRooms.get(i).getRating(), serviceList, false));
+                                if(!flag)
+                                {
+                                    if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
+                                    {
+                                        for(int j=0;j<=i;j++)
+                                        {
+                                            if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
+                                            {
+                                                reservationService.deleteReservation(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel));
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+
+                            if(flag)
+                            {
+                                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно създаване на резервация.");
+                                ViewManager.closeDialogBox();
+                                ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
+                            }
+                            else
+                            {
+                                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Неуспешно създаване на резервация.");
+                            }
+                    }
+                    else
+                    {
+                        AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете стая/и за резервацията.");
+                    }
+                }
+                else
+                 {
+                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","За периода от време, който сте избрали няма свободни стаи.");
+                 }
+            }
+          else
+          {
+              AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля потърсете свободни стаи.");
+          }
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете клиент за резервацията.");
+        }
+
+    }
+
+
+
+    public void startDatePickerChanged()
+    {
+        isRoomSearchConducted = false;
+        if(freeRoomsTable.getItems()!=null)
+        {
+            freeRoomsTable.getItems().clear();
+        }
+    }
+    public void endDatePickerChanged()
+    {
+        isRoomSearchConducted = false;
+        if(freeRoomsTable.getItems()!=null)
+        {
+            freeRoomsTable.getItems().clear();
+        }
+    }
+
+
 
 }

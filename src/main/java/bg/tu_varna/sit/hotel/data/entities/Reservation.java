@@ -19,7 +19,7 @@ public class Reservation implements Serializable {
     private Long id;
 
     @Column(name = "numberr", nullable = false)
-    private Integer number;//reservation number (per hotel)
+    private Long number;//reservation number (per hotel)
 
     @Column(name = "type", nullable = false)
     private String type;//reservation type (direct/indirect)
@@ -128,9 +128,9 @@ public class Reservation implements Serializable {
 
     public void setType(String type) {this.type = type;}
 
-    public Integer getNumber() {return number;}
+    public Long getNumber() {return number;}
 
-    public void setNumber(Integer number) {this.number = number;}
+    public void setNumber(Long number) {this.number = number;}
 
     public Long getId() {return id;}
 

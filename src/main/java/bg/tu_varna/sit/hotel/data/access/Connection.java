@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class Connection {
+public final class Connection {
     private static final Logger log = Logger.getLogger(Connection.class);
     private static SessionFactory sessionFactory;
 

@@ -4,9 +4,12 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -18,6 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistAddNewReservationController">
    <children>
@@ -143,24 +147,24 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="262.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Създаване на нова резервация">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="139.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Създаване на нова резервация">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="142.0" layoutY="84.0" prefHeight="355.0" prefWidth="305.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="490.0" layoutY="139.0" prefHeight="355.0" prefWidth="305.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="94.0" layoutY="7.0" text="Списък с клиенти" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <TableView fx:id="customersTable" layoutX="1.0" layoutY="70.0" prefHeight="273.0" prefWidth="303.0" stylesheets="@../../admin/css/RowsFeatureAddOwner.css">
+            <TableView fx:id="customersTable" layoutX="1.0" layoutY="70.0" prefHeight="273.0" prefWidth="304.0" stylesheets="@../css/RowsFeaturesOfTable.css">
                <columns>
                   <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
                   <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />
                   <TableColumn fx:id="surnameColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Фамилия" />
-                  <TableColumn fx:id="actionColumn" prefWidth="81.0" style="-fx-font-family: Arial;" text="Дейстивя" />
+                  <TableColumn fx:id="actionColumn" prefWidth="81.0" style="-fx-font-family: Arial;" text="Действия" />
                </columns>
             </TableView>
             <TextField fx:id="searchField" alignment="CENTER" layoutX="23.0" layoutY="31.0" prefHeight="30.0" prefWidth="152.0" promptText="Търсене по ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: White;">
@@ -194,5 +198,60 @@
             </Button>
          </children>
       </Pane>
+      <Pane layoutX="142.0" layoutY="51.0" prefHeight="443.0" prefWidth="343.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutY="11.0" text="Начална дата" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="startDatePicker" editable="false" layoutX="123.0" layoutY="6.0" onAction="#startDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Label layoutY="80.0" text="Крайна дата" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="endDatePicker" editable="false" layoutX="123.0" layoutY="81.0" onAction="#endDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Button fx:id="searchRoomsButton" layoutX="126.0" layoutY="157.0" mnemonicParsing="false" onAction="#searchFreeRooms" prefHeight="31.0" prefWidth="102.0" styleClass="searchRoomsButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Търси стаи">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Separator layoutY="191.0" prefHeight="0.0" prefWidth="343.0" />
+            <Label layoutY="46.0" text="Час на настаняване" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="startTimeSpinner" layoutX="180.0" layoutY="43.0" prefHeight="3.0" prefWidth="73.0" />
+            <Label layoutY="120.0" text="Час на напускане" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Spinner fx:id="endTimeSpinner" layoutX="180.0" layoutY="118.0" prefHeight="3.0" prefWidth="73.0" />
+            <Separator layoutY="152.0" prefHeight="0.0" prefWidth="343.0" />
+            <TableView fx:id="freeRoomsTable" layoutY="195.0" prefHeight="249.0" prefWidth="343.0" stylesheets="@../css/FreeRoomsTable.css">
+               <columns>
+                  <TableColumn fx:id="numberColumn" prefWidth="70.0" style="-fx-font-family: Arial;" text="Номер" />
+                  <TableColumn fx:id="typeColumn" prefWidth="79.0" style="-fx-font-family: Arial;" text="Тип" />
+                  <TableColumn fx:id="bedsColumn" prefWidth="50.0" style="-fx-font-family: Arial;" text="Легла" />
+                  <TableColumn fx:id="areaColumn" prefWidth="70.0" style="-fx-font-family: Arial;" text="m2" />
+                  <TableColumn fx:id="priceColumn" prefWidth="70.0" style="-fx-font-family: Arial;" text="Цена" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane layoutX="490.0" layoutY="51.0" prefHeight="84.0" prefWidth="305.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="79.0" layoutY="7.0" text="Допълнителни услуги:" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
+            <CheckComboBox fx:id="checkComboBox" layoutX="42.0" layoutY="34.0" prefHeight="31.0" prefWidth="221.0" styleClass="combo-box-popup" stylesheets="@../css/ButtonFeaturesOnClick.css" />
+         </children>
+      </Pane>
+      <Button fx:id="reserveButton" layoutX="540.0" layoutY="14.0" mnemonicParsing="false" onAction="#createReservation" prefHeight="30.0" prefWidth="133.0" styleClass="reserveButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Резервирай" />
    </children>
 </AnchorPane>

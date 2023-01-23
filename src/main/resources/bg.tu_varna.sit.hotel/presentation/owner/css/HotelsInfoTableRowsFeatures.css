@@ -7,7 +7,7 @@
 }
 
 .table-view .column-header{
-    -fx-pref-height: 31;
+
 }
 
 .table-row-cell{
@@ -31,6 +31,6 @@
 }
 
 .glyph-icon {
-    -fx-font-size: 15px;
+    -fx-font-size: 20px;
     -fx-font-family: "FontAwesome"; /* or Material Design Icons*/
 }

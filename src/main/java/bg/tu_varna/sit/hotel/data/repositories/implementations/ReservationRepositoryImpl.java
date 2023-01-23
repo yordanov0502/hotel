@@ -1,11 +1,18 @@
 package bg.tu_varna.sit.hotel.data.repositories.implementations;
 
 import bg.tu_varna.sit.hotel.data.access.Connection;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
+import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.ReservationRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ReservationRepositoryImpl implements ReservationRepository<Reservation> {
 
@@ -72,5 +79,63 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         }
     }
 
+    @Override
+    public List<Room> getAllFreeRooms(Hotel hotel, Timestamp startDate, Timestamp endDate) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Room> rooms = new LinkedList<>();
+        try{
+            String jpql = "SELECT r FROM Room r " +
+                          "LEFT JOIN Reservation rr ON rr.room.id = r.id "+
+                          "WHERE r.hotel.id = '"+hotel.getId()+"' AND (rr.room.id IS NULL OR ( ('"+startDate+"' > rr.endDate) OR ('"+endDate+"' < rr.startDate) ) ) ORDER BY r.number";
+
+
+            rooms.addAll(session.createQuery(jpql, Room.class).getResultList());
+            transaction.commit();
+            log.info("Got all free rooms successfully.");
+        } catch (Exception e) {
+            log.error("Get all  free rooms error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return rooms;
+    }
+
+
+    @Override
+    public Long getLastReservationNumberOfHotel(Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Long lastReservationNumber = null;
+        try{
+            String jpql = "SELECT COUNT(*) FROM Reservation rr WHERE rr.hotel.id = '"+hotel.getId()+"'";
+            lastReservationNumber = (Long) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got last reservation number of hotel successfully.");
+        } catch (Exception e) {
+            log.error("Get last reservation number of hotel error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return lastReservationNumber;
+    }
+
+    @Override
+    public Reservation getReservationWithNumber(Long reservationNumber, Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Reservation reservation = null;
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE rr.number = '"+reservationNumber+"' AND rr.hotel = '"+ hotel.getId() +"'";
+            reservation = (Reservation) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got a reservation of hotel successfully by number.");
+        } catch (Exception e) {
+            log.error("Get a reservation of hotel number error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return reservation;
+    }
 
 }

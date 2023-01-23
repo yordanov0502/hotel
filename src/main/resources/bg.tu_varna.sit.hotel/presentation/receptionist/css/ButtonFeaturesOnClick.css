@@ -23,3 +23,40 @@
     -fx-border-color: DarkBlue;
     -fx-border-width: 2;
 }
+
+.searchRoomsButton{
+    -fx-background-color: #7700cc;
+    -fx-text-fill: White;
+    -fx-font-family: Arial;
+    -fx-font-size: 15;
+}
+
+.searchRoomsButton:hover{
+    -fx-background-color: #590099;
+}
+
+.searchRoomsButton:pressed{
+    -fx-border-color: #2d004d;
+    -fx-border-width: 2;
+}
+
+.reserveButton{
+    -fx-background-color:  #00cc66;
+    -fx-text-fill: White;
+    -fx-font-family: Arial;
+    -fx-font-size: 17;
+}
+
+.reserveButton:hover{
+    -fx-background-color:  #00994d;
+}
+
+.reserveButton:pressed{
+    -fx-border-color: DarkGreen;
+    -fx-border-width: 2;
+}
+
+.combo-box-popup > .list-view {
+    -fx-pref-width: 221;
+    -fx-pref-height: 221;
+}

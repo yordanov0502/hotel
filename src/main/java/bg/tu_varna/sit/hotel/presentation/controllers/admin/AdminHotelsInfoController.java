@@ -10,6 +10,7 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,6 +22,7 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminHotelsInfoController {
@@ -109,6 +111,13 @@ public class AdminHotelsInfoController {
             {
                 hotelsTable.setItems(hotelService.getAllHotels());// Inserts all hotels in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(hotelsTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -207,6 +216,9 @@ public class AdminHotelsInfoController {
                 {
                     hotelsTable.getItems().clear();
                     hotelsTable.getItems().add(hotelService.getHotelByName(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -218,12 +230,16 @@ public class AdminHotelsInfoController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(hotelService.getAllHotels().size()>1 && hotelsTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<HotelModel> hotelList = hotelService.getAllHotels();
+        if(hotelList.size()>1 && hotelsTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_HOTELS_INFO_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Admin Hotels Info",800,500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            hotelsTable.getItems().clear();
+            hotelsTable.setItems(FXCollections.observableList(hotelList));
         }
     }
 

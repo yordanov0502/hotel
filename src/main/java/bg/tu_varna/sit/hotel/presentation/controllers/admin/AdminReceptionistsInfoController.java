@@ -9,6 +9,7 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +21,7 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public class AdminReceptionistsInfoController {
@@ -121,6 +123,13 @@ public class AdminReceptionistsInfoController {
             {
                 receptionistsTable.setItems(userService.getAllByRole("рецепционист"));// Inserts all receptionists in TableView
                 createActionButtons();//insert dynamically created action buttons in every row of TableView
+
+                if(receptionistsTable.getItems().size()==1)
+                {
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(true);
+                    searchField.setDisable(true);
+                }
             }
             else
             {
@@ -280,6 +289,9 @@ public class AdminReceptionistsInfoController {
                 {
                     receptionistsTable.getItems().clear();
                     receptionistsTable.getItems().add(userService.getUserById(searchField.getText()));
+                    searchButton.setDisable(true);
+                    clearSearchButton.setDisable(false);
+                    searchField.setDisable(true);
                 }
                 else
                 {
@@ -291,12 +303,16 @@ public class AdminReceptionistsInfoController {
     }
 
 
-    public void clearSearch() throws IOException {
+    public void clearSearch() {
         searchField.setText("");
-        if(userService.getAllByRole("рецепционист").size()>1 && receptionistsTable.getItems().size()==1)
+        ViewManager.closeDialogBox();
+        List<UserModel> receptionistList = userService.getAllByRole("рецепционист");
+        if(receptionistList.size()>1 && receptionistsTable.getItems().size()==1)
         {
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.ADMIN_RECEPTIONISTS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Admin Receptionists Info", 800, 500);
+            searchField.setDisable(false);
+            searchButton.setDisable(false);
+            receptionistsTable.getItems().clear();
+            receptionistsTable.setItems(FXCollections.observableList(receptionistList));
         }
     }
 
