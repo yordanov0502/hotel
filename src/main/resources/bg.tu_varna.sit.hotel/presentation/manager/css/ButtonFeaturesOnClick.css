@@ -57,3 +57,23 @@
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
 }
+
+.hotelInfoButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 13;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.hotelInfoButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.hotelInfoButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}

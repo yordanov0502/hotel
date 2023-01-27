@@ -4,11 +4,9 @@ import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminMainController;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -16,6 +14,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ManagerAddNewReceptionistController {
@@ -40,12 +40,19 @@ public class ManagerAddNewReceptionistController {
     private PasswordField receptionistPasswordField;
     @FXML
     private Button addNewReceptionistButton;
+    @FXML
+    private Label timeLabel;
 
 
 
     public void showManagerMainView() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.MANAGER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Main", 800, 500);
+    }
+
+    public void showHotelInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.MANAGER_HOTEL_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Hotel Info", 800, 500);
     }
 
 
@@ -103,6 +110,14 @@ public class ManagerAddNewReceptionistController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(UserSession.user==null)
         {
             receptionistNameField.setDisable(true);

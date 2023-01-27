@@ -125,12 +125,12 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="343.0" size="20" />
-            <Button fx:id="newAdminsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="  За потвърждение" textAlignment="RIGHT">
+            <Button fx:id="hotelInfoButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" onAction="#showHotelInfo" prefHeight="40.0" prefWidth="133.0" styleClass="hotelInfoButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотел" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="CHECK_CIRCLE" size="20" text="" x="5.0" y="397.0" />
+            <FontAwesomeIconView glyphName="INFO_CIRCLE" size="24" x="6.0" y="399.0" />
             <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
             <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
                <font>
@@ -140,6 +140,11 @@
          </children>
       </Pane>
       <Label fx:id="headingLabel" alignment="CENTER" layoutX="163.0" layoutY="14.0" prefHeight="32.0" prefWidth="545.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добре дошли в Хотелска Информационна Система">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
          <font>
             <Font name="Arial" size="22.0" />
          </font>

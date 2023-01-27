@@ -19,6 +19,7 @@ public class Main extends Application {
         ViewManager.changeView(Constants.View.WELCOME_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System",800,500);
 
 
+
     }
 
 
