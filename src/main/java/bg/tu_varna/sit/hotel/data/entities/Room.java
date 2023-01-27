@@ -39,19 +39,12 @@ public class Room implements Serializable {
     @Column(name = "nights_occupied", nullable = false)
     private Integer nightsOccupied;//nights the room was occupied since it was created
 
-    @Column(name = "is_occupied", nullable = false)
-    private Boolean isOccupied = false;
-
     @Column(name = "beds", nullable = false)
     private Integer beds;
 
     public Integer getBeds() {return beds;}
 
     public void setBeds(Integer beds) {this.beds = beds;}
-
-    public Boolean getIsOccupied() {return isOccupied;}
-
-    public void setIsOccupied(Boolean isOccupied) {this.isOccupied = isOccupied;}
 
     public Integer getNightsOccupied() {return nightsOccupied;}
 

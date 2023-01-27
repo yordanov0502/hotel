@@ -4,6 +4,7 @@ import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.common.Constants;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -13,6 +14,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.PortUnreachableException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AdminMainController{
     private static final Logger log = Logger.getLogger(AdminMainController.class);
@@ -20,6 +23,9 @@ public class AdminMainController{
     private Circle notificationCircle;
     @FXML
     private Label notificationLabel;
+    @FXML
+    private Label timeLabel;
+
 
 
     public void addOwner() throws IOException {
@@ -83,9 +89,13 @@ public class AdminMainController{
 
     public void initialize()
     {
-      //notificationCircle.setVisible(true);
-      //notificationLabel.setText("7");
-      //notificationLabel.setVisible(true);
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
     }
 
 

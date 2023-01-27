@@ -1,10 +1,8 @@
 package bg.tu_varna.sit.hotel.presentation.models;
 
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
-import bg.tu_varna.sit.hotel.data.entities.Room;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 public class ReservationModel implements EntityModel<Reservation>{
     private Long id;
@@ -22,13 +20,13 @@ public class ReservationModel implements EntityModel<Reservation>{
     private Integer nightsOccupied;
     private Integer roomRating;
     private String serviceList;
-    private Boolean requestSent;
+    private Boolean notificationSent;
     private Timestamp finalAnnulationDate;//last date which reservation can be annulated for free
     private Long totalPrice;
 
     public ReservationModel(){}
 
-    public ReservationModel(Long id, Long number, String type, String status, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Integer roomRating, String serviceList, Boolean requestSent,Timestamp finalAnnulationDate,Long totalPrice)
+    public ReservationModel(Long id, Long number, String type, String status, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Integer roomRating, String serviceList, Boolean notificationSent,Timestamp finalAnnulationDate,Long totalPrice)
     {
         this.id = id;
         this.number = number;
@@ -45,7 +43,7 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.nightsOccupied = nightsOccupied;
         this.roomRating = roomRating;
         this.serviceList = serviceList;
-        this.requestSent = requestSent;
+        this.notificationSent = notificationSent;
         this.finalAnnulationDate = finalAnnulationDate;
         this.totalPrice=totalPrice;
     }
@@ -67,7 +65,7 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.nightsOccupied=reservation.getNightsOccupied();
         this.roomRating=reservation.getRoomRating();
         this.serviceList=reservation.getServiceList();
-        this.requestSent=reservation.getRequestSent();
+        this.notificationSent =reservation.getNotificationSent();
         this.finalAnnulationDate=reservation.getFinalAnnulationDate();
         this.totalPrice= reservation.getTotalPrice();
     }
@@ -192,12 +190,12 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.serviceList = serviceList;
     }
 
-    public Boolean getRequestSent() {
-        return requestSent;
+    public Boolean getNotificationSent() {
+        return notificationSent;
     }
 
-    public void setRequestSent(Boolean requestSent) {
-        this.requestSent = requestSent;
+    public void setNotificationSent(Boolean notificationSent) {
+        this.notificationSent = notificationSent;
     }
 
     public Timestamp getFinalAnnulationDate() {return finalAnnulationDate;}
@@ -226,7 +224,7 @@ public class ReservationModel implements EntityModel<Reservation>{
         reservationTemp.setNightsOccupied(this.nightsOccupied);
         reservationTemp.setRoomRating(this.roomRating);
         reservationTemp.setServiceList(this.serviceList);
-        reservationTemp.setRequestSent(this.requestSent);
+        reservationTemp.setNotificationSent(this.notificationSent);
         reservationTemp.setFinalAnnulationDate(this.finalAnnulationDate);
         reservationTemp.setTotalPrice(this.totalPrice);
         return reservationTemp;

@@ -48,5 +48,10 @@
             <DropShadow blurType="ONE_PASS_BOX" />
          </effect>
       </Button>
+      <Label fx:id="timeLabel" layoutX="95.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="30.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

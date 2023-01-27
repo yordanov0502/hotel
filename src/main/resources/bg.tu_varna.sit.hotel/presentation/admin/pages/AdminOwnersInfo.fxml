@@ -141,6 +141,11 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
       <TableView fx:id="ownersTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/RowsFeatures.css">
         <columns>
           <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />

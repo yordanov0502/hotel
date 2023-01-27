@@ -126,8 +126,8 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="INFO_CIRCLE" layoutX="7.0" layoutY="345.0" size="24" />
-            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
-            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
+            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="274.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
+            <Label fx:id="notificationLabel" layoutX="20.0" layoutY="266.0" text="0" textFill="WHITE" visible="false">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -177,5 +177,10 @@
             <FontAwesomeIconView fill="WHITE" glyphName="PHONE" layoutX="68.0" layoutY="187.0" size="20" />
          </children>
       </Pane>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

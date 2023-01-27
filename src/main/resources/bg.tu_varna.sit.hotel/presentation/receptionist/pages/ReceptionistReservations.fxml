@@ -129,8 +129,8 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="INFO_CIRCLE" layoutX="7.0" layoutY="345.0" size="24" />
-            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
-            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
+            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="274.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
+            <Label fx:id="notificationLabel" layoutX="20.0" layoutY="266.0" text="0" textFill="WHITE" visible="false">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -142,7 +142,12 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="reservationsTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="reservationsTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/ReservationsTableRowsFeatures.css">
          <columns>
             <TableColumn fx:id="resNumberColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Номер" />
             <TableColumn fx:id="resTypeColumn" prefWidth="81.0" style="-fx-font-family: Arial;" text="Тип" />

@@ -23,4 +23,7 @@ public interface ReservationRepository<T> extends Repository<T> {
     List<Reservation> getAllReservationsWithSameReceptionistId(String id, Hotel hotel);
     Long getHotelIdByReceptionistById(String id);
     Long checkIfRoomCanBeEditedOrDeleted(Long roomId,Hotel hotel);
+    List<T> getAllUncompletedReservationsOfCustomerById(Long customerId, Hotel hotel);
+    List<T> getAllReservationsOfHotelWithoutExpiryNotification(Hotel hotel);
+    List<T> getAllReservationsOfHotelWithExpiryNotification(Hotel hotel);
 }

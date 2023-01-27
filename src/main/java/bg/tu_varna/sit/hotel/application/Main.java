@@ -9,9 +9,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class Main extends Application {
@@ -20,7 +17,6 @@ public class Main extends Application {
     {
         Connection.createSessionFactory();
         ViewManager.changeView(Constants.View.WELCOME_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System",800,500);
-
 
 
     }

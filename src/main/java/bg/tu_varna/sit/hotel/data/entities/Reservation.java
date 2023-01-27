@@ -70,8 +70,8 @@ public class Reservation implements Serializable {
     @Column(name = "service_list", nullable = false)
     private String serviceList;
 
-    @Column(name = "request_sent", nullable = false)
-    private Boolean requestSent = false;
+    @Column(name = "notification_sent", nullable = false)
+    private Boolean notificationSent = false;
 
     @Column(name = "final_annulation_date", nullable = false)
     private Timestamp finalAnnulationDate;
@@ -87,9 +87,9 @@ public class Reservation implements Serializable {
 
     public void setFinalAnnulationDate(Timestamp finalAnnulationDate) {this.finalAnnulationDate = finalAnnulationDate;}
 
-    public Boolean getRequestSent() {return requestSent;}
+    public Boolean getNotificationSent() {return notificationSent;}
 
-    public void setRequestSent(Boolean requestSent) {this.requestSent = requestSent;}
+    public void setNotificationSent(Boolean notificationSent) {this.notificationSent = notificationSent;}
 
     public String getServiceList() {return serviceList;}
 
@@ -179,7 +179,7 @@ public class Reservation implements Serializable {
         reservationModel.setNightsOccupied(this.nightsOccupied);
         reservationModel.setRoomRating(this.roomRating);
         reservationModel.setServiceList(this.serviceList);
-        reservationModel.setRequestSent(this.requestSent);
+        reservationModel.setNotificationSent(this.notificationSent);
         reservationModel.setFinalAnnulationDate(this.finalAnnulationDate);
         reservationModel.setTotalPrice(this.totalPrice);
         return reservationModel;

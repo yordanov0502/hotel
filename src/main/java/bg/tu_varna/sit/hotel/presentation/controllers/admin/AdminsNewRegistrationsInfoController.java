@@ -8,6 +8,7 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,6 +21,8 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,6 +54,8 @@ public class AdminsNewRegistrationsInfoController {
     private TableColumn<UserModel,String> statusColumn;
     @FXML
     private TableColumn actionColumn;
+    @FXML
+    private Label timeLabel;
 
 
     public void showAdminMainView() throws IOException {
@@ -89,6 +94,14 @@ public class AdminsNewRegistrationsInfoController {
     }
 
     public void initialize() {
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
 
         if(UserSession.user!=null)
         {

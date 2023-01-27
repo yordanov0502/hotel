@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.Timestamp;
+import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -370,4 +371,64 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         return roomId;
     }
 
+
+    @Override
+    public List<Reservation> getAllUncompletedReservationsOfCustomerById(Long customerId, Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> uncompletedReservationsOfCustomer = new LinkedList<>();
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE rr.customer.id = '"+customerId+"' AND rr.hotel = '"+ hotel.getId() +"' AND rr.status != 'обработена' ORDER BY rr.number ASC";
+            uncompletedReservationsOfCustomer.addAll(session.createQuery(jpql, Reservation.class).getResultList());
+            transaction.commit();
+            log.info("Got all uncompleted reservations of customer successfully by customer_id.");
+        } catch (Exception e) {
+            log.error("Get all uncompleted reservations of customer by customer_id error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return uncompletedReservationsOfCustomer;
+    }
+
+
+    @Override
+    public List<Reservation> getAllReservationsOfHotelWithoutExpiryNotification(Hotel hotel) {
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Timestamp today = Timestamp.from(timestamp.toInstant().plus(2, ChronoUnit.HOURS));
+
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> allReservationsWithoutExpiryNotification = new LinkedList<>();
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE rr.hotel = '"+ hotel.getId() +"' AND (rr.status = 'изтекла' OR (rr.status = 'активна' AND   rr.endDate < '"+today+"')) AND rr.notificationSent = '"+ 0 +"'";
+            allReservationsWithoutExpiryNotification.addAll(session.createQuery(jpql, Reservation.class).getResultList());
+            transaction.commit();
+            log.info("Got all reservations about to or already expired without notification sent.");
+        } catch (Exception e) {
+            log.error("Get all reservations about to or already expired without notification sent error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return allReservationsWithoutExpiryNotification;
+    }
+
+
+    @Override
+    public List<Reservation> getAllReservationsOfHotelWithExpiryNotification(Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> allReservationsWithoutExpiryNotification = new LinkedList<>();
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE rr.hotel = '"+ hotel.getId() +"' AND (rr.status = 'изтекла' OR rr.status = 'активна') AND rr.notificationSent = '"+ 1 +"'";
+            allReservationsWithoutExpiryNotification.addAll(session.createQuery(jpql, Reservation.class).getResultList());
+            transaction.commit();
+            log.info("Got all reservations about to or already expired with notification sent.");
+        } catch (Exception e) {
+            log.error("Get all reservations about to or already expired with notification sent error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return allReservationsWithoutExpiryNotification;
+    }
 }

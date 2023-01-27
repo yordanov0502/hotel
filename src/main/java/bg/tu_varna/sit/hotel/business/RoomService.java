@@ -53,7 +53,6 @@ public class RoomService {
                             r.getSize(),
                             r.getRating(),
                             r.getNightsOccupied(),
-                            r.getIsOccupied(),
                             r.getBeds()
                     )).collect(Collectors.toList())
             );
@@ -83,7 +82,7 @@ public class RoomService {
 
             if(!isRoomExists("13",hotelModel))//ako prazna staq ne sushtestvuva kum hotel
             {
-                RoomModel NULL_Room_Model = new RoomModel(1L,13,hotelModel,0,"изтрити данни",0,0,0,false,0);
+                RoomModel NULL_Room_Model = new RoomModel(1L,13,hotelModel,0,"изтрити данни",0,0,0,0);
                 if(!addRoom(NULL_Room_Model))//ako praznata staq kum hotel ne se dobavi uspeshno
                 {
                     log.info("ERROR when adding Null Room to hotel \""+hotelModel.getName()+"\".");
@@ -180,7 +179,7 @@ public class RoomService {
                     }
                 }
 
-                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,1,0,false,beds)))
+                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,1,0,beds)))
                 {
                     return false;
                 }

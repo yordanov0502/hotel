@@ -1,0 +1,36 @@
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header{
+
+}
+
+.table-row-cell{
+    -fx-background: -fx-accent;
+}
+
+.table-row-cell:even{
+    -fx-background-color: rgba(0, 0, 240, 0.4);
+}
+
+.table-row-cell:odd{
+    -fx-background-color:   rgba(51, 51, 51,0.4);
+}
+
+.table-row-cell:selected{
+    -fx-background-color: #66cc00;
+}
+
+.table-row-cell:hover{
+    -fx-background-color: #66cc00;
+}
+
+.glyph-icon {
+    -fx-font-size: 20px;
+    -fx-font-family: "FontAwesome"; /* or Material Design Icons*/
+}

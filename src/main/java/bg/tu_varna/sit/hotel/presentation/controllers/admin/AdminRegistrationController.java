@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,6 +14,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AdminRegistrationController {
@@ -41,6 +44,8 @@ public class AdminRegistrationController {
     private Button adminBackButton;
     @FXML
     private Button closeWindowButton;
+    @FXML
+    private Label timeLabel;
 
 
     public void registerAdmin(ActionEvent event) throws IOException {
@@ -89,6 +94,14 @@ public class AdminRegistrationController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER){
                 adminRegistrationButton.fire();

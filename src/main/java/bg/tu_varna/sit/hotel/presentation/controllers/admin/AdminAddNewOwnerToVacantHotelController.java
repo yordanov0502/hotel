@@ -4,6 +4,7 @@ import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -13,6 +14,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AdminAddNewOwnerToVacantHotelController {
@@ -40,6 +43,8 @@ public class AdminAddNewOwnerToVacantHotelController {
     private Button addNewOwnerButton;
     @FXML
     private ComboBox<String> comboBox;
+    @FXML
+    private Label timeLabel;
 
 
     public void showAdminMainView() throws IOException {
@@ -163,6 +168,14 @@ public class AdminAddNewOwnerToVacantHotelController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         comboBox.setItems(hotelService.getAllHotelNamesWithoutOwner());
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {

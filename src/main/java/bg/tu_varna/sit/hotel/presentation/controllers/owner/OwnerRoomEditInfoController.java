@@ -52,7 +52,7 @@ public class OwnerRoomEditInfoController {
         {
             if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),selectedHotel.getName(), bedsField.getText(),selectedRoom))
             {
-                if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getNightsOccupied(),selectedRoom.getIsOccupied(),Integer.parseInt(bedsField.getText()))))
+                if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getNightsOccupied(),Integer.parseInt(bedsField.getText()))))
                 {
                     AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно редактиране на данни за стая.");
                     ViewManager.closeDialogBox();

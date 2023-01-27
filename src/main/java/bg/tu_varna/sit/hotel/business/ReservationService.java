@@ -1,19 +1,23 @@
 package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
-import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.ReservationRepositoryImpl;
+import bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistLoginController;
 import bg.tu_varna.sit.hotel.presentation.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.shape.Circle;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +26,8 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private static final Logger log = Logger.getLogger(ReservationService.class);
     private final ReservationRepositoryImpl reservationRepository = ReservationRepositoryImpl.getInstance();
+    public static boolean processNotificationSucceeded = true;
+    public static int uncompletedNotifiedReservations = 0;
 
     //lazy-loaded singleton pattern
     public static ReservationService getInstance() {
@@ -49,7 +55,6 @@ public class ReservationService {
                             r.getSize(),
                             r.getRating(),
                             r.getNightsOccupied(),
-                            r.getIsOccupied(),
                             r.getBeds()
                     )).collect(Collectors.toList())
             );
@@ -80,7 +85,7 @@ public class ReservationService {
                             rr.getNightsOccupied(),
                             rr.getRoomRating(),
                             rr.getServiceList(),
-                            rr.getRequestSent(),
+                            rr.getNotificationSent(),
                             rr.getFinalAnnulationDate(),
                             rr.getTotalPrice()
                     )).collect(Collectors.toList())
@@ -122,6 +127,14 @@ public class ReservationService {
         if(reservationsWithSameNumber.isEmpty()) {return null;}
 
         else {return reservationsWithSameNumber;}
+    }
+
+    public List<Reservation> getAllUncompletedReservationsOfCustomerById(Long customerId, HotelModel hotelModel) {
+        List<Reservation> uncompletedReservationsOfCustomer = reservationRepository.getAllUncompletedReservationsOfCustomerById(customerId,hotelModel.toEntity());
+
+        if(uncompletedReservationsOfCustomer.isEmpty()) {return null;}
+
+        else {return uncompletedReservationsOfCustomer;}
     }
 
     public List<Integer> getAllReservationsWithSameNumber_RoomsNumbers(Long reservationNumber, HotelModel hotelModel) {
@@ -180,7 +193,7 @@ public class ReservationService {
                             rr.getNightsOccupied(),
                             rr.getRoomRating(),
                             rr.getServiceList(),
-                            rr.getRequestSent(),
+                            rr.getNotificationSent(),
                             rr.getFinalAnnulationDate(),
                             rr.getTotalPrice()
                     )).collect(Collectors.toList())
@@ -276,6 +289,86 @@ public class ReservationService {
             }
             log.info("Uncompleted[status!='обработена'] reservations refreshed.");
         }
+    }
+
+
+
+
+    public List<Reservation> getAllReservationsOfHotelWithoutExpiryNotification(HotelModel hotelModel) {
+        List<Reservation> allReservationsOfHotelWithoutExpiryNotification = reservationRepository.getAllReservationsOfHotelWithoutExpiryNotification(hotelModel.toEntity());
+
+        if(allReservationsOfHotelWithoutExpiryNotification.isEmpty()) {return null;}
+
+        else {return allReservationsOfHotelWithoutExpiryNotification;}
+    }
+
+    public void processNotifications(HotelModel hotelModel, Circle circle, Label label){
+
+        boolean enteredFirstStatement = false;
+        List<Reservation> allReservationsOfHotelWithoutExpiryNotification = getAllReservationsOfHotelWithoutExpiryNotification(hotelModel);
+        List<Long> assembledReservations = new LinkedList<>();
+        if(allReservationsOfHotelWithoutExpiryNotification!=null)
+        {
+
+            enteredFirstStatement=true;
+            for(Reservation reservation: allReservationsOfHotelWithoutExpiryNotification)
+            {
+                reservation.setNotificationSent(true);
+                if(!updateReservation(reservation.toModel()))
+                {
+                    processNotificationSucceeded=false;
+                }
+                else
+                {
+                   if(!assembledReservations.contains(reservation.getNumber()))
+                   {
+                       assembledReservations.add(reservation.getNumber());
+                   }
+                }
+            }
+        }
+
+        if(enteredFirstStatement && processNotificationSucceeded)
+        {
+            uncompletedNotifiedReservations+=assembledReservations.size();
+            if(uncompletedNotifiedReservations>0)
+            {
+                AlertManager.showAlert(Alert.AlertType.WARNING,"Предупреждение","✅ Имате изтичащи резервации.");
+                circle.setVisible(true);
+                label.setVisible(true);
+                label.setText(determineNotificationsCounter(uncompletedNotifiedReservations));
+            }
+        }
+        else if(processNotificationSucceeded)
+        {
+            if(uncompletedNotifiedReservations>0)
+            {
+                circle.setVisible(true);
+                label.setVisible(true);
+                label.setText(determineNotificationsCounter(uncompletedNotifiedReservations));
+            }
+            else
+            {
+                circle.setVisible(false);
+                label.setVisible(false);
+                label.setText("0");
+            }
+        }
+    }
+
+
+    public List<Reservation> getAllReservationsOfHotelWithExpiryNotification(HotelModel hotelModel, ReceptionistLoginController receptionistLoginController) {
+        List<Reservation> allReservationsOfHotelWithExpiryNotification = reservationRepository.getAllReservationsOfHotelWithExpiryNotification(hotelModel.toEntity());
+
+        if(allReservationsOfHotelWithExpiryNotification.isEmpty()) {return null;}
+
+        else {return allReservationsOfHotelWithExpiryNotification;}
+    }
+
+
+    private String determineNotificationsCounter(int notificationNumber){
+        if(notificationNumber>0 && notificationNumber<10) {return String.valueOf(notificationNumber);}
+        else return "+9";
     }
 
 }

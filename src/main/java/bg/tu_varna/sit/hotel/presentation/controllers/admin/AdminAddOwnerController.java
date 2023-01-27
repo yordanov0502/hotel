@@ -2,12 +2,15 @@ package bg.tu_varna.sit.hotel.presentation.controllers.admin;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
 import bg.tu_varna.sit.hotel.common.*;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AdminAddOwnerController {
     private static final Logger log = Logger.getLogger(AdminMainController.class);
@@ -21,6 +24,9 @@ public class AdminAddOwnerController {
     private Button addOwnerButton2;
     @FXML
     private Button addOwnerButton3;
+    @FXML
+    private Label timeLabel;
+
 
 
     public void showAdminMainView() throws IOException {
@@ -116,6 +122,14 @@ public class AdminAddOwnerController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(UserSession.user==null)
         {
             addOwnerButton1.setDisable(true);

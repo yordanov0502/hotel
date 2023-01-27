@@ -8,6 +8,7 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.models.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ import org.joda.time.Days;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ReceptionistAddNewReservationController {
@@ -98,6 +100,8 @@ public class ReceptionistAddNewReservationController {
 
     @FXML
     private Button reserveButton;
+    @FXML
+    private Label timeLabel;
 
 
     public void showReceptionistMainView() throws IOException {
@@ -131,6 +135,9 @@ public class ReceptionistAddNewReservationController {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
         {
+            ReservationService.processNotificationSucceeded = true;
+            ReservationService.uncompletedNotifiedReservations = 0;
+
             log.info("Receptionist \""+UserSession.user.getUsername()+"\" successfully logged out.");
             UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
         }
@@ -152,15 +159,25 @@ public class ReceptionistAddNewReservationController {
 
     public void initialize()
     {
-        //notificationCircle.setVisible(true);
-        //notificationLabel.setText("7");
-        //notificationLabel.setVisible(true);
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
 
         if(UserSession.user!=null)
         {
             hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
 
             reservationService.refreshUncompletedReservationsStatus(hotelModel);
+
+            if(ReservationService.processNotificationSucceeded)
+            {
+                reservationService.processNotifications(UserSession.user.getHotels().get(0).toModel(),notificationCircle,notificationLabel);
+            }
 
             customersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
             customersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs

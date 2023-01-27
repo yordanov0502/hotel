@@ -11,12 +11,11 @@ public class RoomModel implements EntityModel<Room> {
     private Integer size;
     private Integer rating;
     private Integer nightsOccupied;
-    private Boolean isOccupied;
     private Integer beds;
 
     public RoomModel(){}
 
-    public RoomModel(Long id, Integer number, HotelModel hotel, Integer price, String type, Integer size, Integer rating, Integer nightsOccupied, Boolean isOccupied,Integer beds)
+    public RoomModel(Long id, Integer number, HotelModel hotel, Integer price, String type, Integer size, Integer rating, Integer nightsOccupied, Integer beds)
     {
       this.id=id;
       this.number=number;
@@ -26,7 +25,6 @@ public class RoomModel implements EntityModel<Room> {
       this.size=size;
       this.rating=rating;
       this.nightsOccupied = nightsOccupied;
-      this.isOccupied=isOccupied;
       this.beds=beds;
     }
 
@@ -40,7 +38,6 @@ public class RoomModel implements EntityModel<Room> {
         this.size=room.getSize();
         this.rating=room.getRating();
         this.nightsOccupied =room.getNightsOccupied();
-        this.isOccupied=room.getIsOccupied();
         this.beds=room.getBeds();
     }
 
@@ -100,10 +97,6 @@ public class RoomModel implements EntityModel<Room> {
 
     public void setNightsOccupied(Integer nightsOccupied) {this.nightsOccupied = nightsOccupied;}
 
-    public Boolean getIsOccupied() {return isOccupied;}
-
-    public void setIsOccupied(Boolean occupied) {isOccupied = occupied;}
-
     public Integer getBeds() {return beds;}
 
     public void setBeds(Integer beds) {this.beds = beds;}
@@ -119,7 +112,6 @@ public class RoomModel implements EntityModel<Room> {
         roomTemp.setSize(this.size);
         roomTemp.setRating(this.rating);
         roomTemp.setNightsOccupied(this.nightsOccupied);
-        roomTemp.setIsOccupied(this.isOccupied);
         roomTemp.setBeds(this.beds);
         return roomTemp;
     }

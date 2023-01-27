@@ -43,7 +43,7 @@ public class OwnerAddRoomController {
     public void addRoom() throws IOException {
         if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),bedsField.getText(),selectedHotel.getName()))
         {
-            if(roomService.addRoom(new RoomModel(1L,Integer.parseInt(numberField.getText()), HotelService.getInstance().getHotelByName(selectedHotel.getName()), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),1,0,false,Integer.parseInt(bedsField.getText()))))
+            if(roomService.addRoom(new RoomModel(1L,Integer.parseInt(numberField.getText()), HotelService.getInstance().getHotelByName(selectedHotel.getName()), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),1,0,Integer.parseInt(bedsField.getText()))))
             {
                 AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно добавяне на стая.");
                 ViewManager.closeDialogBox();

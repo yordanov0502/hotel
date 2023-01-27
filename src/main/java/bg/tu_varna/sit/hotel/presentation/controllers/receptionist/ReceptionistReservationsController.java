@@ -13,6 +13,7 @@ import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,6 +32,8 @@ import org.joda.time.Minutes;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -47,6 +50,8 @@ public class ReceptionistReservationsController {
     private Circle notificationCircle;
     @FXML
     private Label notificationLabel;
+    @FXML
+    private Label timeLabel;
 
     @FXML
     private TextField searchField;
@@ -103,15 +108,24 @@ public class ReceptionistReservationsController {
 
     public void initialize(){
 
-        //notificationCircle.setVisible(true);
-        //notificationLabel.setText("7");
-        //notificationLabel.setVisible(true);
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
 
         if(UserSession.user!=null)
         {
             hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
 
             reservationService.refreshUncompletedReservationsStatus(hotelModel);
+
+            if(ReservationService.processNotificationSucceeded)
+            {
+                reservationService.processNotifications(UserSession.user.getHotels().get(0).toModel(),notificationCircle,notificationLabel);
+            }
 
             reservationsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
             reservationsTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
@@ -437,11 +451,9 @@ public class ReceptionistReservationsController {
         );
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void searchReservationsByCustomerEgn() {
-/*
-        if(customerService.getAllCustomersOfHotel(this.hotelModel).size()>1 && customersTable.getItems().size()!=1)
-        {
+
             if(searchField.getText().equals(""))
             {
                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля въведете ЕГН в полето за търсене.");
@@ -455,11 +467,31 @@ public class ReceptionistReservationsController {
             {
                 if(customerService.isEgnExists(searchField.getText(),this.hotelModel))
                 {
-                    customersTable.getItems().clear();
-                    customersTable.getItems().add(customerService.getCustomerByEgn(searchField.getText(),this.hotelModel));
-                    searchButton.setDisable(true);
-                    clearSearchButton.setDisable(false);
-                    searchField.setDisable(true);
+                    if(customerService.getAllCustomersOfHotel(this.hotelModel).size()>1 && reservationsTable.getItems().size()!=1)
+                    {
+                        CustomerModel customerModel = customerService.getCustomerByEgn(searchField.getText(),this.hotelModel);
+
+                        List<Reservation> allUncompletedReservationsOfCustomer = reservationService.getAllUncompletedReservationsOfCustomerById(customerModel.getId(),hotelModel);
+
+                        if(allUncompletedReservationsOfCustomer!=null)
+                        {System.out.println(assembleWholeReservations(allUncompletedReservationsOfCustomer).size()+"------res of cus-----------------------");
+                            System.out.println(reservationsTable.getItems().size()+"------total reses-----------------------");
+
+                            if(reservationsTable.getItems().size()-assembleWholeReservations(allUncompletedReservationsOfCustomer).size()>0)
+                            {
+                                reservationsTable.getItems().clear();
+                                reservationsTable.getItems().addAll(assembleWholeReservations(allUncompletedReservationsOfCustomer));
+                                searchButton.setDisable(true);
+                                clearSearchButton.setDisable(false);
+                                searchField.setDisable(true);
+                            }
+                        }
+                        else
+                        {
+                            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Клиент с ЕГН: "+searchField.getText()+" няма незавършени резервации към хотел \""+this.hotelModel.getName()+"\".");
+                            searchField.setText("");
+                        }
+                    }
                 }
                 else
                 {
@@ -467,28 +499,39 @@ public class ReceptionistReservationsController {
                     searchField.setText("");
                 }
             }
-        }*/
     }
 
 
-    public void clearSearch() {/*
+    public void clearSearch() {
         searchField.setText("");
         ViewManager.closeDialogBox();
         List<CustomerModel> customersList = customerService.getAllCustomersOfHotel(this.hotelModel);
-        if(customersList.size()>1 && customersTable.getItems().size()==1)
+
+        if(customersList.size()>1)
         {
-            searchField.setDisable(false);
-            searchButton.setDisable(false);
-            customersTable.getItems().clear();
-            customersTable.setItems(FXCollections.observableList(customersList));
-        }*/
+            List<Reservation> allUncompletedReservationsOfHotel = reservationService.getAllUncompletedReservationsOfHotel(this.hotelModel);
+            if(allUncompletedReservationsOfHotel!=null)
+            {
+                ObservableList<ReservationRowModel> reservationRowModels = assembleWholeReservations(allUncompletedReservationsOfHotel);
+                if(reservationRowModels.size()>reservationsTable.getItems().size())
+                {
+                    searchField.setDisable(false);
+                    searchButton.setDisable(false);
+                    reservationsTable.getItems().clear();
+                    reservationsTable.setItems(reservationRowModels);
+                }
+            }
+        }
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     public void logout() throws IOException {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
         {
+            ReservationService.processNotificationSucceeded = true;
+            ReservationService.uncompletedNotifiedReservations = 0;
+
             log.info("Receptionist \""+UserSession.user.getUsername()+"\" successfully logged out.");
             UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
         }

@@ -152,5 +152,10 @@
             <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

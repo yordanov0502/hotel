@@ -89,6 +89,11 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
       <Pane layoutX="166.0" layoutY="72.0" prefHeight="355.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="36.0" layoutY="14.0" text="Въведете данни за собственик" textFill="WHITE">

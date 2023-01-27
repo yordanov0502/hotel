@@ -252,6 +252,10 @@ public class ReceptionistCompleteReservationController {
 
                 if (successfulUpdate && enteredIfStatement)
                 {
+                    if(reservationModel.getNotificationSent().equals(true))
+                    {
+                        ReservationService.uncompletedNotifiedReservations-=1;//decrement notification counter only if the assembled reservation's notificationSent attribute is true
+                    }
                     AlertManager.showAlert(Alert.AlertType.INFORMATION, "Информация", "✅ Успешно завършихте резервация № " + reservationModel.getNumber());
                     ViewManager.closeDialogBox();
                     ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW, ViewManager.getPrimaryStage(), this.getClass(), "Receptionist Uncompleted Reservations", 800, 500);
