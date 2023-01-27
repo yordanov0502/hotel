@@ -1,15 +1,14 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
 import bg.tu_varna.sit.hotel.business.CustomerService;
+import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.ReservationService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
-import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerAddNewReceptionistController;
 import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
-import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,12 +17,13 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 
 public class ReceptionistAddNewCustomerController {
     private static final Logger log = Logger.getLogger(ReceptionistAddNewCustomerController.class);
     private final CustomerService customerService = CustomerService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private final ReservationService reservationService = ReservationService.getInstance();
+    private final HotelService hotelService = HotelService.getInstance();
 
     @FXML
     private AnchorPane anchorPane;
@@ -53,6 +53,11 @@ public class ReceptionistAddNewCustomerController {
     public void addNewService() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
+    public void showReservations() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Uncompleted Reservations",800,500);
     }
 
     public void showHotelInfo() throws IOException {
@@ -107,7 +112,11 @@ public class ReceptionistAddNewCustomerController {
 
     public void initialize()
     {
-        if(UserSession.user==null)
+        if(UserSession.user!=null)
+        {
+            reservationService.refreshUncompletedReservationsStatus(UserSession.user.getHotels().get(0).toModel());
+        }
+        else
         {
             customerNameField.setDisable(true);
             customerSurnameField.setDisable(true);

@@ -83,5 +83,6 @@
     <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:11.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:11.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11.0.2" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.13" level="project" />
   </component>
 </module>

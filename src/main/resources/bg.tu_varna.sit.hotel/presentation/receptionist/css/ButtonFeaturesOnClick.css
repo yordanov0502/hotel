@@ -60,3 +60,7 @@
     -fx-pref-width: 221;
     -fx-pref-height: 221;
 }
+
+.roomsListView .list-cell {
+    -fx-alignment: center;
+}

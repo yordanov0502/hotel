@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.ReservationService;
 import bg.tu_varna.sit.hotel.business.ServiceService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
@@ -27,6 +28,8 @@ public class ReceptionistAddNewServiceController {
     private final ServiceService serviceService = ServiceService.getInstance();
     private final HotelService hotelService = HotelService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private final ReservationService reservationService = ReservationService.getInstance();
+    private HotelModel hotelModel;
 
     @FXML
     private AnchorPane anchorPane;
@@ -51,6 +54,11 @@ public class ReceptionistAddNewServiceController {
     public void addNewReservation() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
+    }
+
+    public void showReservations() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Uncompleted Reservations",800,500);
     }
 
     public void showHotelInfo() throws IOException {
@@ -88,7 +96,6 @@ public class ReceptionistAddNewServiceController {
     }
 
     private boolean checkForExistingHotelService(String serviceName){
-        HotelModel hotelModel = hotelService.getHotelByName(userService.getUserById(UserSession.user.getId()).getHotels().get(0).getName());
         if(serviceService.isServiceExists(serviceName,hotelModel))
         {
             AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "❌ Хотелска услуга \""+serviceName+"\" вече съществува.");
@@ -127,13 +134,7 @@ public class ReceptionistAddNewServiceController {
 
     public void initialize()
     {
-        if(UserSession.user==null)
-        {
-            serviceTextField.setDisable(true);
-            seasonsComboBox.setDisable(true);
-            addNewServiceButton.setDisable(true);
-        }
-        else
+        if(UserSession.user!=null)
         {
             seasonsComboBox.setItems(FXCollections.observableArrayList("пролет", "лято", "есен", "зима" , "цяла година"));
 
@@ -143,6 +144,15 @@ public class ReceptionistAddNewServiceController {
                     keyEvent.consume();
                 }
             });
+
+            hotelModel = UserSession.user.getHotels().get(0).toModel();
+            reservationService.refreshUncompletedReservationsStatus(hotelModel);
+        }
+        else
+        {
+            serviceTextField.setDisable(true);
+            seasonsComboBox.setDisable(true);
+            addNewServiceButton.setDisable(true);
         }
     }
 

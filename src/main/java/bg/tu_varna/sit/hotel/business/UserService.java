@@ -6,6 +6,7 @@ import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.UserRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.ReservationModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +14,9 @@ import javafx.scene.control.Alert;
 import org.apache.log4j.Logger;
 import org.apache.commons.lang3.StringUtils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 
 public class UserService {
     private static final Logger log = Logger.getLogger(UserService.class);
+    private final ReservationService reservationService = ReservationService.getInstance();
     private final UserRepositoryImpl userRepository = UserRepositoryImpl.getInstance();
 
     //lazy-loaded singleton pattern
@@ -236,7 +240,73 @@ public class UserService {
         return userRepository.update(userModel.toEntity());
     }
 
-    public boolean deleteUser(UserModel userModel){return userRepository.delete(userModel.toEntity());}
+    public boolean deleteUser(UserModel userModel){
+
+        //ako recepcionista sushtestvuva v tablica rezervacii
+        if(userModel.getRole().equals("рецепционист") && reservationService.isReceptionistExistsInReservations(userModel.getId()))
+        {
+            Long hotelId = reservationService.getHotelIdByReceptionistId(userModel.getId());
+            HotelModel hotelModel = HotelService.getInstance().getHotelById(hotelId);
+
+            List<ReservationModel> reservationsWithSameReceptionistId = reservationService.getAllReservationsWithSameReceptionistId(userModel.getId(),hotelModel);
+            List<ReservationModel> previousReservationModels = new LinkedList<>();
+
+            if(reservationsWithSameReceptionistId ==null){return false;}
+
+
+            if(!isIdExists("13"))//ako prazen recepcionist ne sushtestvuva
+            {
+                UserModel NULL_User_Model = new UserModel("13","изтрити данни","изтрити данни","изтрит","изтрити данни","изтрити данни","изтрити данни","изтрити данни","изтрити данни",new Timestamp(System.currentTimeMillis()),new Timestamp(System.currentTimeMillis()),"изтрити данни",new ArrayList<>());
+                if(!addUser(NULL_User_Model))//ako praznq recepcionist ne se dobavi uspeshno
+                {
+                    log.info("ERROR when adding Null Receptionist.");
+                    return false;
+                }
+                else
+                {
+                    log.info("Null Receptionist has been added successfully.");
+                    for(ReservationModel reservationModel: reservationsWithSameReceptionistId)
+                    {
+                        previousReservationModels.add(reservationService.getReservationById(reservationModel.getId(),reservationModel.getHotel()));
+                        reservationModel.setReceptionist(getUserById(NULL_User_Model.getId()));
+                        if(!reservationService.updateReservation(reservationModel))
+                        {
+                            log.info("ERROR when updating receptionist_id of reservation with the 'Null Receptionist'.");
+                            return false;
+                        }
+                    }
+                }
+            }
+            else //ako prazen recepcionist veche otdavna sushtestvuva
+            {
+                UserModel NULL_User_Model = getUserById("13");
+                for(ReservationModel reservationModel: reservationsWithSameReceptionistId)
+                {
+                    previousReservationModels.add(reservationService.getReservationById(reservationModel.getId(),reservationModel.getHotel()));
+                    reservationModel.setReceptionist(NULL_User_Model);
+                    if(!reservationService.updateReservation(reservationModel))
+                    {
+                        log.info("ERROR when updating receptionist_id of reservation with the 'Null Receptionist'.");
+                        return false;
+                    }
+                }
+            }
+
+            if(!userRepository.delete(userModel.toEntity()))//ako recepcionista ne se iztrie uspeshno
+            {
+                for(int i = 0; i< reservationsWithSameReceptionistId.size(); i++)
+                {
+                    reservationService.updateReservation(previousReservationModels.get(i));
+                }
+                UserSession.unsuccessfulReceptionistDelete=true;
+                addHotel(getUserById(userModel.getId()),HotelService.getInstance().getHotelById(hotelId));
+                return false;
+            }
+            else {return true;}
+        }
+
+        return userRepository.delete(userModel.toEntity());
+    }
 
     public boolean addHotel(UserModel userModel, HotelModel hotelModel)
     {
@@ -270,7 +340,14 @@ public class UserService {
                 if(updateUser(userModel) && HotelService.getInstance().updateHotel(hotelModel))
                 {
                     log.info("Successfully added hotel \""+hotelModel.getName()+"\" to "+userModel.getFirstName()+" "+userModel.getLastName()+" list of hotels and vice versa.");
-                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    if(!UserSession.unsuccessfulReceptionistDelete)
+                    {
+                        AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно добавихте "+userModel.getRole()+" "+userModel.getFirstName()+" "+userModel.getLastName()+" към хотел \""+hotelModel.getName()+"\".");
+                    }
+                    else
+                    {
+                        UserSession.unsuccessfulReceptionistDelete=false;
+                    }
                     return true;
                 }
                 else

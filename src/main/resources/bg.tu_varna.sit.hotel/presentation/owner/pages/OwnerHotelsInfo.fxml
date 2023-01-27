@@ -141,7 +141,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="hotelsTable" layoutX="143.0" layoutY="87.0" prefHeight="408.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/HotelsInfoTableRowsFeatures.css">
+      <TableView fx:id="hotelsTable" layoutX="143.0" layoutY="94.0" prefHeight="396.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/HotelsInfoTableRowsFeatures.css">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="140.0" style="-fx-font-family: Arial;" text="Име" />
           <TableColumn fx:id="majorInfoColumn" prefWidth="140.0" style="-fx-font-family: Arial;" text="Осн. информация" />
@@ -151,12 +151,12 @@
             <TableColumn fx:id="removeOrDeleteColumn" prefWidth="138.0" style="-fx-font-family: Arial;" text="Премахни/Изтрий" />
         </columns>
       </TableView>
-      <TextField fx:id="searchField" alignment="CENTER" layoutX="314.0" layoutY="52.0" prefHeight="30.0" prefWidth="258.0" promptText="Търсене по име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: White;">
+      <TextField fx:id="searchField" alignment="CENTER" layoutX="314.0" layoutY="56.0" prefHeight="30.0" prefWidth="258.0" promptText="Търсене по име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: White;">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="searchButton" alignment="CENTER" layoutX="579.0" layoutY="52.0" mnemonicParsing="false" onAction="#searchHotelByName" prefHeight="20.0" prefWidth="34.0" styleClass="searchButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
+      <Button fx:id="searchButton" alignment="CENTER" layoutX="579.0" layoutY="56.0" mnemonicParsing="false" onAction="#searchHotelByName" prefHeight="20.0" prefWidth="34.0" styleClass="searchButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" size="19" />
          </graphic>
@@ -168,7 +168,7 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Button fx:id="clearSearchButton" alignment="CENTER" layoutX="620.0" layoutY="52.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="20.0" prefWidth="34.0" styleClass="clearSearchButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
+      <Button fx:id="clearSearchButton" alignment="CENTER" layoutX="620.0" layoutY="56.0" mnemonicParsing="false" onAction="#clearSearch" prefHeight="20.0" prefWidth="34.0" styleClass="clearSearchButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
          <graphic>
             <FontAwesomeIconView glyphName="TIMES" size="19" />
          </graphic>

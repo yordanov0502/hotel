@@ -2,6 +2,7 @@ package bg.tu_varna.sit.hotel.business;
 
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.data.entities.Customer;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.CustomerRepositoryImpl;
@@ -58,6 +59,10 @@ public class CustomerService {
     }
 
 
+    public CustomerModel getCustomerById(Long id) {
+        Customer customer = customerRepository.getById(id);
+        return (customer == null) ? null : new CustomerModel(customer);
+    }
 
     public CustomerModel getCustomerByEgn(String egn,HotelModel hotelModel) {
         Customer customer = customerRepository.getByEgn(egn,hotelModel.toEntity());
@@ -80,8 +85,6 @@ public class CustomerService {
     public boolean addCustomer(CustomerModel customerModel) {return customerRepository.save(customerModel.toEntity());}
 
     public boolean updateCustomer(CustomerModel customerModel) {return customerRepository.update(customerModel.toEntity());}
-
-    public boolean deleteCustomer(CustomerModel customerModel){return customerRepository.delete(customerModel.toEntity());}
 
 
 

@@ -11,4 +11,16 @@ public interface ReservationRepository<T> extends Repository<T> {
     List<Room> getAllFreeRooms(Hotel hotel, Timestamp startDate, Timestamp endDate);
     Long getLastReservationNumberOfHotel(Hotel hotel);
     Reservation getReservationWithNumber(Long reservationNumber,Hotel hotel);
+    List<T> getAllUncompletedReservationsOfHotel(Hotel hotel);
+    List<T> getAllUncompletedReservationsOfHotelWithNumber(Long reservationNumber, Hotel hotel);
+    List<T> getAllReservationsWithSameNumber(Long reservationNumber, Hotel hotel);
+    List<Integer> getAllReservationsWithSameNumber_RoomsNumbers(Long reservationNumber, Hotel hotel);
+    Long getRoomId(Long id);
+    Long getHotelIdByRoomById(Long id);
+    List<T> getAllReservationsWithSameRoomId(Long roomId, Hotel hotel);
+    Reservation getReservationWithId(Long reservationId, Hotel hotel);
+    String getReceptionistId(String id);
+    List<Reservation> getAllReservationsWithSameReceptionistId(String id, Hotel hotel);
+    Long getHotelIdByReceptionistById(String id);
+    Long checkIfRoomCanBeEditedOrDeleted(Long roomId,Hotel hotel);
 }

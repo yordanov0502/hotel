@@ -5,6 +5,7 @@ import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.RoomRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.RoomsInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.ReservationModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -21,7 +23,9 @@ import java.util.stream.Collectors;
 
 public class RoomService {
     private static final Logger log = Logger.getLogger(RoomService.class);
+    private final ReservationService reservationService = ReservationService.getInstance();
     private final RoomRepositoryImpl roomRepository = RoomRepositoryImpl.getInstance();
+
 
     //lazy-loaded singleton pattern
     public static RoomService getInstance() {
@@ -64,7 +68,70 @@ public class RoomService {
         return roomRepository.update(roomModel.toEntity());
     }
 
-    public boolean deleteRoom(RoomModel roomModel){return roomRepository.delete(roomModel.toEntity());}
+    public boolean deleteRoom(RoomModel roomModel){
+
+        //ako staqta sushtestvuva v tablica rezervacii
+        if(reservationService.isRoomExistsInReservations(roomModel.getId()))
+        {
+            Long hotelId = reservationService.getHotelIdByRoomId(roomModel.getId());
+            HotelModel hotelModel = HotelService.getInstance().getHotelById(hotelId);
+            List<ReservationModel> reservationsWithSameRoomId = reservationService.getAllReservationsWithSameRoomId(roomModel.getId(),hotelModel);
+            List<ReservationModel> previousReservationModels = new LinkedList<>();
+
+            if(reservationsWithSameRoomId==null){return false;}
+
+
+            if(!isRoomExists("13",hotelModel))//ako prazna staq ne sushtestvuva kum hotel
+            {
+                RoomModel NULL_Room_Model = new RoomModel(1L,13,hotelModel,0,"изтрити данни",0,0,0,false,0);
+                if(!addRoom(NULL_Room_Model))//ako praznata staq kum hotel ne se dobavi uspeshno
+                {
+                    log.info("ERROR when adding Null Room to hotel \""+hotelModel.getName()+"\".");
+                    return false;
+                }
+                else
+                {
+                    log.info("Null Room has been added successfully to hotel \""+hotelModel.getName()+"\".");
+                    for(ReservationModel reservationModel: reservationsWithSameRoomId)
+                    {
+                        previousReservationModels.add(reservationService.getReservationById(reservationModel.getId(),reservationModel.getHotel()));
+                        reservationModel.setRoom(getRoomByNumber(NULL_Room_Model.getNumber().toString(),hotelModel));
+                        if(!reservationService.updateReservation(reservationModel))
+                        {
+                            log.info("ERROR when updating room_id of reservation with the 'Null Room' to hotel \""+hotelModel.getName()+"\".");
+                            return false;
+                        }
+                    }
+                }
+            }
+            else //ako prazna staq veche otdavna sushtestvuva kum hotel
+            {
+                RoomModel NULL_Room_Model = getRoomByNumber("13",hotelModel);
+                for(ReservationModel reservationModel: reservationsWithSameRoomId)
+                {
+                    previousReservationModels.add(reservationService.getReservationById(reservationModel.getId(),reservationModel.getHotel()));
+                    reservationModel.setRoom(NULL_Room_Model);
+                    if(!reservationService.updateReservation(reservationModel))
+                    {
+                        log.info("ERROR when updating room_id of reservation with the 'Null Room' to hotel \""+hotelModel.getName()+"\".");
+                        return false;
+                    }
+                }
+            }
+
+            if(!roomRepository.delete(roomModel.toEntity()))//ako staqta ne se iztrie uspeshno
+            {
+               for(int i=0;i<reservationsWithSameRoomId.size();i++)
+               {
+                   reservationService.updateReservation(previousReservationModels.get(i));
+               }
+               return false;
+            }
+            else {return true;}
+        }
+
+            return roomRepository.delete(roomModel.toEntity());
+    }
 
     public boolean addRooms(RoomsInformation roomsInformation,HotelModel hotelModel){
 
@@ -113,7 +180,7 @@ public class RoomService {
                     }
                 }
 
-                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,0D,0,false,beds)))
+                if(!addRoom(new RoomModel(1L,Integer.parseInt(String.valueOf(sb)),hotelModel,price,type,area,1,0,false,beds)))
                 {
                     return false;
                 }
@@ -564,5 +631,47 @@ public class RoomService {
         return validateFloorsNumber(floorsNumber) && validateRoomTypesCheckBoxesSelection(roomTypesCheckBoxesList) && validateRoomTypeAreaAndPriceAndBedFields(roomTypesCheckBoxesList, roomTypesAreaFieldsList, roomTypesPriceFieldsList,roomBedsFieldsList);
     }
 
+    public boolean calculateRoomRatings(RoomModel roomModel,HotelModel hotelModel){
+        List<RoomModel> allRooms = getAllHotelRooms(hotelModel);
+        int allNightsOccupied=0;
+
+        for(RoomModel currRoom: allRooms)//loop to calculate the new allNightsOccupied (sum of all rooms nightOccupied)
+        {
+            if(currRoom.getId().equals(roomModel.getId()))
+            {
+                allNightsOccupied+=roomModel.getNightsOccupied();//we sum the new amount of nightsOccupied of specified room
+            }
+            else
+            {
+                allNightsOccupied+=currRoom.getNightsOccupied();//we sum the amount of nightsOccupied of other rooms
+            }
+        }
+
+
+        for(RoomModel currRoom: allRooms)
+        {
+            if(currRoom.getId().equals(roomModel.getId()))
+            {
+                roomModel.setRating(calculateRating( ((double)roomModel.getNightsOccupied()/(double)allNightsOccupied)*100));
+                if(!updateRoom(roomModel)){return false;}
+            }
+            else
+            {
+                currRoom.setRating(calculateRating(((double)currRoom.getNightsOccupied()/(double)allNightsOccupied)*100));
+                if(!updateRoom(currRoom)){return false;}
+            }
+        }
+        return true;//Everything was OK (all rooms were updated successfully)
+    }
+
+    public Integer calculateRating(Double nightsOccupied){
+
+        if(nightsOccupied>=0D && nightsOccupied<3D){return 1;}
+        else if(nightsOccupied>=3 && nightsOccupied<5){return 2;}
+        else if(nightsOccupied>=5 && nightsOccupied<10){return 3;}
+        else if(nightsOccupied>=10 && nightsOccupied<15){return 4;}
+        else if(nightsOccupied>=15 && nightsOccupied<20){return 5;}
+        else {return 6;}//20+
+    }
 
 }

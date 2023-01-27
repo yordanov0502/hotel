@@ -1,30 +1,25 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
-import bg.tu_varna.sit.hotel.business.CustomerService;
+import bg.tu_varna.sit.hotel.business.ReservationService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.presentation.models.CustomerModel;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.Rating;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 
 public class ReceptionistHotelInfoController {
     private static final Logger log = Logger.getLogger(ReceptionistHotelInfoController.class);
+    private final ReservationService reservationService = ReservationService.getInstance();
+
     @FXML
     private Label hotelNameLabel;
     @FXML
@@ -55,6 +50,11 @@ public class ReceptionistHotelInfoController {
     public void addNewService() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
+    public void showReservations() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Uncompleted Reservations",800,500);
     }
 
 
@@ -93,6 +93,8 @@ public class ReceptionistHotelInfoController {
             addressLabel.setText(hotelModel.getAddress());
             establishedAtLabel.setText(hotelModel.getEstablished_at().toString());
             hotelRating.setRating(hotelModel.getStars());
+
+            reservationService.refreshUncompletedReservationsStatus(hotelModel);
         }
        else
         {
@@ -100,7 +102,6 @@ public class ReceptionistHotelInfoController {
             addressLabel.setDisable(true);
             establishedAtLabel.setDisable(true);
         }
-
-
     }
+
 }

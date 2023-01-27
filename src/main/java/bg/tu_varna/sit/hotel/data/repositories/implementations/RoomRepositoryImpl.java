@@ -79,7 +79,7 @@ public class RoomRepositoryImpl implements RoomRepository<Room> {
         Transaction transaction = session.beginTransaction();
         List<Room> rooms = new LinkedList<>();
         try{
-            String jpql = "SELECT r FROM Room r WHERE hotel = '"+ hotel.getId() +"' ORDER BY number";
+            String jpql = "SELECT r FROM Room r WHERE hotel = '"+ hotel.getId() +"' AND r.number != '"+13+"' ORDER BY number";
             rooms.addAll(session.createQuery(jpql, Room.class).getResultList());
             transaction.commit();
             log.info("Got all rooms successfully.");

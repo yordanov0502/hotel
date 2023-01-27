@@ -16,7 +16,7 @@ module bg.tu_varna.sit.hotel {
     requires java.sql;
     requires org.apache.commons.lang3;
     requires de.jensd.fx.glyphs.fontawesome;
-
+    requires org.joda.time;
 
 
     opens bg.tu_varna.sit.hotel.application to javafx.fxml;
@@ -46,4 +46,8 @@ module bg.tu_varna.sit.hotel {
     opens bg.tu_varna.sit.hotel.presentation.models to java.base;
     exports bg.tu_varna.sit.hotel.presentation.controllers.owner.cache;
     opens bg.tu_varna.sit.hotel.presentation.controllers.owner.cache to javafx.fxml;
+
+    exports bg.tu_varna.sit.hotel.presentation.models.custom;
+    opens bg.tu_varna.sit.hotel.presentation.models.custom to java.base;
+
 }

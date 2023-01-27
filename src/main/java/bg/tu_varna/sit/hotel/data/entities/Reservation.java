@@ -1,5 +1,7 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import bg.tu_varna.sit.hotel.presentation.models.*;
+import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -22,10 +24,10 @@ public class Reservation implements Serializable {
     private Long number;//reservation number (per hotel)
 
     @Column(name = "type", nullable = false)
-    private String type;//reservation type (direct/indirect)
+    private String type;//reservation type (small/medium/big)
 
-    @Column(name = "finish_type", nullable = false)
-    private String finishType;//(unfinished/normal/earlier/forced)
+    @Column(name = "status", nullable = false)
+    private String status;//(not started/active/ended/completed)
 
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;//date and time when reservation was created
@@ -42,20 +44,20 @@ public class Reservation implements Serializable {
     private Hotel hotel;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)//allows foreign key "receptionist_id" to remain in the table even if a user(receptionist) is removed from the users table
+    @OnDelete(action = OnDeleteAction.CASCADE)//* when a reservation is about to be deleted because we deleted a receptionist, the receptionist_id FK is updated to a FK which points to a specific receptionist_id which does not have any data(this is done in order to avoid deleting reservation row when trying to delete receptionist_id FK) - however the receptionist which we tried to delete from the database will be deleted(if everything is OK)
     @JoinColumn(name = "receptionist_id", nullable = false)
     private User receptionist;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)//allows "foreign key on cascade delete"(deletes all reservations when the customer they were associated with is deleted)
-    @JoinColumn(name = "customer_id",  nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
     @Column(name = "customer_rating", nullable = false)
     private String customerRating;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.NO_ACTION)//allows foreign key "room_id" to remain in the table even if a room is removed from the rooms table so customer rating would be available (for queries) (the reservation row will not be deleted)
+    @OnDelete(action = OnDeleteAction.CASCADE)//* when a reservation is about to be deleted because we deleted a room, the room_id FK is updated to a FK which points to a specific room_id which does not have any data(this is done in order to avoid deleting reservation row when trying to delete room_id FK) - however the room which we tried to delete from the database will be deleted(if everything is OK)
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
@@ -63,7 +65,7 @@ public class Reservation implements Serializable {
     private Integer nightsOccupied;
 
     @Column(name = "room_rating", nullable = false)
-    private Double roomRating;
+    private Integer roomRating;
 
     @Column(name = "service_list", nullable = false)
     private String serviceList;
@@ -71,6 +73,19 @@ public class Reservation implements Serializable {
     @Column(name = "request_sent", nullable = false)
     private Boolean requestSent = false;
 
+    @Column(name = "final_annulation_date", nullable = false)
+    private Timestamp finalAnnulationDate;
+
+    @Column(name = "total_price", nullable = false)
+    private Long totalPrice;
+
+    public Long getTotalPrice() {return totalPrice;}
+
+    public void setTotalPrice(Long totalPrice) {this.totalPrice = totalPrice;}
+
+    public Timestamp getFinalAnnulationDate() {return finalAnnulationDate;}
+
+    public void setFinalAnnulationDate(Timestamp finalAnnulationDate) {this.finalAnnulationDate = finalAnnulationDate;}
 
     public Boolean getRequestSent() {return requestSent;}
 
@@ -80,9 +95,9 @@ public class Reservation implements Serializable {
 
     public void setServiceList(String serviceList) {this.serviceList = serviceList;}
 
-    public Double getRoomRating() {return roomRating;}
+    public Integer getRoomRating() {return roomRating;}
 
-    public void setRoomRating(Double roomRating) {this.roomRating = roomRating;}
+    public void setRoomRating(Integer roomRating) {this.roomRating = roomRating;}
 
     public Integer getNightsOccupied() {return nightsOccupied;}
 
@@ -120,9 +135,9 @@ public class Reservation implements Serializable {
 
     public void setCreatedAt(Timestamp createdAt) {this.createdAt = createdAt;}
 
-    public String getFinishType() {return finishType;}
+    public String getStatus() {return status;}
 
-    public void setFinishType(String finishType) {this.finishType = finishType;}
+    public void setStatus(String status) {this.status = status;}
 
     public String getType() {return type;}
 
@@ -135,5 +150,39 @@ public class Reservation implements Serializable {
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
+
+
+    public ReservationRowModel toReservationRowModel(Integer rooms){
+        ReservationRowModel reservationRowModel = new ReservationRowModel();
+        reservationRowModel.setNumber(this.number);
+        reservationRowModel.setType(this.type);
+        reservationRowModel.setStatus(this.status);
+        reservationRowModel.setRooms(rooms);
+        reservationRowModel.setCustomerFullName(this.customer.getFirst_name()+" "+this.customer.getLast_name());
+        return reservationRowModel;
+    }
+
+    public ReservationModel toModel(){
+        ReservationModel reservationModel = new ReservationModel();
+        reservationModel.setId(this.id);
+        reservationModel.setNumber(this.number);
+        reservationModel.setType(this.type);
+        reservationModel.setStatus(this.status);
+        reservationModel.setCreatedAt(this.createdAt);
+        reservationModel.setStartDate(this.startDate);
+        reservationModel.setEndDate(this.endDate);
+        reservationModel.setHotel(new HotelModel(this.hotel));
+        reservationModel.setReceptionist(new UserModel(this.receptionist));
+        reservationModel.setCustomer(new CustomerModel(this.customer));
+        reservationModel.setCustomerRating(this.customerRating);
+        reservationModel.setRoom(new RoomModel(this.room));
+        reservationModel.setNightsOccupied(this.nightsOccupied);
+        reservationModel.setRoomRating(this.roomRating);
+        reservationModel.setServiceList(this.serviceList);
+        reservationModel.setRequestSent(this.requestSent);
+        reservationModel.setFinalAnnulationDate(this.finalAnnulationDate);
+        reservationModel.setTotalPrice(this.totalPrice);
+        return reservationModel;
+    }
 
 }

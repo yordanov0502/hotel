@@ -9,14 +9,14 @@ public class RoomModel implements EntityModel<Room> {
     private Integer price;
     private String type;
     private Integer size;
-    private Double rating;
+    private Integer rating;
     private Integer nightsOccupied;
     private Boolean isOccupied;
     private Integer beds;
 
     public RoomModel(){}
 
-    public RoomModel(Long id, Integer number, HotelModel hotel, Integer price, String type, Integer size, Double rating, Integer nightsOccupied, Boolean isOccupied,Integer beds)
+    public RoomModel(Long id, Integer number, HotelModel hotel, Integer price, String type, Integer size, Integer rating, Integer nightsOccupied, Boolean isOccupied,Integer beds)
     {
       this.id=id;
       this.number=number;
@@ -92,9 +92,9 @@ public class RoomModel implements EntityModel<Room> {
         this.size = size;
     }
 
-    public Double getRating() {return rating;}
+    public Integer getRating() {return rating;}
 
-    public void setRating(Double rating) {this.rating = rating;}
+    public void setRating(Integer rating) {this.rating = rating;}
 
     public Integer getNightsOccupied() {return nightsOccupied;}
 

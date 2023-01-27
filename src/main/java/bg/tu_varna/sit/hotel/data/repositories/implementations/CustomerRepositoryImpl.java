@@ -130,4 +130,22 @@ public class CustomerRepositoryImpl implements CustomerRepository<Customer> {
         return customer;
     }
 
+    @Override //ID
+    public Customer getById(Long id) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Customer customer = null;
+        try{
+            String jpql = "SELECT c FROM Customer c WHERE id = '"+id+"'";
+            customer = (Customer) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got a customer successfully by id.");
+        } catch (Exception e) {
+            log.error("Get a customer by id error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return customer;
+    }
+
 }

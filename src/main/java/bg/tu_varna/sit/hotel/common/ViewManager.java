@@ -108,8 +108,16 @@ public final class ViewManager {
                 secondaryStage.initStyle(StageStyle.UNDECORATED);//removes the bar with minimize,maximize and exit buttons
                 secondaryStage.setTitle(title);
                 secondaryStage.setScene(new Scene(root, width, height));
-                secondaryStage.setX(primaryStage.getX()+75);
-                secondaryStage.setY(primaryStage.getY()+75);
+                if(title.equals("Receptionist Complete Reservation"))
+                {
+                    secondaryStage.setX(primaryStage.getX()+225);
+                    secondaryStage.setY(primaryStage.getY()+125);
+                }
+                else
+                {
+                    secondaryStage.setX(primaryStage.getX()+75);
+                    secondaryStage.setY(primaryStage.getY()+75);
+                }
                 sx = secondaryStage.getX();
                 sy = secondaryStage.getY();
 

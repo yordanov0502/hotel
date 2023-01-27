@@ -1,6 +1,7 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.ReservationService;
 import bg.tu_varna.sit.hotel.business.RoomService;
 import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
@@ -191,17 +192,25 @@ public class OwnerHotelsInfoRoomsInformationController {
 
     private void deleteRow(RoomModel roomModel) throws IOException {
 
-        if(roomService.deleteRoom(roomModel))
+        if(ReservationService.getInstance().checkIfRoomCanBeEditedOrDeleted(roomModel.getId(),selectedHotel)!=null)
         {
-            log.info("Information for room has been successfully deleted.");
-            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за стая.");
-            ViewManager.closeDialogBox();
-            ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+            log.info("Room can NOT be deleted as it is has been reserved or is currently being used by customers.");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ Стаята не може да бъде изтрита от системата, защото е резервирана или в момента се използва.");
         }
         else
         {
-            log.info("Information for room has NOT been deleted.");
-            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни за стая е неуспешно.");
+            if(roomService.deleteRoom(roomModel))
+            {
+                log.info("Information for room has been successfully deleted.");
+                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно изтрихте данни за стая.");
+                ViewManager.closeDialogBox();
+                ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+            }
+            else
+            {
+                log.info("Information for room has NOT been deleted.");
+                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Изтриването на данни за стая е неуспешно.");
+            }
         }
     }
 

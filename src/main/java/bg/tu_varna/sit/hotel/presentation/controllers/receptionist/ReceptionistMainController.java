@@ -1,10 +1,13 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.receptionist;
 
+import bg.tu_varna.sit.hotel.business.HotelService;
+import bg.tu_varna.sit.hotel.business.ReservationService;
+import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
-import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerMainController;
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -15,6 +18,8 @@ import java.io.IOException;
 
 public class ReceptionistMainController {
     private static final Logger log = Logger.getLogger(ReceptionistMainController.class);
+    private final ReservationService reservationService = ReservationService.getInstance();
+
 
     @FXML
     private Circle notificationCircle;
@@ -36,6 +41,11 @@ public class ReceptionistMainController {
     public void addNewService() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
+    public void showReservations() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Uncompleted Reservations",800,500);
     }
 
     public void showHotelInfo() throws IOException {
@@ -72,5 +82,9 @@ public class ReceptionistMainController {
         //notificationCircle.setVisible(true);
         //notificationLabel.setText("7");
         //notificationLabel.setVisible(true);
+        if(UserSession.user!=null)
+        {
+            reservationService.refreshUncompletedReservationsStatus(UserSession.user.getHotels().get(0).toModel());
+        }
     }
 }

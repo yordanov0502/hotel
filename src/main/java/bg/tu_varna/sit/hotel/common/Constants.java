@@ -60,6 +60,9 @@ public final class Constants {
         public static final String CUSTOMER_EDIT_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/CustomerEditInfo.fxml";
         public static final String RECEPTIONIST_ADD_NEW_SERVICE_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistAddNewService.fxml";
         public static final String RECEPTIONIST_HOTEL_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistHotelInfo.fxml";
+        public static final String RECEPTIONIST_RESERVATIONS_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistReservations.fxml";
+        public static final String RECEPTIONIST_RESERVATION_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistReservationInfo.fxml";
+        public static final String RECEPTIONIST_COMPLETE_RESERVATION_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistCompleteReservation.fxml";
     }
 
     public static class Configurations{

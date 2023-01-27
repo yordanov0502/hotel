@@ -16,10 +16,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
+import javafx.stage.StageStyle;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
 import org.controlsfx.control.CheckComboBox;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -72,6 +76,8 @@ public class ReceptionistAddNewReservationController {
     @FXML
     private Spinner<Integer> endTimeSpinner;
     @FXML
+    private TextField daysAnnulationField;
+    @FXML
     private Button searchRoomsButton;
 
     @FXML
@@ -107,6 +113,11 @@ public class ReceptionistAddNewReservationController {
     public void addNewService() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_SERVICE_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Service",800,500);
+    }
+
+    public void showReservations() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.RECEPTIONIST_RESERVATIONS_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Uncompleted Reservations",800,500);
     }
 
     public void showHotelInfo() throws IOException {
@@ -148,6 +159,8 @@ public class ReceptionistAddNewReservationController {
         if(UserSession.user!=null)
         {
             hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
+
+            reservationService.refreshUncompletedReservationsStatus(hotelModel);
 
             customersTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
             customersTable.getColumns().forEach(column -> column.setSortable(false));//prevents custom sorting of columns in order to avoid icon bugs
@@ -212,6 +225,20 @@ public class ReceptionistAddNewReservationController {
             startTimeSpinner.setValueFactory(startHoursFactory);
             endTimeSpinner.setValueFactory(endHoursFactory);
 
+            startTimeSpinner.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                if(freeRoomsTable.getItems()!=null)
+                {
+                    freeRoomsTable.getItems().clear();
+                }
+            });
+            endTimeSpinner.getEditor().textProperty().addListener((obs, oldValue, newValue) -> {
+                if(freeRoomsTable.getItems()!=null)
+                {
+                    freeRoomsTable.getItems().clear();
+                }
+            });
+
+
             //In this list I get all service names of hotel for current season(or for all year if specified)
             //It is possible that no service names are found so value could be null
             //That's why I check it in the following if statement
@@ -257,6 +284,7 @@ public class ReceptionistAddNewReservationController {
             startTimeSpinner.setDisable(true);
             endDatePicker.setDisable(true);
             endTimeSpinner.setDisable(true);
+            daysAnnulationField.setDisable(true);
             searchRoomsButton.setDisable(true);
             checkComboBox.setDisable(true);
             reserveButton.setDisable(true);
@@ -483,78 +511,131 @@ public class ReceptionistAddNewReservationController {
         {
             if(isRoomSearchConducted)
             {
-                if(freeRoomsTable.getItems()!=null && freeRoomsTable.getItems().size()>0)//ako ima svobodni stai
+                if(validateNumberOfDaysForFreeAnnulation())
                 {
-                    if(selectedRooms!=null && selectedRooms.size()>0)//proverka za izbrani stai (1 ili pove4e)
+                    if(freeRoomsTable.getItems()!=null && freeRoomsTable.getItems().size()>0)//ako ima svobodni stai
                     {
-                        String startDateHour = startDatePicker.getValue()+" "+startTimeSpinner.getValue()+":00:00.000";
-                        Timestamp reservationStart = Timestamp.valueOf(startDateHour);
-
-                        String endDateHour = endDatePicker.getValue()+" "+endTimeSpinner.getValue()+":00:00.000";
-                        Timestamp reservationEnd = Timestamp.valueOf(endDateHour);
-
-                        String serviceList="";
-                        if(selectedServices!=null && selectedServices.size()>0)
+                        if(selectedRooms!=null && selectedRooms.size()>0)//proverka za izbrani stai (1 ili pove4e)
                         {
-                            for(int i=0;i<selectedServices.size();i++)
+
+                            if(customerModel.getRating().equals("слаб"))
                             {
-                                if(i==0){serviceList=selectedServices.get(i);}
-                                else if(i<selectedServices.size()-1){serviceList=serviceList+","+selectedServices.get(i);}
-                                else {serviceList=serviceList+","+selectedServices.get(i);}
+                                AlertManager.showAlert(Alert.AlertType.WARNING,"Внимание❕","Рисков клиент.");
                             }
-                        }
-                        else
-                        {
-                            serviceList=".";
-                        }
 
-                        String reservationType;
-                        if(selectedRooms.size()==1) {reservationType="малка";}
-                        else if(selectedRooms.size()>1 && selectedRooms.size()<6) {reservationType="средна";}
-                        else {reservationType="голяма";}
+                            ////////////////////////////////////for reservation////////////////////////////////////////////
+                            String startDateHour = startDatePicker.getValue()+" "+startTimeSpinner.getValue()+":00:00.000";
+                            Timestamp reservationStart = Timestamp.valueOf(startDateHour);
 
-                        Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel)+1;
-                        boolean flag = false;
+                            String endDateHour = endDatePicker.getValue()+" "+endTimeSpinner.getValue()+":00:00.000";
+                            Timestamp reservationEnd = Timestamp.valueOf(endDateHour);
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
 
-                            for(int i=0;i<selectedRooms.size();i++)
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTimeInMillis(reservationStart.getTime());
+                            cal.add(Calendar.DAY_OF_MONTH, -(Integer.parseInt(daysAnnulationField.getText())));
+                            Timestamp finalDateOfFreeAnnulation = new Timestamp(cal.getTime().getTime());
+
+                            ////////////////////////////////////for total price////////////////////////////////////////////
+                            String startDateHour1 = startDatePicker.getValue()+" 00:00:00.000";
+                            Timestamp reservationStart1 = Timestamp.valueOf(startDateHour1);
+
+                            String endDateHour1 = endDatePicker.getValue()+" 00:00:00.000";
+                            Timestamp reservationEnd1 = Timestamp.valueOf(endDateHour1);
+                            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+                            //Calculating the total price of Reservation(determined by number of rooms and the days reserved for each room X price of each room)
+                            long totalPrice=0L;
+                            for(RoomModel roomModel: selectedRooms)
                             {
-                                flag = reservationService.addReservation(new ReservationModel(1L, reservationNumber, reservationType, "незавършена", new Timestamp(System.currentTimeMillis()), reservationStart, reservationEnd, this.hotelModel, userService.getUserById(UserSession.user.getId()), customerModel, customerModel.getRating(),selectedRooms.get(i), selectedRooms.get(i).getNightsOccupied(), selectedRooms.get(i).getRating(), serviceList, false));
-                                if(!flag)
+                                totalPrice += (long) (Days.daysBetween(new DateTime(reservationStart1.getTime()),new DateTime(reservationEnd1.getTime())).getDays()) * roomModel.getPrice();
+                            }
+
+
+
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setHeaderText("Потвърждение");
+                            alert.initStyle(StageStyle.UNDECORATED);
+                            alert.setContentText("Общата цена за плащане е "+totalPrice+"лв. Потвърждавате ли, че желаете да създадете резервация?");
+                            alert.setX(ViewManager.getPrimaryStage().getX()+220);
+                            alert.setY(ViewManager.getPrimaryStage().getY()+180);
+                            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                            ButtonType yesButton = new ButtonType("Да", ButtonBar.ButtonData.YES);
+                            ButtonType noButton = new ButtonType("Не", ButtonBar.ButtonData.NO);
+                            alert.getButtonTypes().setAll(yesButton, noButton);
+                            Optional<ButtonType> answer = alert.showAndWait();
+
+                            if(answer.isPresent() && answer.get()==yesButton)
+                            {
+                                String serviceList="";
+                                if(selectedServices!=null && selectedServices.size()>0)
                                 {
-                                    if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
+                                    for(int i=0;i<selectedServices.size();i++)
                                     {
-                                        for(int j=0;j<=i;j++)
+                                        if(i==0){serviceList=selectedServices.get(i);}
+                                        else if(i<selectedServices.size()-1){serviceList=serviceList+","+selectedServices.get(i);}
+                                        else {serviceList=serviceList+","+selectedServices.get(i);}
+                                    }
+                                }
+                                else
+                                {
+                                    serviceList=".";
+                                }
+
+                                String reservationType;
+                                if(selectedRooms.size()==1) {reservationType="малка";}
+                                else if(selectedRooms.size()>1 && selectedRooms.size()<6) {reservationType="средна";}
+                                else {reservationType="голяма";}
+
+
+                                Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel)+1;
+                                boolean flag = false;
+
+                                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
+                                for(int i=0;i<selectedRooms.size();i++)
+                                {
+                                    flag = reservationService.addReservation(new ReservationModel(1L, reservationNumber, reservationType, "незапочнала", currentTime, reservationStart, reservationEnd, this.hotelModel, userService.getUserById(UserSession.user.getId()), customerModel, customerModel.getRating(),selectedRooms.get(i), selectedRooms.get(i).getNightsOccupied(), selectedRooms.get(i).getRating(), serviceList, false,finalDateOfFreeAnnulation,totalPrice));
+                                    if(!flag)
+                                    {
+                                        if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
                                         {
-                                            if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
+                                            for(int j=0;j<=i;j++)
                                             {
-                                                reservationService.deleteReservation(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel));
+                                                if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
+                                                {
+                                                    reservationService.deleteReservation(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel));
+                                                }
                                             }
                                         }
+                                        break;
                                     }
-                                    break;
+                                }
+
+                                if(flag)
+                                {
+                                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно създаване на резервация.");
+                                    ViewManager.closeDialogBox();
+                                    ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
+                                }
+                                else
+                                {
+                                    AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Неуспешно създаване на резервация.");
                                 }
                             }
 
-                            if(flag)
-                            {
-                                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Успешно създаване на резервация.");
-                                ViewManager.closeDialogBox();
-                                ViewManager.changeView(Constants.View.RECEPTIONIST_ADD_NEW_RESERVATION_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Receptionist Add New Reservation",800,500);
-                            }
-                            else
-                            {
-                                AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Неуспешно създаване на резервация.");
-                            }
+
+                        }
+                        else
+                        {
+                            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете стая/и за резервацията.");
+                        }
                     }
                     else
                     {
-                        AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете стая/и за резервацията.");
+                        AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","За периода от време, който сте избрали няма свободни стаи.");
                     }
                 }
-                else
-                 {
-                 AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","За периода от време, който сте избрали няма свободни стаи.");
-                 }
             }
           else
           {
@@ -568,11 +649,24 @@ public class ReceptionistAddNewReservationController {
 
     }
 
-
+    private boolean validateNumberOfDaysForFreeAnnulation(){
+        if(daysAnnulationField.getText().equals(""))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля задайте брой дни [0-9] преди начална дата, до които резервацията ще може да бъде анулирана безплатно.");
+            return false;
+        }
+        else if(!reservationService.validateDaysAnnulationField(daysAnnulationField.getText()))
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Броят дни преди начална дата на резервация, който определея до кога е възможно безплатно анулиране на резервация може да бъде между 0 и 9.");
+            return false;
+        }
+        else {return true;}//everything is OK
+    }
 
     public void startDatePickerChanged()
     {
         isRoomSearchConducted = false;
+        daysAnnulationField.setText("");
         if(freeRoomsTable.getItems()!=null)
         {
             freeRoomsTable.getItems().clear();
@@ -581,6 +675,7 @@ public class ReceptionistAddNewReservationController {
     public void endDatePickerChanged()
     {
         isRoomSearchConducted = false;
+        daysAnnulationField.setText("");
         if(freeRoomsTable.getItems()!=null)
         {
             freeRoomsTable.getItems().clear();

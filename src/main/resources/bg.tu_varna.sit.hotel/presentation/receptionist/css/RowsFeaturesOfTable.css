@@ -23,7 +23,7 @@
 }
 
 .table-row-cell:selected{
-    -fx-background-color: #66cc00;
+    -fx-background-color: #006600;
 }
 
 .table-row-cell:hover{

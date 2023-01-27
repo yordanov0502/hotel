@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="anchorPane" prefHeight="270.0" prefWidth="400.0" style="-fx-background-color: #333333;" styleClass="anchor" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistCompleteReservationController">
+   <children>
+      <Button fx:id="closeWindowButton" layoutX="365.0" layoutY="5.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
+      <Button fx:id="completeReservationButton" layoutX="106.0" layoutY="211.0" mnemonicParsing="false" onAction="#completeReservation" prefHeight="39.0" prefWidth="195.0" styleClass="reserveButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Завърши резервация" />
+      <Label fx:id="ratingLabel" layoutX="118.0" layoutY="70.0" text="Оценка на клиент:" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

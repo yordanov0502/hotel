@@ -9,5 +9,6 @@ import java.util.List;
 public interface CustomerRepository<T>  extends Repository<T>{
     List<T> getAllCustomersOfHotel(Hotel hotel);
     Customer getByEgn(String egn, Hotel hotel);
+    Customer getById(Long id);
     Customer getByPhone(String phone, Hotel hotel);
 }

@@ -34,7 +34,7 @@ public class Room implements Serializable {
     private Integer size;
 
     @Column(name = "rating", nullable = false)
-    private Double rating;
+    private Integer rating;//[1-6]
 
     @Column(name = "nights_occupied", nullable = false)
     private Integer nightsOccupied;//nights the room was occupied since it was created
@@ -57,9 +57,9 @@ public class Room implements Serializable {
 
     public void setNightsOccupied(Integer nightsOccupied) {this.nightsOccupied = nightsOccupied;}
 
-    public Double getRating() {return rating;}
+    public Integer getRating() {return rating;}
 
-    public void setRating(Double rating) {this.rating = rating;}
+    public void setRating(Integer rating) {this.rating = rating;}
 
     public Integer getSize() {
         return size;

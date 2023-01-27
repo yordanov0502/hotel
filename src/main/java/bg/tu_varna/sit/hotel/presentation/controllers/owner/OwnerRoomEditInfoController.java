@@ -1,5 +1,6 @@
 package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
+import bg.tu_varna.sit.hotel.business.ReservationService;
 import bg.tu_varna.sit.hotel.business.RoomService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
@@ -42,16 +43,24 @@ public class OwnerRoomEditInfoController {
     private static HotelModel selectedHotel;
 
     public void editRoomInfo() throws IOException {
-        if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),selectedHotel.getName(), bedsField.getText(),selectedRoom))
+        if(ReservationService.getInstance().checkIfRoomCanBeEditedOrDeleted(selectedRoom.getId(),selectedHotel)!=null)
         {
-            if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getNightsOccupied(),selectedRoom.getIsOccupied(),Integer.parseInt(bedsField.getText()))))
+            log.info("Room can NOT be edited as is has been reserved or is currently being used by customers.");
+            AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","ⓘ Информацията за стаята не може да бъде редактирана, защото стаята е резервирана или в момента се използва.");
+        }
+        else
+        {
+            if(roomService.validateRoomInfoFields(numberField.getText(), typeField.getText(), areaField.getText(), priceField.getText(),selectedHotel.getName(), bedsField.getText(),selectedRoom))
             {
-                AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно редактиране на данни за стая.");
-                ViewManager.closeDialogBox();
-                ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+                if(roomService.updateRoom(new RoomModel(selectedRoom.getId(),Integer.parseInt(numberField.getText()), selectedRoom.getHotel(), Integer.parseInt(priceField.getText()), typeField.getText(), Integer.parseInt(areaField.getText()),selectedRoom.getRating(),selectedRoom.getNightsOccupied(),selectedRoom.getIsOccupied(),Integer.parseInt(bedsField.getText()))))
+                {
+                    AlertManager.showAlert(Alert.AlertType.INFORMATION,"Информация","✅ Извършихте успешно редактиране на данни за стая.");
+                    ViewManager.closeDialogBox();
+                    ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+                }
+                else
+                {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Редактирането на данни за стая е неуспешно.");}
             }
-            else
-            {AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","❌ Редактирането на данни за стая е неуспешно.");}
         }
     }
 

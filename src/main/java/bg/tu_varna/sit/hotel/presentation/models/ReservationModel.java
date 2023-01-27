@@ -4,14 +4,15 @@ import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.data.entities.Room;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class ReservationModel implements EntityModel<Reservation>{
     private Long id;
     private Long number;//number of reservation per hotel
-    private String type;//reservation type (direct/indirect)
-    private String finishType;//(unfinished/normal/earlier/forced)
+    private String type;//reservation type (small/medium/big)
+    private String status;//(not started/active/ended/completed)
     private Timestamp createdAt;//date and time when reservation was created
-    private Timestamp startDate;////first day of reservation
+    private Timestamp startDate;//first day of reservation
     private Timestamp endDate;//last day of reservation
     private HotelModel hotel;
     private UserModel receptionist;
@@ -19,18 +20,20 @@ public class ReservationModel implements EntityModel<Reservation>{
     private String customerRating;
     private RoomModel room;
     private Integer nightsOccupied;
-    private Double roomRating;
+    private Integer roomRating;
     private String serviceList;
     private Boolean requestSent;
+    private Timestamp finalAnnulationDate;//last date which reservation can be annulated for free
+    private Long totalPrice;
 
     public ReservationModel(){}
 
-    public ReservationModel(Long id, Long number, String type, String finishType, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Double roomRating, String serviceList, Boolean requestSent)
+    public ReservationModel(Long id, Long number, String type, String status, Timestamp createdAt, Timestamp startDate, Timestamp endDate, HotelModel hotel, UserModel receptionist, CustomerModel customer, String customerRating, RoomModel room, Integer nightsOccupied, Integer roomRating, String serviceList, Boolean requestSent,Timestamp finalAnnulationDate,Long totalPrice)
     {
         this.id = id;
         this.number = number;
         this.type = type;
-        this.finishType = finishType;
+        this.status = status;
         this.createdAt = createdAt;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -43,6 +46,8 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.roomRating = roomRating;
         this.serviceList = serviceList;
         this.requestSent = requestSent;
+        this.finalAnnulationDate = finalAnnulationDate;
+        this.totalPrice=totalPrice;
     }
 
     public ReservationModel(Reservation reservation)
@@ -50,7 +55,7 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.id=reservation.getId();
         this.number=reservation.getNumber();
         this.type= reservation.getType();
-        this.finishType=reservation.getFinishType();
+        this.status=reservation.getStatus();
         this.createdAt=reservation.getCreatedAt();
         this.startDate=reservation.getStartDate();
         this.endDate=reservation.getEndDate();
@@ -63,6 +68,8 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.roomRating=reservation.getRoomRating();
         this.serviceList=reservation.getServiceList();
         this.requestSent=reservation.getRequestSent();
+        this.finalAnnulationDate=reservation.getFinalAnnulationDate();
+        this.totalPrice= reservation.getTotalPrice();
     }
 
     public Long getId() {
@@ -89,12 +96,12 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.type = type;
     }
 
-    public String getFinishType() {
-        return finishType;
+    public String getStatus() {
+        return status;
     }
 
-    public void setFinishType(String finishType) {
-        this.finishType = finishType;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Timestamp getCreatedAt() {
@@ -169,11 +176,11 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.nightsOccupied = nightsOccupied;
     }
 
-    public Double getRoomRating() {
+    public Integer getRoomRating() {
         return roomRating;
     }
 
-    public void setRoomRating(Double roomRating) {
+    public void setRoomRating(Integer roomRating) {
         this.roomRating = roomRating;
     }
 
@@ -193,7 +200,13 @@ public class ReservationModel implements EntityModel<Reservation>{
         this.requestSent = requestSent;
     }
 
+    public Timestamp getFinalAnnulationDate() {return finalAnnulationDate;}
 
+    public void setFinalAnnulationDate(Timestamp finalAnnulationDate) {this.finalAnnulationDate = finalAnnulationDate;}
+
+    public Long getTotalPrice() {return totalPrice;}
+
+    public void setTotalPrice(Long totalPrice) {this.totalPrice = totalPrice;}
 
     @Override
     public Reservation toEntity() {
@@ -201,7 +214,7 @@ public class ReservationModel implements EntityModel<Reservation>{
         reservationTemp.setId(this.id);
         reservationTemp.setNumber(this.number);
         reservationTemp.setType(this.type);
-        reservationTemp.setFinishType(this.finishType);
+        reservationTemp.setStatus(this.status);
         reservationTemp.setCreatedAt(this.createdAt);
         reservationTemp.setStartDate(this.startDate);
         reservationTemp.setEndDate(this.endDate);
@@ -214,7 +227,22 @@ public class ReservationModel implements EntityModel<Reservation>{
         reservationTemp.setRoomRating(this.roomRating);
         reservationTemp.setServiceList(this.serviceList);
         reservationTemp.setRequestSent(this.requestSent);
+        reservationTemp.setFinalAnnulationDate(this.finalAnnulationDate);
+        reservationTemp.setTotalPrice(this.totalPrice);
         return reservationTemp;
     }
+
+    //@Override
+    //public boolean equals(Object o) {
+    //    if (this == o) return true;
+     //   if (o == null || getClass() != o.getClass()) return false;
+    //    ReservationModel that = (ReservationModel) o;
+     //   return id.equals(that.id);
+    //}
+
+    //@Override
+  //  public int hashCode() {
+    //    return Objects.hash(id);
+    //}
 
 }
