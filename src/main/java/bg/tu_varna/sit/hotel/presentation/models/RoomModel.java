@@ -2,7 +2,9 @@ package bg.tu_varna.sit.hotel.presentation.models;
 
 import bg.tu_varna.sit.hotel.data.entities.Room;
 
-public class RoomModel implements EntityModel<Room> {
+import java.util.Objects;
+
+public class RoomModel implements EntityModel<Room>,Comparable<RoomModel> {
     private Long id;
     private Integer number;
     private HotelModel hotel;
@@ -116,4 +118,21 @@ public class RoomModel implements EntityModel<Room> {
         return roomTemp;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoomModel roomModel = (RoomModel) o;
+        return id.equals(roomModel.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(RoomModel roomModel) {
+        return this.number.compareTo(roomModel.getNumber());
+    }
 }

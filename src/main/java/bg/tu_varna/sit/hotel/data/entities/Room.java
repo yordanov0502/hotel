@@ -1,10 +1,13 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
+import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rooms")
@@ -100,5 +103,32 @@ public class Room implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public RoomModel toModel(){
+        RoomModel roomModel = new RoomModel();
+        roomModel.setId(this.id);
+        roomModel.setNumber(this.number);
+        roomModel.setHotel(new HotelModel(this.hotel));
+        roomModel.setPrice(this.price);
+        roomModel.setType(this.type);
+        roomModel.setSize(this.size);
+        roomModel.setRating(this.rating);
+        roomModel.setNightsOccupied(this.nightsOccupied);
+        roomModel.setBeds(this.beds);
+        return roomModel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return id.equals(room.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

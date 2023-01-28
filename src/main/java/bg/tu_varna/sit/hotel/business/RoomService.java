@@ -630,6 +630,7 @@ public class RoomService {
         return validateFloorsNumber(floorsNumber) && validateRoomTypesCheckBoxesSelection(roomTypesCheckBoxesList) && validateRoomTypeAreaAndPriceAndBedFields(roomTypesCheckBoxesList, roomTypesAreaFieldsList, roomTypesPriceFieldsList,roomBedsFieldsList);
     }
 
+    //This method is used to calculate all current room ratings when completing a reservation
     public boolean calculateRoomRatings(RoomModel roomModel,HotelModel hotelModel){
         List<RoomModel> allRooms = getAllHotelRooms(hotelModel);
         int allNightsOccupied=0;
@@ -662,6 +663,24 @@ public class RoomService {
         }
         return true;//Everything was OK (all rooms were updated successfully)
     }
+
+    //This method is used to calculate room ratings for period
+    public List<RoomModel> calculateRoomRatingsForPeriod(List<RoomModel> allRooms,HotelModel hotelModel){
+
+        int allNightsOccupied=0;
+
+        for(RoomModel currRoom: allRooms)//loop to calculate the new allNightsOccupied (sum of all rooms nightOccupied)
+        {
+            allNightsOccupied+=currRoom.getNightsOccupied();
+        }
+
+        for(RoomModel currRoom: allRooms)
+        {
+            currRoom.setRating(calculateRating(((double)currRoom.getNightsOccupied()/(double)allNightsOccupied)*100));
+        }
+        return allRooms;
+    }
+
 
     public Integer calculateRating(Double nightsOccupied){
 

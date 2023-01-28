@@ -16,7 +16,6 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -135,6 +134,14 @@ public class ReservationService {
         if(uncompletedReservationsOfCustomer.isEmpty()) {return null;}
 
         else {return uncompletedReservationsOfCustomer;}
+    }
+
+    public List<Reservation> getReservationsForPeriod(HotelModel hotelModel,  Timestamp startDate, Timestamp endDate) {
+        List<Reservation> reservationsBeforeDate = reservationRepository.getReservationsForPeriod(hotelModel.toEntity(),startDate,endDate);
+
+        if(reservationsBeforeDate.isEmpty()) {return null;}
+
+        else {return reservationsBeforeDate;}
     }
 
     public List<Integer> getAllReservationsWithSameNumber_RoomsNumbers(Long reservationNumber, HotelModel hotelModel) {

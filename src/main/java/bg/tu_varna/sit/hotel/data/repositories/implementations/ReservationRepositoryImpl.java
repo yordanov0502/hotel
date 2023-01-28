@@ -111,7 +111,7 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         Transaction transaction = session.beginTransaction();
         Long lastReservationNumber = null;
         try{
-            String jpql = "SELECT COUNT ( DISTINCT rr.number ) FROM Reservation rr WHERE rr.hotel.id = '"+hotel.getId()+"'";
+           String jpql = "SELECT MAX (rr.number)  FROM Reservation rr WHERE rr.hotel.id = '"+hotel.getId()+"'";
             lastReservationNumber = (Long) session.createQuery(jpql).getSingleResult();
             transaction.commit();
             log.info("Got last reservation number of hotel successfully.");
@@ -119,9 +119,31 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
             log.error("Get last reservation number of hotel error: " + e.getMessage());
         } finally {
             session.close();
-        }
+        }System.out.println("Query="+lastReservationNumber);
         return lastReservationNumber;
     }
+
+    @Override
+    public List<Reservation> getReservationsForPeriod(Hotel hotel,Timestamp startDate,Timestamp endDate) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> reservationsWithUniqueRoomIds = new LinkedList<>();
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE (rr.startDate < '"+startDate+"' AND rr.endDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"') OR (rr.startDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"')  OR (rr.startDate >= '"+startDate+"' AND rr.startDate <= '"+endDate+"' AND rr.endDate > '"+endDate+"') OR (rr.startDate < '"+startDate+"' AND rr.endDate > '"+endDate+"' )   AND rr.hotel = '"+ hotel.getId() +"' ORDER BY rr.endDate DESC";
+
+            //String jpql = "SELECT rr FROM Reservation rr WHERE NOT EXISTS ( SELECT rr FROM Reservation rr WHERE (rr.endDate < '"+startDate+"' AND rr.startDate < '"+startDate+"') OR (rr.startDate > '"+endDate+"' AND rr.endDate > '"+endDate+"') ) ORDER BY rr.startDate ASC";
+
+            reservationsWithUniqueRoomIds.addAll(session.createQuery(jpql, Reservation.class).getResultList());
+            transaction.commit();
+            log.info("Got all reservations of hotel before date.");
+        } catch (Exception e) {
+            log.error("Get all reservations of hotel before date error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return reservationsWithUniqueRoomIds;
+    }
+
 
     @Override
     public Reservation getReservationWithNumber(Long reservationNumber, Hotel hotel) {

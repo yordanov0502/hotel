@@ -605,7 +605,16 @@ public class ReceptionistAddNewReservationController {
                                 else {reservationType="голяма";}
 
 
-                                Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel)+1;
+                                System.out.println(hotelModel.getName());
+                                Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel);
+                                if(reservationNumber!=null)
+                                {
+                                    reservationNumber+=1;
+                                }
+                                else
+                                {
+                                    reservationNumber=1L;
+                                }
                                 boolean flag = false;
 
                                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());

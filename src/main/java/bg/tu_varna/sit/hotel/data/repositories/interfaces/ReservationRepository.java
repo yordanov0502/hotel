@@ -26,4 +26,5 @@ public interface ReservationRepository<T> extends Repository<T> {
     List<T> getAllUncompletedReservationsOfCustomerById(Long customerId, Hotel hotel);
     List<T> getAllReservationsOfHotelWithoutExpiryNotification(Hotel hotel);
     List<T> getAllReservationsOfHotelWithExpiryNotification(Hotel hotel);
+    List<T> getReservationsForPeriod(Hotel hotel,Timestamp startDate,Timestamp endDate);
 }
