@@ -97,3 +97,26 @@
     -fx-scale-x: 1.03;
     -fx-scale-y: 1.03;
 }
+
+
+
+
+.registrationsQueryButton{
+    -fx-background-color: white;
+    -fx-background-radius: 30 0 0 30;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-alignment: right;
+}
+
+.registrationsQueryButton:hover{
+    -fx-background-color: Khaki;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}
+
+.registrationsQueryButton:focused{
+    -fx-background-color: lightgreen;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+}

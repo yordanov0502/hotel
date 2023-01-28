@@ -183,4 +183,23 @@ public class User implements Serializable {
                 //", hotels=" + hotels +
                 '}';
     }
+
+
+    public UserModel toModel() {
+        UserModel userModel = new UserModel();
+        userModel.setId(this.id);
+        userModel.setFirstName(this.firstName);
+        userModel.setLastName(this.lastName);
+        userModel.setPhone(this.phone);
+        userModel.setUsername(this.username);
+        userModel.setEmail(this.email);
+        userModel.setPassword(this.password);
+        userModel.setHash(this.hash);
+        userModel.setRole(this.role);
+        userModel.setCreatedAt(this.createdAt);
+        userModel.setLastLogin(this.lastLogin);
+        userModel.setStatus(this.status);
+        userModel.setHotels(this.hotels);
+        return userModel;
+    }
 }

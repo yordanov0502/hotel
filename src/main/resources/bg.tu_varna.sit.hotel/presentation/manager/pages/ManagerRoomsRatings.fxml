@@ -116,7 +116,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
-            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -152,7 +152,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="144.0" layoutY="59.0" prefHeight="88.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="144.0" layoutY="64.0" prefHeight="88.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="52.0" layoutY="14.0" text="Начална дата" textFill="WHITE">
                <font>
@@ -174,7 +174,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="roomsTable" layoutX="144.0" layoutY="162.0" prefHeight="319.0" prefWidth="648.0" stylesheets="@../../admin/css/RowsFeatures.css">
+      <TableView fx:id="roomsTable" layoutX="144.0" layoutY="170.0" prefHeight="313.0" prefWidth="648.0" stylesheets="@../../admin/css/RowsFeatures.css">
          <columns>
             <TableColumn fx:id="numberColumn" prefWidth="90.0" style="-fx-font-family: Arial;" text="Номер" />
             <TableColumn fx:id="ratingColumn" prefWidth="90.0" text="Рейтинг ★" />
