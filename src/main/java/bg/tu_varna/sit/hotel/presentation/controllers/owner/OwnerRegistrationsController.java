@@ -8,6 +8,8 @@ import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.User;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -32,7 +34,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OwnerRegistrationsController {
+public class OwnerRegistrationsController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerRegistrationsController.class);
     private final UserService userService = UserService.getInstance();
     private final HotelService hotelService = HotelService.getInstance();
@@ -87,6 +89,12 @@ public class OwnerRegistrationsController {
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
 
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
+
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_RECEPTIONISTS_RESERVATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Receptionists Reservations Info", 800, 500);
@@ -135,6 +143,8 @@ public class OwnerRegistrationsController {
 
         if(UserSession.user!=null)
         {
+            NewHotelInformation.makeRefreshedFalse(this);
+
             hotelsOfOwner = userService.getUserById(UserSession.user.getId()).getHotels();
             if(hotelsOfOwner!=null && hotelsOfOwner.size()>0)
             {

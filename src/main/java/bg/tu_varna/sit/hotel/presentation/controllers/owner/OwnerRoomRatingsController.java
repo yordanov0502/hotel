@@ -8,6 +8,8 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerRoomRatingsController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import javafx.animation.AnimationTimer;
@@ -28,7 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class OwnerRoomRatingsController {
+public class OwnerRoomRatingsController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerRoomRatingsController.class);
     private final UserService userService = UserService.getInstance();
     private final ServiceService serviceService = ServiceService.getInstance();
@@ -85,6 +87,12 @@ public class OwnerRoomRatingsController {
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
 
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
+
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_RECEPTIONISTS_RESERVATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Receptionists Reservations Info", 800, 500);
@@ -132,6 +140,8 @@ public class OwnerRoomRatingsController {
 
         if(UserSession.user!=null)
         {
+            NewHotelInformation.makeRefreshedFalse(this);
+
             hotelsOfOwner = userService.getUserById(UserSession.user.getId()).getHotels();
             if(hotelsOfOwner!=null && hotelsOfOwner.size()>0)
             {

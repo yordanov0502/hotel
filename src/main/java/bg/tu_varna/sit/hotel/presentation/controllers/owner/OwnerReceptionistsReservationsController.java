@@ -10,6 +10,8 @@ import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.data.entities.User;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
+import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OwnerReceptionistsReservationsController {
+public class OwnerReceptionistsReservationsController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerReceptionistsReservationsController.class);
     private final UserService userService = UserService.getInstance();
     private final ReservationService reservationService = ReservationService.getInstance();
@@ -48,7 +50,8 @@ public class OwnerReceptionistsReservationsController {
     private List<Hotel> hotelsOfOwner;
 
 
-
+    @FXML
+    private Label timeLabel;
     @FXML
     private DatePicker startDatePicker;
     @FXML
@@ -89,11 +92,60 @@ public class OwnerReceptionistsReservationsController {
     private ComboBox<String> hotelsComboBox;
 
 
+
+
+
+    public void showOwnerMainView() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
+    }
+
+    public void addHotelAndManager() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
+    }
+
+    public void showHotelsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
+    }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
+
+    public void showRegistrationsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_REGISTRATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Registrations Info", 800, 500);
+    }
+
+    public void showRoomRatings() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_ROOMS_RATINGS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Room Ratings", 800, 500);
+    }
+
+
+
+
+
+
     public void initialize()
     {
 
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(UserSession.user!=null)
         {
+            NewHotelInformation.makeRefreshedFalse(this);
+
             hotelsOfOwner = userService.getUserById(UserSession.user.getId()).getHotels();
             if(hotelsOfOwner!=null && hotelsOfOwner.size()>0)
             {
@@ -339,37 +391,6 @@ public class OwnerReceptionistsReservationsController {
             }
         }
     }
-
-
-
-
-
-    public void showOwnerMainView() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
-    }
-
-    public void addHotelAndManager() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
-    }
-
-    public void showHotelsInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
-    }
-
-    public void showRegistrationsInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_REGISTRATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Registrations Info", 800, 500);
-    }
-
-    public void showRoomRatings() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.OWNER_ROOMS_RATINGS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Room Ratings", 800, 500);
-    }
-
-
 
 
     public void logout() throws IOException {

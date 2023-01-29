@@ -28,8 +28,6 @@ public class Main extends Application {
     public void start(Stage stageParameter) throws IOException, ParseException {
         Connection.createSessionFactory();
         ViewManager.changeView(Constants.View.WELCOME_VIEW,ViewManager.getPrimaryStage(),this.getClass(),"Hotel Management System",800,500);
-
-
     }
 
 

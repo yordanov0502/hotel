@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="450.0" prefWidth="750.0" styleClass="anchor" stylesheets="@../css/ServicesInformationView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerServicesUsedController">
+   <children>
+      <Label layoutX="198.0" layoutY="16.0" text="Списък с използвани хотелски услуги:" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="serviceTable" layoutX="205.0" layoutY="85.0" prefHeight="314.0" prefWidth="378.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
+         <columns>
+            <TableColumn fx:id="typeColumn" prefWidth="372.0" text="Услуга" />
+         </columns>
+      </TableView>
+      <Button fx:id="closeWindowButton" layoutX="706.0" layoutY="14.0" mnemonicParsing="false" onAction="#closeWindow" styleClass="closeWindowButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="X" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+         <effect>
+            <DropShadow blurType="ONE_PASS_BOX" />
+         </effect>
+      </Button>
+   </children>
+</AnchorPane>

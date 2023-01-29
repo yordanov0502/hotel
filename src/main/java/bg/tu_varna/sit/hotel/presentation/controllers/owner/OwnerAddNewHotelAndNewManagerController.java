@@ -9,12 +9,15 @@ import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class OwnerAddNewHotelAndNewManagerController {
     private static final Logger log = Logger.getLogger(OwnerAddNewHotelAndNewManagerController.class);
@@ -32,6 +35,8 @@ public class OwnerAddNewHotelAndNewManagerController {
     private CheckBox hotelCheckBox;
     @FXML
     private CheckBox roomsCheckBox;
+    @FXML
+    private Label timeLabel;
 
 
 
@@ -49,6 +54,12 @@ public class OwnerAddNewHotelAndNewManagerController {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
 
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
@@ -163,6 +174,14 @@ public class OwnerAddNewHotelAndNewManagerController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(NewHotelInformation.isRefreshed())
         {
             managerCheckBox.setSelected(NewHotelInformation.getHotelManagerInformation() != null);

@@ -15,6 +15,7 @@ import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,6 +29,8 @@ import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,6 +63,8 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
     private TableColumn servicesInfoColumn;
     @FXML
     private TableColumn removeOrDeleteColumn;
+    @FXML
+    private Label timeLabel;
 
     public void showOwnerMainView() throws IOException {
         ViewManager.closeDialogBox();
@@ -70,6 +75,12 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
 
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
@@ -88,6 +99,14 @@ public class OwnerHotelsInfoController implements MajorOwnerController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(UserSession.user!=null)
         {
             NewHotelInformation.makeRefreshedFalse(this);

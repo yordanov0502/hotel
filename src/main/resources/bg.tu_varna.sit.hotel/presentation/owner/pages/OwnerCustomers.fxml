@@ -3,19 +3,23 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerAddNewHotelAndNewManagerController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.owner.OwnerCustomersController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
@@ -107,7 +111,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="customersQueryButton1" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showCustomersQuery" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Клиенти" textAlignment="RIGHT">
+            <Button fx:id="customersQueryButton1" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Клиенти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -131,11 +135,17 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
+            <Circle fx:id="notificationCircle" fill="#fc0000" layoutX="28.0" layoutY="385.0" radius="10.0" stroke="RED" strokeType="INSIDE" visible="false" />
+            <Label fx:id="notificationLabel" layoutX="21.0" layoutY="377.0" visible="false">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="225.0" layoutY="14.0" prefHeight="32.0" prefWidth="424.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на нов хотел с нов мениджър">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="147.0" layoutY="14.0" prefHeight="32.0" prefWidth="570.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Списък с клиенти (лични данни, услуги, рейтинг)">
          <font>
-            <Font name="Arial" size="22.0" />
+            <Font name="Arial" size="21.0" />
          </font>
       </Label>
       <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
@@ -143,79 +153,38 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="183.0" layoutY="61.0" prefHeight="419.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8);">
+      <Pane layoutX="144.0" layoutY="55.0" prefHeight="107.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <Label layoutX="38.0" layoutY="19.0" text="Въведете данни за мениджър" textFill="WHITE">
+            <Label layoutX="60.0" layoutY="40.0" text="Начална дата" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="addHotelManagerInformationButton" layoutX="28.0" layoutY="48.0" mnemonicParsing="false" onAction="#addHotelManagerInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addHotelManagerInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов мениджър" textFill="WHITE">
+            <DatePicker fx:id="startDatePicker" editable="false" layoutX="21.0" layoutY="69.0" onAction="#startDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Label layoutX="305.0" layoutY="40.0" text="Крайна дата" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <Label layoutX="54.0" layoutY="123.0" text="Въведете данни за хотел" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="addMajorInformationButton" layoutX="28.0" layoutY="148.0" mnemonicParsing="false" onAction="#addMajorInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addMajorInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Основна информация" textFill="WHITE">
+            <DatePicker fx:id="endDatePicker" editable="false" layoutX="259.0" layoutY="69.0" onAction="#endDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Button fx:id="customersQueryButton" layoutX="523.0" layoutY="69.0" mnemonicParsing="false" onAction="#showCustomersQuery" prefHeight="9.0" prefWidth="109.0" styleClass="reserveButton" stylesheets="@../../receptionist/css/ButtonFeaturesOnClick.css" text="Справка" />
+            <Label layoutX="467.0" layoutY="3.0" text="Изберете хотел:" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="addRoomsInformationButton" layoutX="28.0" layoutY="197.0" mnemonicParsing="false" onAction="#addRoomsInformation" prefHeight="38.0" prefWidth="230.0" styleClass="addRoomsInformationButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Брой / видове стаи" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <Label layoutX="28.0" layoutY="279.0" text="*задължителни" textFill="#00eb14" />
-            <Label layoutX="11.0" layoutY="305.0" text="*" textFill="#00eb14">
-               <font>
-                  <Font size="20.0" />
+                  <Font name="Arial Bold" size="17.0" />
                </font>
             </Label>
-            <CheckBox fx:id="managerCheckBox" disable="true" layoutX="28.0" layoutY="305.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="189.0" style="-fx-text-fill: White;" text="Добавен мениджър" underline="true">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </CheckBox>
-            <Label layoutX="11.0" layoutY="333.0" text="*" textFill="#00eb14">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="hotelCheckBox" disable="true" layoutX="28.0" layoutY="333.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="189.0" style="-fx-text-fill: White;" text="Основна информация" underline="true">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </CheckBox>
-            <Label layoutX="11.0" layoutY="361.0" text="*" textFill="#00eb14">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="roomsCheckBox" disable="true" layoutX="28.0" layoutY="361.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="189.0" style="-fx-text-fill: White;" text="Брой / видове стаи" underline="true">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </CheckBox>
+            <ComboBox fx:id="hotelsComboBox" layoutX="441.0" layoutY="26.0" prefHeight="31.0" prefWidth="192.0" />
          </children>
       </Pane>
-      <Pane layoutX="468.0" layoutY="182.0" prefHeight="159.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8);">
-         <children>
-            <Button fx:id="addNewHotelAndNewManagerButton" disable="true" layoutX="11.0" layoutY="26.0" mnemonicParsing="false" onAction="#addNewHotelAndNewManager" prefHeight="38.0" prefWidth="264.0" styleClass="addNewHotelAndNewManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Добави нов хотел с нов мениджър" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="backButton" layoutX="87.0" layoutY="95.0" mnemonicParsing="false" onAction="#backToOwnerAddHotelAndManager" prefHeight="38.0" prefWidth="109.0" styleClass="backButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Назад" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
+      <TableView fx:id="customersTable" layoutX="144.0" layoutY="170.0" prefHeight="313.0" prefWidth="648.0" stylesheets="@../../admin/css/RowsFeatures.css">
+         <columns>
+            <TableColumn fx:id="egnColumn" prefWidth="90.0" style="-fx-font-family: Arial;" text="ЕГН" />
+            <TableColumn fx:id="nameColumn" prefWidth="125.0" text="Име" />
+            <TableColumn fx:id="surnameColumn" prefWidth="125.0" style="-fx-font-family: Arial;" text="Фамилия" />
+            <TableColumn fx:id="phoneColumn" prefWidth="100.0" style="-fx-font-family: Arial;" text="Моб.номер" />
+            <TableColumn fx:id="ratingColumn" prefWidth="100.0" style="-fx-font-family: Arial;" text="Рейтинг ★" />
+            <TableColumn fx:id="actionColumn" prefWidth="103.0" text="Услуги" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

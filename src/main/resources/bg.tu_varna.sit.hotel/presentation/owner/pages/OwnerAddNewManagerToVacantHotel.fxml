@@ -89,6 +89,57 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuButton>
+      <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
+         <children>
+            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showOwnerMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
+            <Button fx:id="addHotelAndManagerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addHotelAndManager" prefHeight="40.0" prefWidth="133.0" styleClass="addHotelAndManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотел/Мениджър" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="HOTEL" layoutX="6.0" layoutY="127.0" size="20" />
+            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" onAction="#showHotelsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
+            <Button fx:id="customersQueryButton1" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showCustomersQuery" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Клиенти" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="MALE" layoutX="6.0" layoutY="237.0" size="28" />
+            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showReceptionistsReservations" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
+            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="343.0" size="20" />
+            <Button fx:id="roomsRatingsButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" onAction="#showRoomRatings" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рейтинг на стаи" textAlignment="RIGHT">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
+         </children>
+      </Pane>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
       <Pane layoutX="166.0" layoutY="72.0" prefHeight="355.0" prefWidth="285.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="38.0" layoutY="14.0" text="Въведете данни за мениджър" textFill="WHITE">
@@ -150,51 +201,6 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="leftPane" prefHeight="500.0" prefWidth="137.0" style="-fx-background-color: #00004d;">
-         <children>
-            <Button fx:id="beginningButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="46.0" mnemonicParsing="false" onAction="#showOwnerMainView" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Начало" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addHotelAndManagerButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addHotelAndManager" prefHeight="40.0" prefWidth="133.0" styleClass="addHotelAndManagerButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Хотел/Мениджър" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="HOTEL" layoutX="6.0" layoutY="127.0" size="20" />
-            <Button fx:id="hotelsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="154.0" mnemonicParsing="false" onAction="#showHotelsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="ownersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Хотели" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
-            <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showReceptionistsReservations" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="customersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="343.0" size="20" />
-            <Button fx:id="roomsRatingsButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" onAction="#showRoomRatings" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рейтинг на стаи" textAlignment="RIGHT">
-               <font>
-                  <Font name="Arial" size="15.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
       <Label fx:id="headingLabel" alignment="CENTER" layoutX="153.0" layoutY="14.0" prefHeight="32.0" prefWidth="560.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на нов мениджър към съществуващ хотел">
          <font>
             <Font name="Arial" size="22.0" />
@@ -210,6 +216,5 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Button>
-      <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
    </children>
 </AnchorPane>

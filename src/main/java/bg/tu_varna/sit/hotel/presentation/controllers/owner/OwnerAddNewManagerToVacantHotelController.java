@@ -5,6 +5,7 @@ import bg.tu_varna.sit.hotel.business.UserService;
 import bg.tu_varna.sit.hotel.common.*;
 import bg.tu_varna.sit.hotel.presentation.controllers.admin.AdminMainController;
 import bg.tu_varna.sit.hotel.presentation.models.UserModel;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -14,6 +15,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class OwnerAddNewManagerToVacantHotelController {
@@ -41,6 +44,8 @@ public class OwnerAddNewManagerToVacantHotelController {
     private Button addNewManagerButton;
     @FXML
     private ComboBox<String> comboBox;
+    @FXML
+    private Label timeLabel;
 
 
     public void showOwnerMainView() throws IOException {
@@ -57,6 +62,12 @@ public class OwnerAddNewManagerToVacantHotelController {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
 
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
@@ -154,6 +165,14 @@ public class OwnerAddNewManagerToVacantHotelController {
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         comboBox.setItems(userService.getAllHotelNamesOfOwnerWithoutManager(userService.getUserById(UserSession.user.getId())));
 
         anchorPane.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent -> {

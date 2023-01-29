@@ -110,12 +110,12 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
+            <Button fx:id="customersQueryButton1" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showCustomersQuery" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Клиенти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
+            <FontAwesomeIconView glyphName="MALE" layoutX="6.0" layoutY="237.0" size="28" />
             <Button fx:id="receptionistsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showReceptionistsReservations" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
@@ -133,9 +133,15 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
+            <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
       <Label fx:id="headingLabel" alignment="CENTER" layoutX="292.0" layoutY="14.0" prefHeight="32.0" prefWidth="300.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Списък с всички мои хотели">
+         <font>
+            <Font name="Arial" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
          <font>
             <Font name="Arial" size="22.0" />
          </font>
@@ -179,6 +185,5 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
    </children>
 </AnchorPane>

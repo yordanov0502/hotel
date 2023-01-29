@@ -8,12 +8,16 @@ import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.MajorOwnerController;
 import bg.tu_varna.sit.hotel.presentation.controllers.owner.cache.NewHotelInformation;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerController {
     private static final Logger log = Logger.getLogger(OwnerAddHotelAndManagerOwnerController.class);
@@ -24,6 +28,8 @@ public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerControl
     private Button addHotelAndManagerButton1;
     @FXML
     private Button addHotelAndManagerButton2;
+    @FXML
+    private Label timeLabel;
 
 
 
@@ -36,6 +42,12 @@ public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerControl
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Customers Query", 800, 500);
+    }
+
 
     public void showReceptionistsReservations() throws IOException {
         ViewManager.closeDialogBox();
@@ -100,6 +112,14 @@ public class OwnerAddHotelAndManagerOwnerController implements MajorOwnerControl
 
     public void initialize()
     {
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                timeLabel.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+            }
+        };
+        timer.start();
+
         if(UserSession.user!=null)
         {
             NewHotelInformation.makeRefreshedFalse(this);
