@@ -128,12 +128,11 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="343.0" size="20" />
-            <Button fx:id="newAdminsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="  За потвърждение" textAlignment="RIGHT">
+            <Button fx:id="roomsRatingsButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" onAction="#showRoomRatings" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рейтинг на стаи" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="5.0" layoutY="397.0" size="20" />
          </children>
       </Pane>
       <Label fx:id="headingLabel" alignment="CENTER" layoutX="292.0" layoutY="14.0" prefHeight="32.0" prefWidth="300.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Списък с всички мои хотели">
@@ -180,5 +179,6 @@
             </Tooltip>
          </tooltip>
       </Button>
+      <FontAwesomeIconView glyphName="STAR" layoutX="7.0" layoutY="397.0" size="20" />
    </children>
 </AnchorPane>

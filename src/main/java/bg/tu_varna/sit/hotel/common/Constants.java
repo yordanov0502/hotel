@@ -43,6 +43,7 @@ public final class Constants {
         public static final String OWNER_ROOM_EDIT_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerRoomEditInfo.fxml";
         public static final String OWNER_HOTELS_INFO_SERVICES_INFORMATION_VIEW="/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerHotelsInfoServicesInformation.fxml";
         public static final String OWNER_ADD_ROOM_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerAddRoom.fxml";
+        public static final String OWNER_ROOMS_RATINGS_VIEW = "/bg.tu_varna.sit.hotel/presentation/owner/pages/OwnerRoomsRatings.fxml";
         public static final String MANAGER_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerLogin.fxml";
         public static final String MANAGER_MAIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerMain.fxml";
         public static final String MANAGER_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerInfo.fxml";

@@ -1,14 +1,18 @@
-package bg.tu_varna.sit.hotel.presentation.controllers.manager;
+package bg.tu_varna.sit.hotel.presentation.controllers.owner;
 
 import bg.tu_varna.sit.hotel.business.*;
 import bg.tu_varna.sit.hotel.common.AlertManager;
 import bg.tu_varna.sit.hotel.common.Constants;
 import bg.tu_varna.sit.hotel.common.UserSession;
 import bg.tu_varna.sit.hotel.common.ViewManager;
+import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
+import bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerRoomRatingsController;
 import bg.tu_varna.sit.hotel.presentation.models.HotelModel;
 import bg.tu_varna.sit.hotel.presentation.models.RoomModel;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,18 +23,20 @@ import org.joda.time.Days;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class ManagerRoomRatingsController {
-    private static final Logger log = Logger.getLogger(ManagerRoomRatingsController.class);
+public class OwnerRoomRatingsController {
+    private static final Logger log = Logger.getLogger(OwnerRoomRatingsController.class);
     private final UserService userService = UserService.getInstance();
     private final ServiceService serviceService = ServiceService.getInstance();
     private final RoomService roomService = RoomService.getInstance();
     private final ReservationService reservationService = ReservationService.getInstance();
+    private final HotelService hotelService = HotelService.getInstance();
     private HotelModel hotelModel;
+    private List<Hotel> hotelsOfOwner;
 
     @FXML
     private TableView<RoomModel> roomsTable;
@@ -60,35 +66,23 @@ public class ManagerRoomRatingsController {
     @FXML
     private Button roomQueryButton;
 
+    @FXML
+    private ComboBox<String> hotelsComboBox;
 
-    public void showManagerMainView() throws IOException {
+
+    public void showOwnerMainView() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Main", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_MAIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Main", 800, 500);
     }
 
-    public void addNewReceptionist() throws IOException {
+    public void addHotelAndManager() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_ADD_NEW_RECEPTIONIST_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Add New Receptionist", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_ADD_HOTEL_AND_MANAGER_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Add Hotel And Manager", 800, 500);
     }
 
-    public void showCustomersQuery() throws IOException {
+    public void showHotelsInfo() throws IOException {
         ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Customers Info", 800, 500);
-    }
-
-    public void showReceptionistsReservationsInfo() throws IOException{
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_RECEPTIONISTS_RESERVATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Receptionists Reservations Info", 800, 500);
-    }
-
-    public void showRegistrationsInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_REGISTRATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Registrations Info", 800, 500);
-    }
-
-    public void showHotelInfo() throws IOException {
-        ViewManager.closeDialogBox();
-        ViewManager.changeView(Constants.View.MANAGER_HOTEL_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Hotel Info", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
 
 
@@ -97,22 +91,22 @@ public class ManagerRoomRatingsController {
         ViewManager.closeDialogBox();
         if(UserSession.user!=null)
         {
-            log.info("Manager \""+UserSession.user.getUsername()+"\" successfully logged out.");
+            log.info("Owner \""+UserSession.user.getUsername()+"\" successfully logged out.");
             UserSession.user=null;//pri logout dannite za nastoqshta user sesiq se iztrivat, za da ne sa nali4ni otvun
         }
-        ViewManager.changeView(Constants.View.MANAGER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Login", 800, 500);
+        ViewManager.changeView(Constants.View.OWNER_LOGIN_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Login", 800, 500);
     }
 
 
     public void showAccountInformation() throws IOException {
         if(UserSession.user==null)
         {
-            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Няма заредени данни за мениджър.");
+            AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Няма заредени данни за собственик.");
         }
         else
         {
             ViewManager.closeDialogBox();
-            ViewManager.openDialogBox(Constants.View.MANAGER_INFO_VIEW, null,this.getClass(),"Manager Info", 652, 352);
+            ViewManager.openDialogBox(Constants.View.OWNER_INFO_VIEW, null,this.getClass(),"Owner Info", 652, 352);
         }
     }
 
@@ -129,7 +123,29 @@ public class ManagerRoomRatingsController {
 
         if(UserSession.user!=null)
         {
-            hotelModel = userService.getUserById(UserSession.user.getId()).getHotels().get(0).toModel();
+            hotelsOfOwner = userService.getUserById(UserSession.user.getId()).getHotels();
+            if(hotelsOfOwner!=null && hotelsOfOwner.size()>0)
+            {
+                hotelsComboBox.getItems().addAll(hotelsOfOwner.stream().map(Hotel::getName).collect(Collectors.toList()));
+            }
+            else
+            {
+                hotelsComboBox.setDisable(true);
+            }
+
+
+
+            hotelsComboBox.valueProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue ov, String t, String t1) {
+                    if(roomsTable.getItems()!=null)
+                    {
+                        roomsTable.getItems().clear();
+                    }
+                    roomQueryButton.setDisable(startDatePicker.getValue() == null || endDatePicker.getValue() == null);
+                }
+            });
+
 
 
             roomsTable.getColumns().forEach(column -> column.setReorderable(false));//prevents custom reordering of columns in order to avoid icon bugs
@@ -163,8 +179,17 @@ public class ManagerRoomRatingsController {
 
     public void showRoomQuery() {
 
-        if(validateDates())
+        if(validateDates() && validateChosenHotel())
         {
+            for(Hotel currHotel : hotelsOfOwner)
+            {
+                if(hotelsComboBox.getValue().equals(currHotel.getName()))
+                {
+                    hotelModel = hotelService.getHotelByName(hotelsComboBox.getValue());
+                    break;
+                }
+            }
+
             String startDateHour = startDatePicker.getValue()+" 00:00:00.000000000";
             Timestamp startDate = Timestamp.valueOf(startDateHour);
 
@@ -311,6 +336,18 @@ public class ManagerRoomRatingsController {
         }
     }
 
+    private boolean validateChosenHotel(){
+        if(hotelsComboBox.getValue()!=null)
+        {
+            return true;
+        }
+        else
+        {
+            AlertManager.showAlert(Alert.AlertType.ERROR,"Грешка","Моля изберете хотел.");
+            return false;
+        }
+    }
+
     private boolean validateDates(){
         if(startDatePicker.getValue().equals(endDatePicker.getValue()))
         {
@@ -331,6 +368,10 @@ public class ManagerRoomRatingsController {
         {
             roomsTable.getItems().clear();
         }
+        if(hotelsComboBox.getValue()!=null)
+        {
+            hotelsComboBox.setValue(null);
+        }
         roomQueryButton.setDisable(startDatePicker.getValue() == null || endDatePicker.getValue() == null);
     }
     public void endDatePickerChanged()
@@ -339,7 +380,12 @@ public class ManagerRoomRatingsController {
         {
             roomsTable.getItems().clear();
         }
+        if(hotelsComboBox.getValue()!=null)
+        {
+            hotelsComboBox.setValue(null);
+        }
         roomQueryButton.setDisable(startDatePicker.getValue() == null || endDatePicker.getValue() == null);
     }
+
 
 }
