@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.data.repositories.interfaces;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.data.entities.Room;
+import bg.tu_varna.sit.hotel.data.entities.User;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -27,4 +28,5 @@ public interface ReservationRepository<T> extends Repository<T> {
     List<T> getAllReservationsOfHotelWithoutExpiryNotification(Hotel hotel);
     List<T> getAllReservationsOfHotelWithExpiryNotification(Hotel hotel);
     List<T> getReservationsForPeriod(Hotel hotel,Timestamp startDate,Timestamp endDate);
+    List<T> getAllReservationsOfReceptionist(User receptionist, Hotel hotel);
 }

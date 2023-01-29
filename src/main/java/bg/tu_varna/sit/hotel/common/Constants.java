@@ -53,6 +53,8 @@ public final class Constants {
         public static final String MANAGER_ROOMS_RATINGS_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerRoomsRatings.fxml";
         public static final String MANAGER_REGISTRATIONS_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerCreatedRegistrations.fxml";
         public static final String MANAGER_REGISTRATIONS_FORM_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerRegistrationsForm.fxml";
+        public static final String MANAGER_RECEPTIONISTS_RESERVATIONS_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerReceptionistsReservations.fxml";
+        public static final String MANAGER_RESERVATION_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/manager/pages/ManagerReservationInfo.fxml";
         public static final String RECEPTIONIST_LOGIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistLogin.fxml";
         public static final String RECEPTIONIST_MAIN_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistMain.fxml";
         public static final String RECEPTIONIST_INFO_VIEW = "/bg.tu_varna.sit.hotel/presentation/receptionist/pages/ReceptionistInfo.fxml";

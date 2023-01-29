@@ -3,12 +3,14 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -17,7 +19,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerAddNewReceptionistController">
+<AnchorPane fx:id="anchorPane" prefHeight="500.0" prefWidth="800.0" styleClass="anchor" stylesheets="@../../admin/css/WelcomeView.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bg.tu_varna.sit.hotel.presentation.controllers.manager.ManagerReceptionistsReservationsController">
    <children>
       <MenuButton fx:id="secondaryMenuButton" layoutX="728.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="49.0" styleClass="secondaryMenuButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css">
         <items>
@@ -97,7 +99,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="HOME" layoutX="5.0" layoutY="74.0" size="25" text="" />
-            <Button fx:id="addReceptionistButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="addNewReceptionistButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционист" textAlignment="RIGHT">
+            <Button fx:id="addNewReceptionistButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#addNewReceptionist" prefHeight="40.0" prefWidth="133.0" styleClass="addNewReceptionistButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Рецепционист" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -109,13 +111,13 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="receptionistsReservationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showReceptionistsReservationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
+            <Button fx:id="receptionistsReservationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="235.0" size="20" />
-            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="receptionistsQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
+            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="262.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="registrationsQueryButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
@@ -141,9 +143,9 @@
             </Label>
          </children>
       </Pane>
-      <Label fx:id="headingLabel" alignment="CENTER" layoutX="254.0" layoutY="14.0" prefHeight="32.0" prefWidth="350.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добавяне на нов рецепционист">
+      <Label fx:id="headingLabel" alignment="CENTER" layoutX="143.0" layoutY="14.0" prefHeight="32.0" prefWidth="579.0" style="-fx-background-color: #3366cc; -fx-background-radius: 50;" styleClass="headingLabel" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Списък с рецепционисти (създадени резервации и лични данни)">
          <font>
-            <Font name="Arial" size="22.0" />
+            <Font name="Arial" size="19.0" />
          </font>
       </Label>
       <Label fx:id="timeLabel" layoutX="137.0" layoutY="222.0" prefHeight="36.0" prefWidth="141.0" textFill="WHITE">
@@ -151,60 +153,105 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="249.0" layoutY="68.0" prefHeight="396.0" prefWidth="355.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="145.0" layoutY="50.0" prefHeight="114.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
-            <Label layoutX="59.0" layoutY="14.0" text="Въведете данни за рецепционист" textFill="WHITE">
+            <Label layoutX="40.0" layoutY="14.0" text="Начална дата" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="startDatePicker" editable="false" layoutX="1.0" layoutY="43.0" onAction="#startDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Label layoutX="267.0" layoutY="14.0" text="Крайна дата" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="endDatePicker" editable="false" layoutX="221.0" layoutY="43.0" onAction="#endDatePickerChanged" prefHeight="31.0" prefWidth="213.0" />
+            <Button fx:id="reservationsQueryButton" layoutX="489.0" layoutY="58.0" mnemonicParsing="false" onAction="#showReservationsQuery" prefHeight="32.0" prefWidth="109.0" styleClass="reserveButton" stylesheets="@../../receptionist/css/ButtonFeaturesOnClick.css" text="Справка" />
+            <ComboBox fx:id="receptionistsComboBox" layoutX="453.0" layoutY="20.0" prefHeight="31.0" prefWidth="176.0" />
+            <Label layoutX="434.0" layoutY="-1.0" text="Изберете рецепционист:" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <TableView fx:id="reservationsTable" layoutX="145.0" layoutY="168.0" prefHeight="313.0" prefWidth="359.0" styleClass="column-header" stylesheets="@../../receptionist/css/ReservationsTableRowsFeatures.css">
+         <columns>
+            <TableColumn fx:id="resNumberColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Номер" />
+            <TableColumn fx:id="resTypeColumn" prefWidth="81.0" style="-fx-font-family: Arial;" text="Тип" />
+            <TableColumn fx:id="resStatusColumn" prefWidth="95.0" style="-fx-font-family: Arial;" text="Статус" />
+            <TableColumn fx:id="resRoomsColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="Бр. стаи" />
+            <TableColumn fx:id="actionColumn" prefWidth="30.0" style="-fx-font-family: Arial;" text="🛈" />
+         </columns>
+      </TableView>
+      <Pane layoutX="517.0" layoutY="168.0" prefHeight="313.0" prefWidth="274.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+         <children>
+            <Label layoutX="54.0" layoutY="9.0" text="Данни на рецепционист" textFill="WHITE">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="receptionistNameField" alignment="CENTER" layoutX="90.0" layoutY="45.0" prefHeight="31.0" prefWidth="189.0" promptText="Име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            <Label layoutX="4.0" layoutY="56.0" text="Име:" textFill="#1a1251">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
-            </TextField>
-            <TextField fx:id="receptionistSurnameField" alignment="CENTER" layoutX="90.0" layoutY="85.0" prefHeight="31.0" prefWidth="189.0" promptText="Фамилия" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label fx:id="nameLabel" layoutX="51.0" layoutY="52.0" prefHeight="25.0" prefWidth="213.0" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </TextField>
-            <TextField fx:id="receptionistEGNField" alignment="CENTER" layoutX="90.0" layoutY="125.0" prefHeight="31.0" prefWidth="189.0" promptText="ЕГН" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label layoutX="4.0" layoutY="96.0" text="Фамилия:" textFill="#1a1251">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
-            </TextField>
-            <TextField fx:id="receptionistPhoneField" alignment="CENTER" layoutX="90.0" layoutY="165.0" prefHeight="31.0" prefWidth="189.0" promptText="Мобилен номер" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label fx:id="surnameLabel" layoutX="95.0" layoutY="94.0" prefHeight="25.0" prefWidth="176.0" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </TextField>
-            <PasswordField fx:id="receptionistPasswordField" alignment="CENTER" layoutX="90.0" layoutY="205.0" prefHeight="31.0" prefWidth="189.0" promptText="Парола" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label layoutX="4.0" layoutY="136.0" text="ЕГН:" textFill="#1a1251">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
-            </PasswordField>
-            <TextField fx:id="receptionistUsernameField" alignment="CENTER" layoutX="90.0" layoutY="245.0" prefHeight="31.0" prefWidth="189.0" promptText="Потребителско име" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label fx:id="egnLabel" layoutX="61.0" layoutY="133.0" prefHeight="25.0" prefWidth="109.0" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </TextField>
-            <TextField fx:id="receptionistEmailField" alignment="CENTER" layoutX="90.0" layoutY="285.0" prefHeight="31.0" prefWidth="189.0" promptText="Имейл адрес" style="-fx-background-color: rgba(41, 41, 41, 0.8); -fx-background-radius: 15; -fx-text-fill: white;">
+            </Label>
+            <Label layoutX="4.0" layoutY="176.0" text="Моб.номер:" textFill="#1a1251">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial" size="18.0" />
                </font>
-            </TextField>
-            <Button fx:id="addNewReceptionistButton" layoutX="129.0" layoutY="336.0" mnemonicParsing="false" onAction="#addNewReceptionist" prefHeight="38.0" prefWidth="109.0" styleClass="adminRegistrationButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Добави" textFill="WHITE">
+            </Label>
+            <Label fx:id="phoneLabel" layoutX="116.0" layoutY="174.0" prefHeight="25.0" prefWidth="109.0" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Arial Bold" size="18.0" />
                </font>
-            </Button>
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="65.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="FILE_TEXT" layoutX="70.0" layoutY="105.0" size="15" />
-            <FontAwesomeIconView fill="WHITE" glyphName="INFO" layoutX="73.0" layoutY="147.0" size="20" text="" />
-            <FontAwesomeIconView fill="WHITE" glyphName="PHONE" layoutX="68.0" layoutY="187.0" size="20" />
-            <FontAwesomeIconView fill="WHITE" glyphName="LOCK" layoutX="69.0" layoutY="228.0" size="22" />
-            <FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="68.0" layoutY="267.0" size="20" />
-            <FontAwesomeIconView fill="WHITE" glyphName="ENVELOPE" layoutX="68.0" layoutY="306.0" size="16" />
+            </Label>
+            <Label layoutX="4.0" layoutY="216.0" text="Потр.име:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="usernameLabel" layoutX="95.0" layoutY="214.0" prefHeight="25.0" prefWidth="176.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="4.0" layoutY="256.0" text="Имейл:" textFill="#1a1251">
+               <font>
+                  <Font name="Arial" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="emailLabel" layoutX="69.0" layoutY="253.0" prefHeight="25.0" prefWidth="205.0" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

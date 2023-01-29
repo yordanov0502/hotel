@@ -6,6 +6,7 @@ import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.ReservationRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistLoginController;
 import bg.tu_varna.sit.hotel.presentation.models.*;
+import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -16,8 +17,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import java.sql.Timestamp;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -376,6 +379,21 @@ public class ReservationService {
     private String determineNotificationsCounter(int notificationNumber){
         if(notificationNumber>0 && notificationNumber<10) {return String.valueOf(notificationNumber);}
         else return "+9";
+    }
+
+
+
+    public List<Reservation> getAllReservationsOfReceptionist(UserModel receptionist,HotelModel hotelModel) {
+        List<Reservation> allReservationsOfReceptionist = reservationRepository.getAllReservationsOfReceptionist(receptionist.toEntity(),hotelModel.toEntity());
+
+        if(allReservationsOfReceptionist.isEmpty()) {return null;}
+
+        else {return allReservationsOfReceptionist;}
+    }
+
+    public int getCountOfReservation(Long reservationNumber,HotelModel hotelModel)
+    {
+        return (int)((long)reservationRepository.getCountOfReservationNumber(reservationNumber,hotelModel.toEntity()));
     }
 
 }

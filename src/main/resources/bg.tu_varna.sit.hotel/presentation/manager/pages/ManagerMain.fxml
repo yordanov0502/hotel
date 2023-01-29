@@ -107,7 +107,7 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="BUILDING" layoutX="7.0" layoutY="181.0" size="20" />
-            <Button fx:id="managersQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Мениджъри" textAlignment="RIGHT">
+            <Button fx:id="receptionistsReservationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="208.0" mnemonicParsing="false" onAction="#showReceptionistsReservationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="managersQueryButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рецепционисти" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>

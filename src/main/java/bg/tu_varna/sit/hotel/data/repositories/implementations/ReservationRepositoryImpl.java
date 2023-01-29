@@ -4,6 +4,7 @@ import bg.tu_varna.sit.hotel.data.access.Connection;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Reservation;
 import bg.tu_varna.sit.hotel.data.entities.Room;
+import bg.tu_varna.sit.hotel.data.entities.User;
 import bg.tu_varna.sit.hotel.data.repositories.interfaces.ReservationRepository;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -119,7 +120,7 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
             log.error("Get last reservation number of hotel error: " + e.getMessage());
         } finally {
             session.close();
-        }System.out.println("Query="+lastReservationNumber);
+        }
         return lastReservationNumber;
     }
 
@@ -135,9 +136,9 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
 
             reservationsWithUniqueRoomIds.addAll(session.createQuery(jpql, Reservation.class).getResultList());
             transaction.commit();
-            log.info("Got all reservations of hotel before date.");
+            log.info("Got all reservations of hotel for period(or around) successfully.");
         } catch (Exception e) {
-            log.error("Get all reservations of hotel before date error: " + e.getMessage());
+            log.error("Get all reservations of hotel for period(or around) error: " + e.getMessage());
         } finally {
             session.close();
         }
@@ -453,4 +454,44 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         }
         return allReservationsWithoutExpiryNotification;
     }
+
+
+    @Override
+    public List<Reservation> getAllReservationsOfReceptionist(User receptionist, Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        List<Reservation> allReservationsOfReceptionist = new LinkedList<>();
+        try{
+            String jpql = "SELECT rr FROM Reservation rr WHERE rr.receptionist.id = '"+receptionist.getId()+"' AND rr.hotel = '"+ hotel.getId() +"'";
+            allReservationsOfReceptionist.addAll(session.createQuery(jpql, Reservation.class).getResultList());
+            transaction.commit();
+            log.info("Got all reservations of receptionist successfully.");
+        } catch (Exception e) {
+            log.error("Get all reservations of receptionist error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return allReservationsOfReceptionist;
+    }
+
+
+
+
+    public Long getCountOfReservationNumber(Long number, Hotel hotel) {
+        Session session = Connection.openSession();
+        Transaction transaction = session.beginTransaction();
+        Long  countOfReservationNumber = 0L;
+        try{
+            String jpql = "SELECT COUNT (rr.number) FROM Reservation rr WHERE rr.number = '"+number+"' AND rr.hotel = '"+ hotel.getId() +"'";
+            countOfReservationNumber = (Long) session.createQuery(jpql).getSingleResult();
+            transaction.commit();
+            log.info("Got count of reservation number "+number+" of hotel \""+hotel.getName()+"\" successfully.");
+        } catch (Exception e) {
+            log.error("Get count of reservation number "+number+" of hotel \""+hotel.getName()+"\" error: " + e.getMessage());
+        } finally {
+            session.close();
+        }
+        return countOfReservationNumber;
+    }
+
 }

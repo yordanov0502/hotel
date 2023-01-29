@@ -440,6 +440,7 @@ public class ReceptionistReservationsController {
         }
 
 
+
         return FXCollections.observableList(
                 new LinkedList<>(tempReservationsMap.values()).stream().map(rrm -> new ReservationRowModel(
                         rrm.getNumber(),
@@ -474,9 +475,7 @@ public class ReceptionistReservationsController {
                         List<Reservation> allUncompletedReservationsOfCustomer = reservationService.getAllUncompletedReservationsOfCustomerById(customerModel.getId(),hotelModel);
 
                         if(allUncompletedReservationsOfCustomer!=null)
-                        {System.out.println(assembleWholeReservations(allUncompletedReservationsOfCustomer).size()+"------res of cus-----------------------");
-                            System.out.println(reservationsTable.getItems().size()+"------total reses-----------------------");
-
+                        {
                             if(reservationsTable.getItems().size()-assembleWholeReservations(allUncompletedReservationsOfCustomer).size()>0)
                             {
                                 reservationsTable.getItems().clear();
