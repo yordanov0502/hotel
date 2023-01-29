@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reservations")
@@ -185,4 +186,17 @@ public class Reservation implements Serializable {
         return reservationModel;
     }
 
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return number.equals(that.number) && hotel.equals(that.hotel) && customer.equals(that.customer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(number, hotel, customer);
+    }*/
 }

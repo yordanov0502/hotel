@@ -29,4 +29,6 @@ public interface ReservationRepository<T> extends Repository<T> {
     List<T> getAllReservationsOfHotelWithExpiryNotification(Hotel hotel);
     List<T> getReservationsForPeriod(Hotel hotel,Timestamp startDate,Timestamp endDate);
     List<T> getAllReservationsOfReceptionist(User receptionist, Hotel hotel);
+    //List<T> getReservationsForPeriodDistinct(Hotel hotel,Timestamp startDate,Timestamp endDate,Long customerId);
+    List<T> getReservationsOfCustomerForPeriod(Hotel hotel, Timestamp startDate, Timestamp endDate, Long customerId);
 }

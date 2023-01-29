@@ -22,10 +22,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class ManagerRoomRatingsController {
     private static final Logger log = Logger.getLogger(ManagerRoomRatingsController.class);
@@ -72,6 +69,11 @@ public class ManagerRoomRatingsController {
     public void addNewReceptionist() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.MANAGER_ADD_NEW_RECEPTIONIST_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Add New Receptionist", 800, 500);
+    }
+
+    public void showCustomersQuery() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.MANAGER_CUSTOMERS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Manager Customers Info", 800, 500);
     }
 
     public void showReceptionistsReservationsInfo() throws IOException{
@@ -159,7 +161,7 @@ public class ManagerRoomRatingsController {
 
     }
 
-    public void showRoomQuery() throws ParseException {
+    public void showRoomQuery() {
 
         if(validateDates())
         {
@@ -172,12 +174,10 @@ public class ManagerRoomRatingsController {
 
             List<RoomModel> allRooms = roomService.getAllHotelRooms(hotelModel);//all rooms of hotel
 
+
+
             List<Reservation> reservationsForPeriod = reservationService.getReservationsForPeriod(hotelModel,startDate,endDate);//all reservations between start date and end date
 
-            for(Reservation r: reservationsForPeriod)
-            {
-                System.out.println("room "+r.getRoom().getNumber());
-            }
 
             List<RoomModel> reservedRooms = new LinkedList<>();//list to store all rooms which have been reserved before specific date
 
@@ -185,89 +185,129 @@ public class ManagerRoomRatingsController {
 
             if(reservationsForPeriod !=null)
             {
-              for(Reservation reservation: reservationsForPeriod)
-              {
-                  RoomModel tempRoom = reservation.getRoom().toModel();
-
-                  //1st case
-                  if(reservation.getStartDate().before(startDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
-                  {
-                      int daysAfterStartDate = (Days.daysBetween(new DateTime(startDate.getTime()),new DateTime(reservation.getEndDate().getTime())).getDays());
-                      tempRoom.setNightsOccupied(daysAfterStartDate);
-                  }
-                  //2nd case
-                  else if(reservation.getStartDate().after(startDate) && reservation.getStartDate().before(endDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
-                  {
-                      tempRoom.setNightsOccupied(reservation.getNightsOccupied());
-                  }
-                  //3rd case
-                  else if(reservation.getStartDate().after(startDate) && reservation.getStartDate().before(endDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().after(endDate))
-                  {
-                      int daysBeforeEndDate = (Days.daysBetween(new DateTime(reservation.getStartDate().getTime()),new DateTime(endDate.getTime())).getDays());
-                      tempRoom.setNightsOccupied(daysBeforeEndDate);
-                  }
-                  //4th case
-                  else if(reservation.getStartDate().before(startDate) && reservation.getEndDate().after(endDate))
-                  {
-                      int daysBetweenPeriod = (Days.daysBetween(new DateTime(startDate.getTime()),new DateTime(endDate.getTime())).getDays());
-                      tempRoom.setNightsOccupied(daysBetweenPeriod);
-                  }
-
-                  ///////////////////////////////////////////////////
-
-                  if(!(reservation.getEndDate().before(startDate) || reservation.getStartDate().after(endDate)))
-                  {
-                      if(!reservedRooms.contains(tempRoom))
-                      {
-                          reservedRooms.add(tempRoom);
-                      }
-                      else
-                      {
-                          for(RoomModel reservedRoom: reservedRooms)
-                          {
-                              if(reservedRoom.equals(tempRoom))
-                              {
-                                  int oldNightsOccupied = reservedRoom.getNightsOccupied();
-                                  reservedRoom.setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
-                                  break;
-                              }
-                          }
-                      }
-                  }
+                for(Reservation reservation: reservationsForPeriod)
+                {
+                    RoomModel tempRoom = reservation.getRoom().toModel();
 
 
 
-              }
+                    //1st case
+                    if(reservation.getStartDate().before(startDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
+                    {
+                        int daysAfterStartDate = (Days.daysBetween(new DateTime(startDate.getTime()),new DateTime(reservation.getEndDate().getTime())).getDays());
+                        tempRoom.setNightsOccupied(daysAfterStartDate);
+                    }
+                    //2nd case
+                    else if(reservation.getStartDate().after(startDate) && reservation.getStartDate().before(endDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
+                    {
+                        tempRoom.setNightsOccupied(reservation.getNightsOccupied());
+                    }
+                    //3rd case
+                    else if(reservation.getStartDate().after(startDate) && reservation.getStartDate().before(endDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().after(endDate))
+                    {
+                        int daysBeforeEndDate = (Days.daysBetween(new DateTime(reservation.getStartDate().getTime()),new DateTime(endDate.getTime())).getDays());
+                        tempRoom.setNightsOccupied(daysBeforeEndDate);
+                    }
+                    //4th case
+                    else if(reservation.getStartDate().before(startDate) && reservation.getEndDate().after(endDate))
+                    {
+                        int daysBetweenPeriod = (Days.daysBetween(new DateTime(startDate.getTime()),new DateTime(endDate.getTime())).getDays());
+                        tempRoom.setNightsOccupied(daysBetweenPeriod);
+                    }
+
+
+                    if(!(reservation.getEndDate().before(startDate) || reservation.getStartDate().after(endDate)))
+                    {
+                        if(!reservedRooms.contains(tempRoom))
+                        {
+                            reservedRooms.add(tempRoom);
+                            System.out.println(reservedRooms.size());
+                        }
+                        else
+                        {
+                            for(RoomModel reservedRoom: reservedRooms)
+                            {
+                                if(reservedRoom.equals(tempRoom))
+                                {
+                                    int oldNightsOccupied = reservedRoom.getNightsOccupied();
+                                    reservedRoom.setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+                List<RoomModel> uniqueRooms = new LinkedList<>();//list to store all rooms which have been reserved before specific date
+                for(RoomModel reservedRoom : reservedRooms)
+                {
+                    if(reservedRoom.getHotel().getId().equals(hotelModel.getId()))
+                    {
+                        uniqueRooms.add(reservedRoom);
+                    }
+                }
 
 
 
                 //list of all rooms which have been reserved during or around the period
-                List<RoomModel> roomsWithCalculatedRatingForPeriod = roomService.calculateRoomRatingsForPeriod(reservedRooms,hotelModel);
+                List<RoomModel> roomsWithCalculatedRatingForPeriod = roomService.calculateRoomRatingsForPeriod(uniqueRooms,hotelModel);
+
 
 
                 //if there are rooms which has never been reserved or doesn't match the criteria for period
+                boolean brake=false;
                 if(allRooms.size()>roomsWithCalculatedRatingForPeriod.size())
-              {
-                  for(RoomModel currRoom: allRooms)
-                  {
-                      if(!roomsWithCalculatedRatingForPeriod.contains(currRoom))
-                      {
-                          currRoom.setRating(1);
-                          currRoom.setNightsOccupied(0);
-                          roomsWithCalculatedRatingForPeriod.add(currRoom);
-                          if(allRooms.size()==roomsWithCalculatedRatingForPeriod.size()){break;}
-                      }
-                  }
-                  Collections.sort(roomsWithCalculatedRatingForPeriod);
-                  roomsTable.setItems(FXCollections.observableArrayList(roomsWithCalculatedRatingForPeriod));
-              }
+                {
+
+
+                    for(RoomModel currRoom: allRooms)
+                    {
+                        for(RoomModel roomModel : roomsWithCalculatedRatingForPeriod)
+                        {
+                            if(!currRoom.getHotel().getName().equals(roomModel.getHotel().getName()))
+                            {
+                                currRoom.setRating(1);
+                                currRoom.setNightsOccupied(0);
+                                roomsWithCalculatedRatingForPeriod.add(currRoom);
+                                if(allRooms.size()==roomsWithCalculatedRatingForPeriod.size()){break;}
+                            }
+                        }
+                    }
+
+
+                    Set<RoomModel> finalRooms = new HashSet<>(roomsWithCalculatedRatingForPeriod);
+                    List<RoomModel> sortedRooms = new LinkedList<>(finalRooms);
+
+                    Collections.sort(sortedRooms);
+                    roomsTable.setItems(FXCollections.observableArrayList(sortedRooms));
+                }
+
+                else
+                {
+                    Set<RoomModel> finalRooms = new HashSet<>(roomsWithCalculatedRatingForPeriod);
+                    List<RoomModel> sortedRooms = new LinkedList<>(finalRooms);
+
+                    Collections.sort(sortedRooms);
+                    roomsTable.setItems(FXCollections.observableArrayList(sortedRooms));
+                }
 
             }
 
 
             else //this will execute if no rooms were reserved(ever)
             {
-                roomsTable.setItems(roomService.getAllHotelRooms(hotelModel));
+                for(RoomModel roomModel: allRooms)
+                {
+                    roomModel.setRating(1);
+                    roomModel.setNightsOccupied(0);
+                }
+                roomsTable.setItems(FXCollections.observableList(allRooms));
             }
         }
     }

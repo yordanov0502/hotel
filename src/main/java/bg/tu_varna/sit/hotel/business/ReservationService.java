@@ -6,7 +6,6 @@ import bg.tu_varna.sit.hotel.data.entities.Room;
 import bg.tu_varna.sit.hotel.data.repositories.implementations.ReservationRepositoryImpl;
 import bg.tu_varna.sit.hotel.presentation.controllers.receptionist.ReceptionistLoginController;
 import bg.tu_varna.sit.hotel.presentation.models.*;
-import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -17,10 +16,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import java.sql.Timestamp;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -140,11 +137,21 @@ public class ReservationService {
     }
 
     public List<Reservation> getReservationsForPeriod(HotelModel hotelModel,  Timestamp startDate, Timestamp endDate) {
-        List<Reservation> reservationsBeforeDate = reservationRepository.getReservationsForPeriod(hotelModel.toEntity(),startDate,endDate);
+        List<Reservation> reservationsForPeriod = reservationRepository.getReservationsForPeriod(hotelModel.toEntity(),startDate,endDate);
 
-        if(reservationsBeforeDate.isEmpty()) {return null;}
+        if(reservationsForPeriod.isEmpty()) {return null;}
 
-        else {return reservationsBeforeDate;}
+        else {return reservationsForPeriod;}
+    }
+
+
+
+    public List<Reservation> getReservationsOfCustomerForPeriod(HotelModel hotelModel,  Timestamp startDate, Timestamp endDate, Long customerId) {
+        List<Reservation> reservationsOfCustomerForPeriod = reservationRepository.getReservationsOfCustomerForPeriod(hotelModel.toEntity(),startDate,endDate,customerId);
+
+        if(reservationsOfCustomerForPeriod.isEmpty()) {return null;}
+
+        else {return reservationsOfCustomerForPeriod;}
     }
 
     public List<Integer> getAllReservationsWithSameNumber_RoomsNumbers(Long reservationNumber, HotelModel hotelModel) {

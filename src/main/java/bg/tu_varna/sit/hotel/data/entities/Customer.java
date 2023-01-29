@@ -1,5 +1,7 @@
 package bg.tu_varna.sit.hotel.data.entities;
 
+import bg.tu_varna.sit.hotel.presentation.models.custom.CustomerRowModel;
+import bg.tu_varna.sit.hotel.presentation.models.custom.ReservationRowModel;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -83,4 +85,6 @@ public class Customer implements Serializable{
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
+
+
 }

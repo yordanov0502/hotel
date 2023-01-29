@@ -3,6 +3,7 @@ package bg.tu_varna.sit.hotel.presentation.models;
 import bg.tu_varna.sit.hotel.data.entities.Customer;
 import bg.tu_varna.sit.hotel.data.entities.Hotel;
 import bg.tu_varna.sit.hotel.data.entities.Room;
+import bg.tu_varna.sit.hotel.presentation.models.custom.CustomerRowModel;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -96,5 +97,20 @@ public class CustomerModel implements EntityModel<Customer>{
         customerTemp.setHotel(this.hotel.toEntity());
         customerTemp.setNightsStayed(this.nightsStayed);
         return customerTemp;
+    }
+
+    public CustomerRowModel toReservationRowModel(String [] services){
+        CustomerRowModel customerRowModel = new CustomerRowModel();
+        customerRowModel.setId(this.id);
+        customerRowModel.setEgn(this.egn);
+        customerRowModel.setFirstName(this.firstName);
+        customerRowModel.setLastName(this.lastName);
+        customerRowModel.setPhone(this.phone);
+        customerRowModel.setCreatedAt(this.createdAt);
+        customerRowModel.setRating(this.rating);
+        customerRowModel.setHotel(this.hotel);
+        customerRowModel.setNightsStayed(this.nightsStayed);
+        customerRowModel.setUsedServicesList(services);
+        return customerRowModel;
     }
 }
