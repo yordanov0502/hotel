@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/yordanov0502/hotel">
-    <img src="C:\Users\yorda\Desktop\hotel\documentation\logo.jpg" alt="Logo" height="250">
+    <img src="documentation\logo.jpg" alt="Logo" height="250">
   </a>
 
   <p align="center">
