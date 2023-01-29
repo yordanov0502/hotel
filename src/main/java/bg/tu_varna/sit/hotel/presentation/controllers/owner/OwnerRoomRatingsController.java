@@ -85,6 +85,10 @@ public class OwnerRoomRatingsController {
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
 
+    public void showRegistrationsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_REGISTRATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Registrations Info", 800, 500);
+    }
 
 
     public void logout() throws IOException {

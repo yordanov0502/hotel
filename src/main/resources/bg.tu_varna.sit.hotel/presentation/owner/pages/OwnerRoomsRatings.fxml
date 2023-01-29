@@ -123,12 +123,12 @@
                </font>
             </Button>
             <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="290.0" size="20" />
-            <Button alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="roomsRatingsButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="aaaaaaaaa" textAlignment="RIGHT">
+            <Button fx:id="registrationsQueryButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="316.0" mnemonicParsing="false" onAction="#showRegistrationsInfo" prefHeight="40.0" prefWidth="133.0" styleClass="beginningButton" stylesheets="@../css/ButtonFeaturesOnClick.css" text="Регистрации" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
                </font>
             </Button>
-            <FontAwesomeIconView layoutX="7.0" layoutY="343.0" size="20" />
+            <FontAwesomeIconView glyphName="USERS" layoutX="5.0" layoutY="343.0" size="20" />
             <Button fx:id="roomsRatingsButton" alignment="CENTER_RIGHT" layoutX="4.0" layoutY="370.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="133.0" styleClass="messagesButton" stylesheets="@../../admin/css/ButtonFeaturesOnClick.css" text="Рейтинг на стаи" textAlignment="RIGHT">
                <font>
                   <Font name="Arial" size="15.0" />
@@ -153,7 +153,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="144.0" layoutY="60.0" prefHeight="107.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="144.0" layoutY="55.0" prefHeight="107.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="60.0" layoutY="40.0" text="Начална дата" textFill="WHITE">
                <font>

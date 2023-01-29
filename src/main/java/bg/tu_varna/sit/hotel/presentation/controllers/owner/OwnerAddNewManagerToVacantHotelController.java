@@ -58,6 +58,11 @@ public class OwnerAddNewManagerToVacantHotelController {
         ViewManager.changeView(Constants.View.OWNER_HOTELS_INFO_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Hotels Info", 800, 500);
     }
 
+    public void showRegistrationsInfo() throws IOException {
+        ViewManager.closeDialogBox();
+        ViewManager.changeView(Constants.View.OWNER_REGISTRATIONS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Registrations Info", 800, 500);
+    }
+
     public void showRoomRatings() throws IOException {
         ViewManager.closeDialogBox();
         ViewManager.changeView(Constants.View.OWNER_ROOMS_RATINGS_VIEW, ViewManager.getPrimaryStage(),this.getClass(),"Owner Room Ratings", 800, 500);
