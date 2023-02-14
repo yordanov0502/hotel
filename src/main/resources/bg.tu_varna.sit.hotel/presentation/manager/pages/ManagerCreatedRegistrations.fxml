@@ -152,7 +152,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <Pane layoutX="145.0" layoutY="62.0" prefHeight="88.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="144.0" layoutY="55.0" prefHeight="107.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="52.0" layoutY="14.0" text="Начална дата" textFill="WHITE">
                <font>
@@ -169,7 +169,7 @@
             <Button fx:id="registrationQueryButton" layoutX="523.0" layoutY="17.0" mnemonicParsing="false" onAction="#showRegistrationsQuery" prefHeight="48.0" prefWidth="109.0" styleClass="reserveButton" stylesheets="@../../receptionist/css/ButtonFeaturesOnClick.css" text="Справка" />
          </children>
       </Pane>
-      <TableView fx:id="receptionistsTable" layoutX="145.0" layoutY="165.0" prefHeight="320.0" prefWidth="648.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
+      <TableView fx:id="receptionistsTable" layoutX="145.0" layoutY="170.0" prefHeight="314.0" prefWidth="648.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
          <columns>
             <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
             <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />

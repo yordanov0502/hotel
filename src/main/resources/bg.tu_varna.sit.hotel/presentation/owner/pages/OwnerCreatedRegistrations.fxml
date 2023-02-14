@@ -176,7 +176,7 @@
             <ComboBox fx:id="hotelsComboBox" layoutX="441.0" layoutY="26.0" prefHeight="31.0" prefWidth="192.0" />
          </children>
       </Pane>
-      <TableView fx:id="receptionistsTable" layoutX="145.0" layoutY="170.0" prefHeight="320.0" prefWidth="648.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
+      <TableView fx:id="receptionistsTable" layoutX="145.0" layoutY="170.0" prefHeight="314.0" prefWidth="648.0" styleClass="column-header" stylesheets="@../../admin/css/RowsFeatures.css">
          <columns>
             <TableColumn fx:id="egnColumn" prefWidth="73.0" style="-fx-font-family: Arial;" text="ЕГН" />
             <TableColumn fx:id="nameColumn" prefWidth="71.0" style="-fx-font-family: Arial;" text="Име" />

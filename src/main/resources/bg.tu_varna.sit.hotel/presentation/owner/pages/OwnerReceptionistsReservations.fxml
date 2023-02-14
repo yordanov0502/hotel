@@ -153,7 +153,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="reservationsTable" layoutX="145.0" layoutY="168.0" prefHeight="313.0" prefWidth="359.0" styleClass="column-header" stylesheets="@../../receptionist/css/ReservationsTableRowsFeatures.css">
+      <TableView fx:id="reservationsTable" layoutX="145.0" layoutY="170.0" prefHeight="313.0" prefWidth="359.0" styleClass="column-header" stylesheets="@../../receptionist/css/ReservationsTableRowsFeatures.css">
          <columns>
             <TableColumn fx:id="resNumberColumn" prefWidth="75.0" style="-fx-font-family: Arial;" text="Номер" />
             <TableColumn fx:id="resTypeColumn" prefWidth="81.0" style="-fx-font-family: Arial;" text="Тип" />
@@ -162,7 +162,7 @@
             <TableColumn fx:id="actionColumn" prefWidth="30.0" style="-fx-font-family: Arial;" text="🛈" />
          </columns>
       </TableView>
-      <Pane layoutX="517.0" layoutY="168.0" prefHeight="313.0" prefWidth="274.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="517.0" layoutY="170.0" prefHeight="313.0" prefWidth="274.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="54.0" layoutY="9.0" text="Данни на рецепционист" textFill="WHITE">
                <font>
@@ -231,7 +231,7 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="144.0" layoutY="52.0" prefHeight="110.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
+      <Pane layoutX="144.0" layoutY="55.0" prefHeight="107.0" prefWidth="648.0" style="-fx-background-color: rgba(84, 84, 84, 0.8); -fx-background-radius: 15;">
          <children>
             <Label layoutX="60.0" layoutY="40.0" text="Начална дата" textFill="WHITE">
                <font>

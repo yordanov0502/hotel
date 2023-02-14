@@ -146,7 +146,7 @@
             <Font name="Arial" size="22.0" />
          </font>
       </Label>
-      <TableView fx:id="hotelsTable" layoutX="143.0" layoutY="94.0" prefHeight="396.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/HotelsInfoTableRowsFeatures.css">
+      <TableView fx:id="hotelsTable" layoutX="143.0" layoutY="95.0" prefHeight="392.0" prefWidth="652.0" styleClass="column-header" stylesheets="@../css/HotelsInfoTableRowsFeatures.css">
         <columns>
           <TableColumn fx:id="nameColumn" prefWidth="140.0" style="-fx-font-family: Arial;" text="Име" />
           <TableColumn fx:id="majorInfoColumn" prefWidth="140.0" style="-fx-font-family: Arial;" text="Осн. информация" />
