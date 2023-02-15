@@ -293,15 +293,7 @@ public class OwnerReceptionistsReservationsController implements MajorOwnerContr
         {
             if(receptionistsComboBox.getValue() != null)
             {
-
-                for(Hotel currHotel : hotelsOfOwner)
-                {
-                    if(hotelsComboBox.getValue().equals(currHotel.getName()))
-                    {
-                        hotelModel = hotelService.getHotelByName(hotelsComboBox.getValue());
-                        break;
-                    }
-                }
+                hotelModel = hotelService.getHotelByName(hotelsComboBox.getValue());
 
 
                 String startDateHour = startDatePicker.getValue()+" 00:00:00.000000000";

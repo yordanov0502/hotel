@@ -247,32 +247,29 @@ public class ManagerCustomersController {
 
             for(CustomerModel customer : allCustomers)
             {
-                List<Reservation> reservationsOfHotel = reservationService.getReservationsOfCustomerForPeriod(hotelModel,startDate,endDate,customer.getId());
+                List<Reservation> reservationsOfCustomerForPeriod = reservationService.getReservationsOfCustomerForPeriod(hotelModel,startDate,endDate,customer.getId());
 
-                Set<String> serviceSet = new HashSet<>();
+                Set<String> serviceSet = new HashSet<>();//set to store all used hotel services of customer
 
-                List<Reservation> uniqueSingleReservations = new LinkedList<>();
+                List<Reservation> finishedReservationsOfCustomer = new LinkedList<>();
 
-                if(reservationsOfHotel !=null)
+
+                if(reservationsOfCustomerForPeriod !=null)
                 {
-                    for (Reservation reservation : reservationsOfHotel)
+                    for (Reservation reservation : reservationsOfCustomerForPeriod)
                     {
-                        if (uniqueSingleReservations.size() == 0 && reservation.getCustomer().getId().equals(customer.getId()) && reservation.getStatus().equals("обработена"))
+                        if (reservation.getCustomer().getId().equals(customer.getId()) && reservation.getStatus().equals("обработена"))
                         {
-                            uniqueSingleReservations.add(reservation);
-                        }
-                        else if (uniqueSingleReservations.contains(reservation))
-                        {
-                            uniqueSingleReservations.add(reservation);
+                            finishedReservationsOfCustomer.add(reservation);
                         }
                     }
                 }
 
 
 
-                if(uniqueSingleReservations.size()>0)
+                if(finishedReservationsOfCustomer.size()>0)
                 {
-                    for(Reservation reservation: uniqueSingleReservations)
+                    for(Reservation reservation: finishedReservationsOfCustomer)
                     {
                         String[] services = new String[]{};
                         if(reservation.getServiceList().length()>2)
@@ -285,13 +282,13 @@ public class ManagerCustomersController {
                 }
 
 
-                List<RoomModel> reservedRooms = new LinkedList<>();//list to store all rooms which have been reserved before specific date
+                Map<Integer,RoomModel> reservedRooms = new HashMap();//list to store all rooms which have been reserved for specific period (start date - end date)
 
 
 
-                if(uniqueSingleReservations.size()>0)
+                if(finishedReservationsOfCustomer.size()>0)
                  {
-                     for(Reservation reservation : uniqueSingleReservations)
+                     for(Reservation reservation : finishedReservationsOfCustomer)
                      {
                          RoomModel tempRoom = reservation.getRoom().toModel();
 
@@ -323,38 +320,38 @@ public class ManagerCustomersController {
 
                          if(!(reservation.getEndDate().before(startDate) || reservation.getStartDate().after(endDate)))
                          {
-                             if(!reservedRooms.contains(tempRoom))
+
+                             if(!reservedRooms.containsKey(tempRoom.getNumber()))
                              {
-                                 reservedRooms.add(tempRoom);
+                                 reservedRooms.put(tempRoom.getNumber(),tempRoom);
                              }
                              else
                              {
-                                 for(RoomModel reservedRoom: reservedRooms)
-                                 {
-                                     if(reservedRoom.equals(tempRoom))
-                                     {
-                                         int oldNightsOccupied = reservedRoom.getNightsOccupied();
-                                         reservedRoom.setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
-                                         break;
-                                     }
-                                 }
+                                 int oldNightsOccupied = reservedRooms.get(tempRoom.getNumber()).getNightsOccupied();
+                                 reservedRooms.get(tempRoom.getNumber()).setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
                              }
+
                          }
 
+
+
                      }
+
+
                      int nightsStayed = 0;
-                     for(RoomModel roomModel : reservedRooms)
+                     for(RoomModel currRoom : reservedRooms.values())
                      {
-                         nightsStayed+=roomModel.getNightsOccupied();
+                         nightsStayed+=currRoom.getNightsOccupied();
                      }
+
                      customer.setNightsStayed(nightsStayed);
-                    customer.setRating(determineCustomerRating(customer.getNightsStayed()));
+                     customer.setRating(determineCustomerRating(customer.getNightsStayed()));
                  }
 
 
 
 
-                if(uniqueSingleReservations.size()>0)
+                if(finishedReservationsOfCustomer.size()>0)
                 {
                     String[] usedServices = Arrays.copyOf(serviceSet.toArray(), serviceSet.size(), String[].class);
                     customerRowModels.add(customer.toReservationRowModel(usedServices));

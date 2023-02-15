@@ -266,14 +266,8 @@ public class OwnerRegistrationsController implements MajorOwnerController {
 
         if(validateDates() && validateChosenHotel())
         {
-            for(Hotel currHotel : hotelsOfOwner)
-            {
-                if(hotelsComboBox.getValue().equals(currHotel.getName()))
-                {
-                    hotelModel = hotelService.getHotelByName(hotelsComboBox.getValue());
-                    break;
-                }
-            }
+            hotelModel = hotelService.getHotelByName(hotelsComboBox.getValue());
+
 
             String startDateHour = startDatePicker.getValue()+" 00:00:00.000000000";
             Timestamp startDate = Timestamp.valueOf(startDateHour);

@@ -179,7 +179,7 @@ public class ManagerRoomRatingsController {
             List<Reservation> reservationsForPeriod = reservationService.getReservationsForPeriod(hotelModel,startDate,endDate);//all reservations between start date and end date
 
 
-            List<RoomModel> reservedRooms = new LinkedList<>();//list to store all rooms which have been reserved before specific date
+            Map<Integer,RoomModel> reservedRooms = new HashMap();//list to store all rooms which have been reserved for specific period (start date - end date)
 
 
 
@@ -190,14 +190,13 @@ public class ManagerRoomRatingsController {
                     RoomModel tempRoom = reservation.getRoom().toModel();
 
 
-
                     //1st case
                     if(reservation.getStartDate().before(startDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
                     {
                         int daysAfterStartDate = (Days.daysBetween(new DateTime(startDate.getTime()),new DateTime(reservation.getEndDate().getTime())).getDays());
                         tempRoom.setNightsOccupied(daysAfterStartDate);
                     }
-                    //2nd case
+                    //2nd casee
                     else if(reservation.getStartDate().after(startDate) && reservation.getStartDate().before(endDate) && reservation.getEndDate().after(startDate) && reservation.getEndDate().before(endDate))
                     {
                         tempRoom.setNightsOccupied(reservation.getNightsOccupied());
@@ -216,24 +215,20 @@ public class ManagerRoomRatingsController {
                     }
 
 
+
                     if(!(reservation.getEndDate().before(startDate) || reservation.getStartDate().after(endDate)))
                     {
-                        if(!reservedRooms.contains(tempRoom))
+
+                        if(!reservedRooms.containsKey(tempRoom.getNumber()))
                         {
-                            reservedRooms.add(tempRoom);
+                            reservedRooms.put(tempRoom.getNumber(),tempRoom);
                         }
                         else
                         {
-                            for(RoomModel reservedRoom: reservedRooms)
-                            {
-                                if(reservedRoom.equals(tempRoom))
-                                {
-                                    int oldNightsOccupied = reservedRoom.getNightsOccupied();
-                                    reservedRoom.setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
-                                    break;
-                                }
-                            }
+                            int oldNightsOccupied = reservedRooms.get(tempRoom.getNumber()).getNightsOccupied();
+                            reservedRooms.get(tempRoom.getNumber()).setNightsOccupied(oldNightsOccupied+tempRoom.getNightsOccupied());
                         }
+
                     }
 
 
@@ -243,57 +238,34 @@ public class ManagerRoomRatingsController {
 
 
 
-                List<RoomModel> uniqueRooms = new LinkedList<>();//list to store all rooms which have been reserved before specific date
-                for(RoomModel reservedRoom : reservedRooms)
-                {
-                    if(reservedRoom.getHotel().getId().equals(hotelModel.getId()))
-                    {
-                        uniqueRooms.add(reservedRoom);
-                    }
-                }
-
-
-
-                //list of all rooms which have been reserved during or around the period
-                List<RoomModel> roomsWithCalculatedRatingForPeriod = roomService.calculateRoomRatingsForPeriod(uniqueRooms,hotelModel);
+                //list of all rooms which have been reserved during or around the period with calculated rating
+                List<RoomModel> roomsWithCalculatedRatingForPeriod = roomService.calculateRoomRatingsForPeriod(new ArrayList<>(reservedRooms.values()),hotelModel);
 
 
 
                 //if there are rooms which has never been reserved or doesn't match the criteria for period
-                boolean brake=false;
                 if(allRooms.size()>roomsWithCalculatedRatingForPeriod.size())
                 {
 
-
                     for(RoomModel currRoom: allRooms)
                     {
-                        for(RoomModel roomModel : roomsWithCalculatedRatingForPeriod)
+                        if(!reservedRooms.containsKey(currRoom.getNumber()))
                         {
-                            if(!currRoom.getHotel().getName().equals(roomModel.getHotel().getName()))
-                            {
-                                currRoom.setRating(1);
-                                currRoom.setNightsOccupied(0);
-                                roomsWithCalculatedRatingForPeriod.add(currRoom);
-                                if(allRooms.size()==roomsWithCalculatedRatingForPeriod.size()){break;}
-                            }
+                            currRoom.setRating(1);
+                            currRoom.setNightsOccupied(0);
+                            roomsWithCalculatedRatingForPeriod.add(currRoom);
+                            if(allRooms.size()==roomsWithCalculatedRatingForPeriod.size()){break;}
                         }
                     }
 
-
-                    Set<RoomModel> finalRooms = new HashSet<>(roomsWithCalculatedRatingForPeriod);
-                    List<RoomModel> sortedRooms = new LinkedList<>(finalRooms);
-
-                    Collections.sort(sortedRooms);
-                    roomsTable.setItems(FXCollections.observableArrayList(sortedRooms));
+                    Collections.sort(roomsWithCalculatedRatingForPeriod);
+                    roomsTable.setItems(FXCollections.observableArrayList(roomsWithCalculatedRatingForPeriod));
                 }
 
                 else
                 {
-                    Set<RoomModel> finalRooms = new HashSet<>(roomsWithCalculatedRatingForPeriod);
-                    List<RoomModel> sortedRooms = new LinkedList<>(finalRooms);
-
-                    Collections.sort(sortedRooms);
-                    roomsTable.setItems(FXCollections.observableArrayList(sortedRooms));
+                    Collections.sort(roomsWithCalculatedRatingForPeriod);
+                    roomsTable.setItems(FXCollections.observableArrayList(roomsWithCalculatedRatingForPeriod));
                 }
 
             }

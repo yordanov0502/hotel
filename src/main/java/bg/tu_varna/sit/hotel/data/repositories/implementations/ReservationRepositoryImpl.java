@@ -130,7 +130,7 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         Transaction transaction = session.beginTransaction();
         List<Reservation> reservationsWithUniqueRoomIds = new LinkedList<>();
         try{
-            String jpql = "SELECT rr FROM Reservation rr WHERE (rr.startDate < '"+startDate+"' AND rr.endDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"') OR (rr.startDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"')  OR (rr.startDate >= '"+startDate+"' AND rr.startDate <= '"+endDate+"' AND rr.endDate > '"+endDate+"') OR (rr.startDate < '"+startDate+"' AND rr.endDate > '"+endDate+"' ) OR ( '"+startDate+"' < rr.startDate AND '"+endDate+"' > rr.endDate )   AND rr.hotel = '"+ hotel.getId() +"' ORDER BY rr.endDate DESC";
+            String jpql = "SELECT rr FROM Reservation rr WHERE ( (rr.startDate < '"+startDate+"' AND rr.endDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"') OR (rr.startDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"')  OR (rr.startDate >= '"+startDate+"' AND rr.startDate <= '"+endDate+"' AND rr.endDate > '"+endDate+"') OR (rr.startDate < '"+startDate+"' AND rr.endDate > '"+endDate+"' ) OR ( '"+startDate+"' < rr.startDate AND '"+endDate+"' > rr.endDate ) )   AND rr.hotel = '"+ hotel.getId() +"' ORDER BY rr.endDate ASC";
 
             //String jpql = "SELECT rr FROM Reservation rr WHERE NOT EXISTS ( SELECT rr FROM Reservation rr WHERE (rr.endDate < '"+startDate+"' AND rr.startDate < '"+startDate+"') OR (rr.startDate > '"+endDate+"' AND rr.endDate > '"+endDate+"') ) ORDER BY rr.startDate ASC";
 
@@ -499,7 +499,7 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         Transaction transaction = session.beginTransaction();
         List<Reservation> reservationsOfCustomer = new LinkedList<>();
         try{
-            String jpql = "SELECT rr  FROM Reservation rr WHERE  rr.customer.id = '"+customerId+"' AND (rr.startDate < '"+startDate+"' AND rr.endDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"') OR (rr.startDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"')  OR (rr.startDate >= '"+startDate+"' AND rr.startDate <= '"+endDate+"' AND rr.endDate > '"+endDate+"') OR (rr.startDate < '"+startDate+"' AND rr.endDate > '"+endDate+"' )   AND rr.hotel = '"+ hotel.getId() +"'  ORDER BY rr.endDate DESC";
+            String jpql = "SELECT rr  FROM Reservation rr WHERE  rr.customer.id = '"+customerId+"' AND ( (rr.startDate < '"+startDate+"' AND rr.endDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"') OR (rr.startDate >= '"+startDate+"' AND rr.endDate <= '"+endDate+"')  OR (rr.startDate >= '"+startDate+"' AND rr.startDate <= '"+endDate+"' AND rr.endDate > '"+endDate+"') OR (rr.startDate < '"+startDate+"' AND rr.endDate > '"+endDate+"' ) )   AND rr.hotel = '"+ hotel.getId() +"'  ORDER BY rr.endDate ASC";
 
             reservationsOfCustomer.addAll(session.createQuery(jpql, Reservation.class).getResultList());
             transaction.commit();
@@ -509,9 +509,7 @@ public class ReservationRepositoryImpl implements ReservationRepository<Reservat
         } finally {
             session.close();
         }
-        System.out.println(reservationsOfCustomer.size());
         return reservationsOfCustomer;
     }
 
 }
-

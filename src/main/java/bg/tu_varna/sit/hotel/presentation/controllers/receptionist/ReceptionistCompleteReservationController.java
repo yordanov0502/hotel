@@ -197,8 +197,8 @@ public class ReceptionistCompleteReservationController {
 
                         RoomModel roomModel = roomService.getRoomByNumber(reservation.getRoom().getNumber().toString(), hotelModel);
 
-                        reservation.setNightsOccupied(roomModel.getNightsOccupied()+(Days.daysBetween(new DateTime(reservation.getStartDate().getTime()),new DateTime(alteredEndDate.getTime())).getDays()));
-                        roomModel.setNightsOccupied(reservation.getNightsOccupied());
+                        reservation.setNightsOccupied(/*roomModel.getNightsOccupied()+*/(Days.daysBetween(new DateTime(reservation.getStartDate().getTime()),new DateTime(alteredEndDate.getTime())).getDays()));
+                        roomModel.setNightsOccupied(roomModel.getNightsOccupied() + reservation.getNightsOccupied());
                         if (roomService.calculateRoomRatings(roomModel, hotelModel))//if all room ratings were pre-calculated successfully
                         {
                             reservation.setRoomRating(roomModel.getRating()/*roomService.getRoomByNumber(reservation.getRoom().getNumber().toString(), hotelModel).getRating()*/);

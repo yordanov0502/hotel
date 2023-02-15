@@ -605,7 +605,6 @@ public class ReceptionistAddNewReservationController {
                                 else {reservationType="голяма";}
 
 
-                                System.out.println(hotelModel.getName());
                                 Long reservationNumber = reservationService.getLastReservationNumberOfHotel(this.hotelModel);
                                 if(reservationNumber!=null)
                                 {
@@ -621,7 +620,7 @@ public class ReceptionistAddNewReservationController {
 
                                 for(int i=0;i<selectedRooms.size();i++)
                                 {
-                                    flag = reservationService.addReservation(new ReservationModel(1L, reservationNumber, reservationType, "незапочнала", currentTime, reservationStart, reservationEnd, this.hotelModel, userService.getUserById(UserSession.user.getId()), customerModel, customerModel.getRating(),selectedRooms.get(i), selectedRooms.get(i).getNightsOccupied(), selectedRooms.get(i).getRating(), serviceList, false,finalDateOfFreeAnnulation,totalPrice));
+                                    flag = reservationService.addReservation(new ReservationModel(1L, reservationNumber, reservationType, "незапочнала", currentTime, reservationStart, reservationEnd, this.hotelModel, userService.getUserById(UserSession.user.getId()), customerModel, customerModel.getRating(),selectedRooms.get(i), /*selectedRooms.get(i).getNightsOccupied()*/Days.daysBetween(new DateTime(reservationStart1.getTime()),new DateTime(reservationEnd1.getTime())).getDays(), selectedRooms.get(i).getRating(), serviceList, false,finalDateOfFreeAnnulation,totalPrice));
                                     if(!flag)
                                     {
                                         if(reservationService.getReservationWithNumber(reservationNumber,this.hotelModel)!=null)
