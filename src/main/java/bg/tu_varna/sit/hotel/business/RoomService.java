@@ -192,7 +192,7 @@ public class RoomService {
 
     //used when creating new hotel + new manager
     public boolean validateFloorsField(String floorsNumber) {
-        String regex = "^[^0]([0-9]{0,3})$";
+        String regex = "^([0-9]{0,3})$";
 
         Pattern p = Pattern.compile(regex);
         if(floorsNumber == null) {return false;}
@@ -206,7 +206,7 @@ public class RoomService {
     //used when creating new hotel + new manager
     public boolean validateFloorsNumber(String floorsNumber)
     {
-        if(floorsNumber.equals(""))
+        if(floorsNumber.equals("") || floorsNumber.equals(" "))
         {
             AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете брой ежати на хотела.");
             return false;
@@ -229,7 +229,7 @@ public class RoomService {
 
     //used when creating new hotel + new manager
     public boolean validateRoomsNumberDynamicField(String roomsNumber) {
-        String regex = "^[^0]([0-9]{0,2})$";
+        String regex = "^([0-9]{0,2})$";
 
         Pattern p = Pattern.compile(regex);
         if(roomsNumber == null) {return false;}
@@ -368,7 +368,7 @@ public class RoomService {
     //method used when editing room information
     public boolean validateRoomInfoFields(String number, String type, String area, String price, String hotelName,String beds, RoomModel selectedRoom){
 
-        if(number.equals("")||type.equals("")||area.equals("")||price.equals(""))
+        if(number.equals("")||type.equals("")||area.equals("")||price.equals("")||beds.equals(""))
         {
             AlertManager.showAlert(Alert.AlertType.ERROR, "Грешка", "Моля въведете данни във всички полета.");
             return false;
@@ -536,7 +536,7 @@ public class RoomService {
     }
 
     //used when creating new hotel + new manager
-    //Room price[1-100000]
+    //Room price[1-10000]
     public boolean validateRoomPriceField(String roomPriceNumber) {
         String regex = "^([0-9]{0,5})$";
 

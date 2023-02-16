@@ -300,7 +300,7 @@ public class HotelService {
         String regex = "^[\\u0410-\\u042F OR A-Z]{1}([\\u0430-\\u044F OR \\u0410-\\u042F OR a-zA-Z0-9.,_]{2,60})$";
 
         Pattern p = Pattern.compile(regex);
-        if(hotelName == null) {return false;}
+        if(hotelName == null || hotelName.isBlank() || hotelName.isEmpty()) {return false;}
         else
         {
             Matcher m = p.matcher(hotelName);
@@ -312,7 +312,7 @@ public class HotelService {
         String regex = "^([\\u0430-\\u044F OR \\u0410-\\u042F OR a-zA-Z0-9.,_№]{10,200})$";
 
         Pattern p = Pattern.compile(regex);
-        if(hotelAddress == null) {return false;}
+        if(hotelAddress == null || hotelAddress.isBlank() || hotelAddress.isEmpty()) {return false;}
         else
         {
             Matcher m = p.matcher(hotelAddress);

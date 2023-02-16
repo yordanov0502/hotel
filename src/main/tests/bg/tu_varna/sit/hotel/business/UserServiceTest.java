@@ -25,62 +25,83 @@ class UserServiceTest {
 
     @Test
     void usernameValidate() {
-        assertTrue(UserService.getInstance().validateUsername("yordanov5.0"));
-        assertTrue(UserService.getInstance().validateUsername("Zdravk000_1.05"));
-        assertFalse(UserService.getInstance().validateUsername("mAri@ a.02"));
-        assertFalse(UserService.getInstance().validateUsername("GEORGI#()-202"));
+        assertTrue(userService.validateUsername("yordanov5.0"));
+        assertTrue(userService.validateUsername("Zdravk000_1.05"));
+        assertFalse(userService.validateUsername("mAri@ a.02"));
+        assertFalse(userService.validateUsername("GEORGI#()-202"));
+        assertFalse(userService.validateUsername(""));
+        assertFalse(userService.validateUsername("    dsda"));
+        assertFalse(userService.validateUsername("     ._9da       "));
     }
 
     @Test
     void passwordValidate() {
-        assertTrue(UserService.getInstance().validatePassword("awbfg_!?fA9"));
-        assertTrue(UserService.getInstance().validatePassword("req_._2314A"));
-        assertFalse(UserService.getInstance().validatePassword("mSIDi02 13@#$%8765"));
-        assertFalse(UserService.getInstance().validatePassword("pPlK-54***1`~12©"));
+        assertTrue(userService.validatePassword("awbfg_!?fA9"));
+        assertTrue(userService.validatePassword("req_._2314A"));
+        assertFalse(userService.validatePassword("mSIDi02 13@#$%8765"));
+        assertFalse(userService.validatePassword("pPlK-54***1`~12©"));
+        assertFalse(userService.validatePassword(""));
+        assertFalse(userService.validatePassword(" "));
+        assertFalse(userService.validatePassword("     ._9da       "));
     }
 
     @Test
     void emailValidate() {
-        assertTrue(UserService.getInstance().validateEmail("yordanovtodor281@gmail.com"));
-        assertTrue(UserService.getInstance().validateEmail("natoto01@abv.bg"));
-        assertFalse(UserService.getInstance().validateEmail("ivanov24.com"));
-        assertFalse(UserService.getInstance().validateEmail("john@com"));
+        assertTrue(userService.validateEmail("yordanovtodor281@gmail.com"));
+        assertTrue(userService.validateEmail("natoto01@abv.bg"));
+        assertFalse(userService.validateEmail("ivanov24.com"));
+        assertFalse(userService.validateEmail("john@com"));
+        assertFalse(userService.validateEmail(""));
+        assertFalse(userService.validateEmail(" "));
+        assertFalse(userService.validateEmail("     ._9da       "));
     }
 
     @Test
     void phoneValidate() {
-        assertTrue(UserService.getInstance().validatePhone("0882960178"));
-        assertTrue(UserService.getInstance().validatePhone("0894735533"));
-        assertFalse(UserService.getInstance().validatePhone("052500500"));
-        assertFalse(UserService.getInstance().validatePhone("0521144 "));
+        assertTrue(userService.validatePhone("0882960178"));
+        assertTrue(userService.validatePhone("0894735533"));
+        assertFalse(userService.validatePhone("052500500"));
+        assertFalse(userService.validatePhone("0521144 "));
+        assertFalse(userService.validatePhone(""));
+        assertFalse(userService.validatePhone(" "));
+        assertFalse(userService.validatePhone(" ._9da"));
     }
 
     @Test
     void idValidate() {
-        assertTrue(UserService.getInstance().validateId("0146302585"));
-        assertTrue(UserService.getInstance().validateId("1428063011"));
-        assertFalse(UserService.getInstance().validateId("0100301025"));
-        assertFalse(UserService.getInstance().validateId("0146345515"));
+        assertTrue(userService.validateId("0146302585"));
+        assertTrue(userService.validateId("1428063011"));
+        assertFalse(userService.validateId("0100301025"));
+        assertFalse(userService.validateId("0146345515"));
+        assertFalse(userService.validateId(""));
+        assertFalse(userService.validateId(" "));
+        assertFalse(userService.validateId("     ._9da       "));
     }
 
     @Test
     void firstNameValidate() {
-        assertTrue(UserService.getInstance().validateFirstName("Тодор"));
-        assertTrue(UserService.getInstance().validateFirstName("Благовеста"));
-        assertFalse(UserService.getInstance().validateFirstName("ЗАхари"));
-        assertFalse(UserService.getInstance().validateFirstName("митко"));
-        assertFalse(UserService.getInstance().validateFirstName("012321432903423"));
-        assertFalse(UserService.getInstance().validateFirstName("popov"));
+        assertTrue(userService.validateFirstName("Тодор"));
+        assertTrue(userService.validateFirstName("Благовеста"));
+        assertFalse(userService.validateFirstName("ЗАхари"));
+        assertFalse(userService.validateFirstName("митко"));
+        assertFalse(userService.validateFirstName("012321432903423"));
+        assertFalse(userService.validateFirstName("popov"));
+        assertFalse(userService.validateFirstName(""));
+        assertFalse(userService.validateFirstName(" Иаяьа "));
+        assertFalse(userService.validateFirstName("     ._9da       "));
     }
 
     @Test
     void lastNameValidate() {
-        assertTrue(UserService.getInstance().validateFirstName("Йорданов"));
-        assertTrue(UserService.getInstance().validateFirstName("Енчева"));
-        assertFalse(UserService.getInstance().validateFirstName("ГеоргиеВ"));
-        assertFalse(UserService.getInstance().validateFirstName("димитров"));
-        assertFalse(UserService.getInstance().validateFirstName("012321 432903423"));
-        assertFalse(UserService.getInstance().validateLastName("popov"));
+        assertTrue(userService.validateLastName("Йорданов"));
+        assertTrue(userService.validateLastName("Енчева"));
+        assertFalse(userService.validateLastName("ГеоргиеВ"));
+        assertFalse(userService.validateLastName("димитров"));
+        assertFalse(userService.validateLastName("012321 432903423"));
+        assertFalse(userService.validateLastName("popov"));
+        assertFalse(userService.validateLastName(""));
+        assertFalse(userService.validateLastName(" Иаяьа "));
+        assertFalse(userService.validateLastName("     ._9da       "));
     }
 
     @Test

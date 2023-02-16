@@ -121,13 +121,4 @@ public class ServiceService {
         else return true;
     }
 
-    public boolean addServices(List<ServiceModel> serviceList, HotelModel hotelModel) {
-        for(ServiceModel serviceModel:serviceList)
-        {
-            serviceModel.setHotel(hotelModel);
-            if(!addService(serviceModel)){return false;}
-        }
-        return true;
-    }
-
 }
