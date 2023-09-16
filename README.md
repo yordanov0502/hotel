@@ -23,6 +23,11 @@
   </ol>
 </details>
 
+![image1.png](documentation%2Fimage1.png)
+![image2.png](documentation%2Fimage2.png)
+![image3.png](documentation%2Fimage3.png)
+![image4.png](documentation%2Fimage4.png)
+![image5.png](documentation%2Fimage5.png)
 
 ## За проекта
 
